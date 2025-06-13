@@ -3,7 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Digha Hotel - Welcome to Digha!</title>
+    <title>My Digha Hotel - Your Guide to Stays in Digha!</title>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-XXXXXXXXXX'); /* REPLACE 'G-XXXXXXXXXX' with YOUR Google Analytics Measurement ID */
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+     crossorigin="anonymous"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,6 +30,7 @@
             color: white;
             padding: 10px 0;
             text-align: center;
+            position: relative;
         }
         header h1 {
             margin: 0;
@@ -25,9 +39,12 @@
             max-width: 150px;
             height: auto;
             margin-bottom: 10px;
+            display: block; /* Ensures logo is on its own line */
+            margin-left: auto;
+            margin-right: auto;
         }
         .container {
-            width: 80%;
+            width: 85%;
             margin: auto;
             overflow: hidden;
             padding: 20px 0;
@@ -40,48 +57,59 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .hotel-details {
+        .hotel-listing {
             background-color: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
-        .hotel-details h2 {
+        .hotel-listing h2 {
             color: #007BFF;
+            margin-top: 0;
         }
-        .hotel-details p {
+        .hotel-listing p {
             margin: 5px 0;
+        }
+        .contact-info, .price-info, .address-info {
+            margin-top: 10px;
+            font-size: 0.95em;
+        }
+        .contact-info a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        .price-info strong {
+            color: #28a745; /* Green for pricing */
         }
         .hotel-photos {
             display: flex;
+            flex-wrap: wrap; /* Allows photos to wrap on smaller screens */
             justify-content: center;
             gap: 15px;
             margin-top: 20px;
         }
         .hotel-photos img {
-            max-width: 45%;
+            max-width: 48%; /* Adjust for two images per row, with some gap */
             height: auto;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            object-fit: cover; /* Ensures images cover the area without distortion */
+            min-width: 250px; /* Minimum width for images to prevent them from becoming too small */
         }
-        .options {
+        .ad-container {
+            margin: 20px 0;
             text-align: center;
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
-        .options a {
-            display: inline-block;
-            background-color: #28a745;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
+            background-color: #e0e0e0;
+            padding: 10px;
             border-radius: 5px;
-            margin: 0 10px;
-            transition: background-color 0.3s ease;
-        }
-        .options a:hover {
-            background-color: #218838;
+            min-height: 90px; /* To give some space for the ad */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         footer {
             background-color: #333;
@@ -92,6 +120,7 @@
             position: relative;
             bottom: 0;
             width: 100%;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
         }
         footer a {
             color: #007BFF;
@@ -107,6 +136,53 @@
         .event-holiday {
             margin-top: 15px;
             font-size: 0.85em;
+            border-top: 1px solid #555;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        .event-holiday ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 5px 0;
+        }
+        .event-holiday li {
+            margin-bottom: 3px;
+        }
+        .footer-buttons {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #555;
+            margin-bottom: 15px; /* Space between buttons and other footer info */
+        }
+        .footer-buttons a {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+        .footer-buttons a:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            .hotel-photos img {
+                max-width: 100%; /* Stack images on small screens */
+            }
+            .footer-buttons a {
+                display: block;
+                margin-bottom: 10px;
+            }
+            .ad-container {
+                margin: 15px 0;
+            }
         }
     </style>
 </head>
@@ -115,39 +191,103 @@
     <header>
         <img src="https://via.placeholder.com/150x50?text=My+Digha+Jog+Logo" alt="My Digha Jog Logo" class="logo">
         <h1>My Digha Hotel</h1>
+        <p>Your ultimate guide to finding the perfect stay in Digha!</p>
     </header>
 
     <div class="container">
         <div class="welcome-message">
             <h2>Welcome to Digha!</h2>
-            <p>Experience the beauty of Digha with us. We are delighted to welcome every tourist to our wonderful coastal town. Enjoy your stay and create unforgettable memories!</p>
-            <p>Your comfort is our priority. We look forward to serving you!</p>
+            <p>Discover the serene beaches and vibrant atmosphere of Digha. We're here to help every tourist find a comfortable and memorable stay. Explore the best hotels and make your trip unforgettable!</p>
+            <p>Our aim is to provide easy access to hotel information, making your Digha journey smooth and enjoyable.</p>
         </div>
 
-        <div class="hotel-details">
-            <h2>Our Hotel Details</h2>
-            <p><strong>Hotel Name:</strong> My Digha Hotel</p>
-            <p><strong>Mobile Number:</strong> +91 98765 43210</p>
-            <p><strong>WhatsApp Number:</strong> +91 98765 43210</p>
-            <p><strong>Email:</strong> info@mydighahotel.com</p>
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" /* REPLACE with YOUR AdSense Publisher ID */
+                 data-ad-slot="1111111111" /* REPLACE with YOUR Ad Unit Slot ID */
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <p>Advertisement Top (AdSense)</p>
+        </div>
 
+        <div class="hotel-listing">
+            <h2>Hotel Sea View</h2>
+            <p>A beautiful hotel offering stunning views of the sea, perfect for a relaxing getaway.</p>
+            <div class="address-info">
+                <p><strong>Address:</strong> Plot No. 123, Old Digha Main Road, Near Sea Beach, Digha, Purba Medinipur, West Bengal - 721428</p>
+            </div>
+            <div class="contact-info">
+                <p><strong>Mobile Number:</strong> <a href="tel:+919876512345">+91 98765 12345</a></p>
+                <p><strong>WhatsApp Number:</strong> <a href="https://wa.me/919876512345" target="_blank">+91 98765 12345</a></p>
+                <p><strong>Email:</strong> <a href="mailto:seaview@example.com">seaview@example.com</a></p>
+            </div>
+            <div class="price-info">
+                <p><strong>AC Room Price Range:</strong> ₹1500 - ₹2500 per night</p>
+                <p><strong>Non-AC Room Price Range:</strong> ₹800 - ₹1200 per night</p>
+            </div>
             <div class="hotel-photos">
-                <img src="https://via.placeholder.com/400x250?text=Hotel+Image+1" alt="Hotel Photo 1">
-                <img src="https://via.placeholder.com/400x250?text=Hotel+Image+2" alt="Hotel Photo 2">
+                <img src="https://via.placeholder.com/600x400?text=Hotel+Sea+View+1" alt="Hotel Sea View Photo 1">
+                <img src="https://via.placeholder.com/600x400?text=Hotel+Sea+View+2" alt="Hotel Sea View Photo 2">
             </div>
         </div>
 
-        <h2>Other Hotels in Digha</h2>
-        <ul>
-            <li>Hotel Sea View - <a href="tel:+911111122222">+91 11111 22222</a></li>
-            <li>Hotel Green Palace - <a href="tel:+913333344444">+91 33333 44444</a></li>
-            <li>Digha Beach Resort - <a href="tel:+915555566666">+91 55555 66666</a></li>
-            <li>The Oceanic Grand - <a href="tel:+917777788888">+91 77777 88888</a></li>
-        </ul>
+        <div class="hotel-listing">
+            <h2>Digha Grand Resort</h2>
+            <p>Experience luxury and comfort at Digha Grand Resort, featuring modern amenities and excellent service.</p>
+            <div class="address-info">
+                <p><strong>Address:</strong> New Digha Road, Beside Digha Science Centre, Digha, Purba Medinipur, West Bengal - 721428</p>
+            </div>
+            <div class="contact-info">
+                <p><strong>Mobile Number:</strong> <a href="tel:+917777788888">+91 77777 88888</a></p>
+                <p><strong>WhatsApp Number:</strong> <a href="https://wa.me/917777788888" target="_blank">+91 77777 88888</a></p>
+                <p><strong>Email:</strong> <a href="mailto:grandresort@example.com">grandresort@example.com</a></p>
+            </div>
+            <div class="price-info">
+                <p><strong>AC Room Price Range:</strong> ₹3000 - ₹5000 per night</p>
+                <p><strong>Non-AC Room Price Range:</strong> ₹1800 - ₹2500 per night</p>
+            </div>
+            <div class="hotel-photos">
+                <img src="https://via.placeholder.com/600x400?text=Digha+Grand+Resort+1" alt="Digha Grand Resort Photo 1">
+                <img src="https://via.placeholder.com/600x400?text=Digha+Grand+Resort+2" alt="Digha Grand Resort Photo 2">
+            </div>
+        </div>
 
-        <div class="options">
-            <a href="addhotel.html">Add Your Hotel Details</a>
-            <a href="updatehotel.html">Update Your Hotel Details</a>
+        <div class="hotel-listing">
+            <h2>Coastal Breeze Inn</h2>
+            <p>A cozy and budget-friendly option, perfect for travelers looking for a comfortable stay near the beach.</p>
+            <div class="address-info">
+                <p><strong>Address:</strong> Sea Hawk Road, Near Digha Mohana, Digha, Purba Medinipur, West Bengal - 721428</p>
+            </div>
+            <div class="contact-info">
+                <p><strong>Mobile Number:</strong> <a href="tel:+919123456789">+91 91234 56789</a></p>
+                <p><strong>WhatsApp Number:</strong> <a href="https://wa.me/919123456789" target="_blank">+91 91234 56789</a></p>
+                <p><strong>Email:</strong> <a href="mailto:coastalbreeze@example.com">coastalbreeze@example.com</a></p>
+            </div>
+            <div class="price-info">
+                <p><strong>AC Room Price Range:</strong> ₹1000 - ₹1800 per night</p>
+                <p><strong>Non-AC Room Price Range:</strong> ₹600 - ₹900 per night</p>
+            </div>
+            <div class="hotel-photos">
+                <img src="https://via.placeholder.com/600x400?text=Coastal+Breeze+Inn+1" alt="Coastal Breeze Inn Photo 1">
+                <img src="https://via.placeholder.com/600x400?text=Coastal+Breeze+Inn+2" alt="Coastal Breeze Inn Photo 2">
+            </div>
+        </div>
+
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" /* REPLACE with YOUR AdSense Publisher ID */
+                 data-ad-slot="2222222222" /* REPLACE with YOUR Ad Unit Slot ID */
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <p>Advertisement Bottom (AdSense)</p>
         </div>
 
     </div>
@@ -156,6 +296,10 @@
         <div class="footer-info">
             <p>Support Mail: <a href="mailto:hotelmydigha@gmail.com">hotelmydigha@gmail.com</a></p>
             <p><a href="#">Privacy Policy</a></p>
+            <div class="footer-buttons">
+                <a href="addhotel.html">Add Your Hotel Details</a>
+                <a href="updatehotel.html">Update Hotel Details</a>
+            </div>
             <p>This website is managed by Nexuzy Tech under My Digha Platform</p>
             <p>
                 <span id="currentDateTime"></span>
@@ -172,33 +316,134 @@
         function updateDateTime() {
             const now = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('en-US', options);
+            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('en-IN', options); // Using en-IN for Indian locale
         }
 
         function fetchEventsAndHolidays() {
-            // In a real application, you would fetch this data from an API.
-            // For this example, I'll hardcode some for demonstration.
-            const events = [
-                "June 17: Bakrid (Eid al-Adha)",
-                "July 17: Muharram",
-                "August 15: Independence Day",
-                "August 26: Janmashtami",
-                "September 16: Milad un-Nabi"
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const today = new Date(currentYear, now.getMonth(), now.getDate()); // Date object for comparison without time
+
+            const holidays = [
+                // Fixed-date holidays
+                { name: "Independence Day", month: 7, day: 15, tentative: false }, // August is month 7
+                { name: "Gandhi Jayanti", month: 9, day: 2, tentative: false },   // October is month 9
+                { name: "Christmas", month: 11, day: 25, tentative: false },     // December is month 11
+
+                // Variable-date holidays (Dates for 2025 and 2026 pre-populated)
+                { name: "Bakrid (Eid al-Adha)", dates: {
+                    2025: { month: 5, day: 17 }, // June 17, 2025
+                    2026: { month: 4, day: 6 }   // May 26, 2026 (approx) - usually 10-11 days earlier
+                }, tentative: true },
+                { name: "Muharram", dates: {
+                    2025: { month: 6, day: 6 }, // July 6, 2025
+                    2026: { month: 5, day: 26 } // June 25, 2026 (approx) - usually 10-11 days earlier
+                }, tentative: true },
+                { name: "Janmashtami", dates: {
+                    2025: { month: 7, day: 18 }, // August 18, 2025
+                    2026: { month: 8, day: 6 }   // September 6, 2026
+                }, tentative: true },
+                { name: "Milad un-Nabi (Prophet's Birthday)", dates: {
+                    2025: { month: 8, day: 5 }, // September 5, 2025
+                    2026: { month: 7, day: 25 } // August 25, 2026 (approx)
+                }, tentative: true },
+                { name: "Dussehra", dates: {
+                    2025: { month: 9, day: 1 }, // October 1, 2025
+                    2026: { month: 9, day: 20 } // October 20, 2026
+                }, tentative: true },
+                { name: "Diwali (Lakshmi Puja)", dates: {
+                    2025: { month: 9, day: 20 }, // October 20, 2025
+                    2026: { month: 10, day: 8 }  // November 8, 2026
+                }, tentative: true },
+                 { name: "Guru Nanak Jayanti", dates: {
+                    2025: { month: 10, day: 15 }, // November 15, 2025
+                    2026: { month: 10, day: 4 }   // November 4, 2026
+                }, tentative: true }
             ];
 
             const eventsList = document.getElementById('eventsAndHolidays');
             eventsList.innerHTML = ''; // Clear previous entries
-            events.forEach(event => {
+
+            holidays.sort((a, b) => {
+                let dateA, dateB;
+                let yearA = currentYear, yearB = currentYear;
+
+                if (a.fixed) {
+                    dateA = new Date(yearA, a.month, a.day);
+                    if (dateA < today) dateA.setFullYear(yearA + 1); // If past, show next year
+                } else {
+                    dateA = new Date(yearA, a.dates[yearA].month, a.dates[yearA].day);
+                    if (dateA < today && a.dates[yearA + 1]) {
+                        dateA = new Date(yearA + 1, a.dates[yearA + 1].month, a.dates[yearA + 1].day);
+                        yearA = yearA + 1;
+                    }
+                }
+
+                if (b.fixed) {
+                    dateB = new Date(yearB, b.month, b.day);
+                    if (dateB < today) dateB.setFullYear(yearB + 1); // If past, show next year
+                } else {
+                    dateB = new Date(yearB, b.dates[yearB].month, b.dates[yearB].day);
+                    if (dateB < today && b.dates[yearB + 1]) {
+                        dateB = new Date(yearB + 1, b.dates[yearB + 1].month, b.dates[yearB + 1].day);
+                        yearB = yearB + 1;
+                    }
+                }
+                return dateA - dateB; // Sort by date
+            });
+
+            holidays.forEach(event => {
+                let displayYear = currentYear;
+                let month, day;
+                let isTentative = event.tentative;
+
+                if (event.fixed) {
+                    month = event.month;
+                    day = event.day;
+                    let eventDate = new Date(currentYear, month, day);
+                    if (eventDate < today) {
+                        displayYear = currentYear + 1; // Show next year's date if current year's has passed
+                    }
+                } else {
+                    // For variable holidays, check if current year's date is passed
+                    let eventDateForCurrentYear = new Date(currentYear, event.dates[currentYear].month, event.dates[currentYear].day);
+                    if (eventDateForCurrentYear < today && event.dates[currentYear + 1]) {
+                        displayYear = currentYear + 1; // Use next year's date
+                        month = event.dates[displayYear].month;
+                        day = event.dates[displayYear].day;
+                    } else if (event.dates[currentYear]) {
+                        month = event.dates[currentYear].month;
+                        day = event.dates[currentYear].day;
+                    } else {
+                         // Fallback if current year's date isn't defined, go to next available year
+                        displayYear = currentYear + 1;
+                        if(event.dates[displayYear]) {
+                            month = event.dates[displayYear].month;
+                            day = event.dates[displayYear].day;
+                        } else {
+                            // If no next year defined, just skip or handle as error
+                            return;
+                        }
+                    }
+                }
+
+                // Create a temporary date object to get the month name
+                const tempDate = new Date(displayYear, month, day);
+                const monthName = tempDate.toLocaleString('en-IN', { month: 'long' });
+
                 const li = document.createElement('li');
-                li.textContent = event;
+                li.textContent = `${monthName} ${day}: ${event.name} ${isTentative ? '(Tentative)' : ''}`;
                 eventsList.appendChild(li);
             });
         }
 
-        // Update date and time every second
-        setInterval(updateDateTime, 1000);
-        // Initial call to display immediately
-        updateDateTime();
+        setInterval(updateDateTime, 1000); // Update date and time every second
+        updateDateTime(); // Initial call to display immediately
+
+        // Fetch events and holidays daily or upon page load.
+        // For simplicity, we call it once on load. If you want it to check more frequently
+        // (e.g., in case a holiday date passes while the page is open), you could use setInterval,
+        // but for a static page, refreshing the page is usually enough.
         fetchEventsAndHolidays();
     </script>
 
