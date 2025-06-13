@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Digha Bus Booking Counters - Find Your Bus!</title>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-XXXXXXXXXX'); /* REPLACE 'G-XXXXXXXXXX' with YOUR Google Analytics Measurement ID */
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+     crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #DC3545; /* Red color for bus theme */
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .logo {
+            max-width: 150px; /* Adjust as needed */
+            height: auto;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .container {
+            width: 85%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #ffeaea; /* Lighter red background */
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        /* Styling for the dynamically loaded bus counter content */
+        #bus-counter-details-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            min-height: 250px; /* To prevent layout jumps when content loads */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        #bus-counter-details-container.loading {
+            color: #555;
+        }
+        #bus-counter-details-container h2 {
+            color: #DC3545; /* Red color for bus theme */
+            margin-top: 0;
+        }
+        #bus-counter-details-container p {
+            margin: 5px 0;
+        }
+        .contact-info, .address-info {
+            margin-top: 10px;
+            font-size: 0.95em;
+        }
+        .contact-info a {
+            color: #DC3545; /* Red color for bus theme */
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        .ad-container {
+            margin: 20px 0;
+            text-align: center;
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 5px;
+            min-height: 90px; /* To give some space for the ad */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navigation-controls {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .navigation-controls button {
+            background-color: #DC3545; /* Red color for bus theme */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .navigation-controls button:hover:not(:disabled) {
+            background-color: #C82333; /* Darker red on hover */
+        }
+        .navigation-controls button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #bus-counter-page-numbers {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #bus-counter-page-numbers a {
+            text-decoration: none;
+            color: #DC3545; /* Red color for bus theme */
+            border: 1px solid #DC3545;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        #bus-counter-page-numbers a.active,
+        #bus-counter-page-numbers a:hover {
+            background-color: #DC3545;
+            color: white;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.9em;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+        }
+        footer a {
+            color: #DC3545; /* Red color for bus theme */
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .footer-info p {
+            margin: 5px 0;
+        }
+        .footer-buttons {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #555;
+            margin-bottom: 15px; /* Space between buttons and other footer info */
+        }
+        .footer-buttons a {
+            display: inline-block;
+            background-color: #DC3545; /* Red color for bus theme */
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+        .footer-buttons a:hover {
+            background-color: #C82333; /* Darker red on hover */
+        }
+        .make-in-india {
+            margin-top: 10px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            .ad-container {
+                margin: 15px 0;
+            }
+            .navigation-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .footer-buttons a {
+                display: block;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="mydighabus.png" alt="My Digha Bus Logo" class="logo">
+        <h1>Digha Bus Booking Counters</h1>
+        <p>Your guide to finding bus ticket counters in Digha!</p>
+    </header>
+
+    <div class="container">
+        <div class="welcome-message">
+            <h2>Welcome to Digha Bus Services!</h2>
+            <p>Find contact details and addresses for bus booking counters in and around Digha. Plan your journey with ease!</p>
+        </div>
+
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" /* REPLACE with YOUR AdSense Publisher ID */
+                 data-ad-slot="1111111111" /* REPLACE with YOUR Ad Unit Slot ID */
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <p>Advertisement Top (AdSense)</p>
+        </div>
+
+        <div id="bus-counter-details-container">
+            <p class="loading-message">Loading bus counter details...</p>
+        </div>
+
+        <div class="navigation-controls">
+            <button id="prevBtnBus">Previous Counter</button>
+            <div id="bus-counter-page-numbers">
+                </div>
+            <button id="nextBtnBus">Next Counter</button>
+        </div>
+
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" /* REPLACE with YOUR AdSense Publisher ID */
+                 data-ad-slot="2222222222" /* REPLACE with YOUR Ad Unit Slot ID */
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <p>Advertisement Bottom (AdSense)</p>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-info">
+            <p>Support Mail: <a href="mailto:mydighabus@gmail.com">mydighabus@gmail.com</a></p>
+            <p><a href="#">Privacy Policy</a></p>
+            <div class="footer-buttons">
+                <a href="addcounter.html">Add Your Counter</a>
+                <a href="updatebus.html">Update Your Details</a>
+            </div>
+            <p>This website is managed by Nexuzy Tech under My Digha Platform</p>
+            <p class="make-in-india">Made in India 🇮🇳</p>
+            <p>
+                <span id="currentDateTime"></span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const busCounterDetailsContainer = document.getElementById('bus-counter-details-container');
+        const prevBtnBus = document.getElementById('prevBtnBus');
+        const nextBtnBus = document.getElementById('nextBtnBus');
+        const busCounterPageNumbers = document.getElementById('bus-counter-page-numbers');
+
+        // IMPORTANT: Manually update this to the total number of bus/*.html files you have!
+        const totalBusCounters = 3; // Example: if you have bus/1.html, bus/2.html, bus/3.html
+
+        let currentBusCounterId = 1;
+
+        // Function to load bus counter details from a file
+        async function loadBusCounter(id) {
+            if (id < 1 || id > totalBusCounters) {
+                console.warn(`Bus Counter ID ${id} is out of range.`);
+                return;
+            }
+
+            currentBusCounterId = id;
+            busCounterDetailsContainer.innerHTML = '<p class="loading-message">Loading bus counter details...</p>';
+            busCounterDetailsContainer.classList.add('loading'); // Add loading indicator
+
+            try {
+                const response = await fetch(`bus/${id}.html`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const htmlContent = await response.text();
+                busCounterDetailsContainer.innerHTML = htmlContent;
+                updateURL(id); // Update URL in browser's address bar
+            } catch (error) {
+                console.error("Failed to load bus counter details:", error);
+                busCounterDetailsContainer.innerHTML = '<p style="color: red;">Error loading bus counter details. Please try again later.</p>';
+            } finally {
+                busCounterDetailsContainer.classList.remove('loading'); // Remove loading indicator
+                updateBusCounterNavigationButtons();
+                highlightCurrentBusCounterPageNumber();
+            }
+        }
+
+        // Update URL without reloading the page
+        function updateURL(id) {
+            history.pushState({ busCounterId: id }, `Bus Counter ${id}`, `?counter=${id}`);
+        }
+
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', (event) => {
+            if (event.state && event.state.busCounterId) {
+                loadBusCounter(event.state.busCounterId);
+            } else {
+                // Default to counter 1 if no state is found
+                loadBusCounter(1);
+            }
+        });
+
+        // Update navigation buttons (Previous/Next) status
+        function updateBusCounterNavigationButtons() {
+            prevBtnBus.disabled = (currentBusCounterId === 1);
+            nextBtnBus.disabled = (currentBusCounterId === totalBusCounters);
+        }
+
+        // Generate clickable page numbers
+        function generateBusCounterPageNumbers() {
+            busCounterPageNumbers.innerHTML = ''; // Clear existing numbers
+            for (let i = 1; i <= totalBusCounters; i++) {
+                const link = document.createElement('a');
+                link.href = `#`; // Use # for client-side navigation
+                link.textContent = i;
+                link.dataset.busCounterId = i; // Store ID in data attribute
+                link.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent default link behavior (page jump)
+                    loadBusCounter(parseInt(e.target.dataset.busCounterId));
+                });
+                busCounterPageNumbers.appendChild(link);
+            }
+        }
+
+        // Highlight the currently active page number
+        function highlightCurrentBusCounterPageNumber() {
+            const pageLinks = busCounterPageNumbers.querySelectorAll('a');
+            pageLinks.forEach(link => {
+                if (parseInt(link.dataset.busCounterId) === currentBusCounterId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+
+        // --- Event Listeners for Bus Counter Navigation ---
+        prevBtnBus.addEventListener('click', () => {
+            if (currentBusCounterId > 1) {
+                loadBusCounter(currentBusCounterId - 1);
+            }
+        });
+
+        nextBtnBus.addEventListener('click', () => {
+            if (currentBusCounterId < totalBusCounters) {
+                loadBusCounter(currentBusCounterId + 1);
+            }
+        });
+
+        // --- Initial Load Logic for Bus Counters ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get bus counter ID from URL if present (e.g., index.html?counter=2)
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialBusCounterId = parseInt(urlParams.get('counter')) || 1;
+
+            currentBusCounterId = initialBusCounterId; // Set currentBusCounterId based on URL or default to 1
+
+            generateBusCounterPageNumbers(); // Generate the 1 | 2 | 3... links
+            loadBusCounter(currentBusCounterId); // Load the initial bus counter
+        });
+
+
+        // --- Footer Date Time Logic ---
+        function updateDateTime() {
+            const now = new Date();
+            // Using en-IN for Indian locale to ensure correct date format
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('en-IN', options);
+        }
+
+        setInterval(updateDateTime, 1000); // Update date and time every second
+        updateDateTime(); // Initial call to display immediately
+    </script>
+
+</body>
+</html>
