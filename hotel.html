@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Digha Hotel - Welcome to Digha!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .logo {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #e9f7fe;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .hotel-details {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .hotel-details h2 {
+            color: #007BFF;
+        }
+        .hotel-details p {
+            margin: 5px 0;
+        }
+        .hotel-photos {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .hotel-photos img {
+            max-width: 45%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .options {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .options a {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+        .options a:hover {
+            background-color: #218838;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.9em;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        footer a {
+            color: #007BFF;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .footer-info p {
+            margin: 5px 0;
+        }
+        .event-holiday {
+            margin-top: 15px;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="https://via.placeholder.com/150x50?text=My+Digha+Jog+Logo" alt="My Digha Jog Logo" class="logo">
+        <h1>My Digha Hotel</h1>
+    </header>
+
+    <div class="container">
+        <div class="welcome-message">
+            <h2>Welcome to Digha!</h2>
+            <p>Experience the beauty of Digha with us. We are delighted to welcome every tourist to our wonderful coastal town. Enjoy your stay and create unforgettable memories!</p>
+            <p>Your comfort is our priority. We look forward to serving you!</p>
+        </div>
+
+        <div class="hotel-details">
+            <h2>Our Hotel Details</h2>
+            <p><strong>Hotel Name:</strong> My Digha Hotel</p>
+            <p><strong>Mobile Number:</strong> +91 98765 43210</p>
+            <p><strong>WhatsApp Number:</strong> +91 98765 43210</p>
+            <p><strong>Email:</strong> info@mydighahotel.com</p>
+
+            <div class="hotel-photos">
+                <img src="https://via.placeholder.com/400x250?text=Hotel+Image+1" alt="Hotel Photo 1">
+                <img src="https://via.placeholder.com/400x250?text=Hotel+Image+2" alt="Hotel Photo 2">
+            </div>
+        </div>
+
+        <h2>Other Hotels in Digha</h2>
+        <ul>
+            <li>Hotel Sea View - <a href="tel:+911111122222">+91 11111 22222</a></li>
+            <li>Hotel Green Palace - <a href="tel:+913333344444">+91 33333 44444</a></li>
+            <li>Digha Beach Resort - <a href="tel:+915555566666">+91 55555 66666</a></li>
+            <li>The Oceanic Grand - <a href="tel:+917777788888">+91 77777 88888</a></li>
+        </ul>
+
+        <div class="options">
+            <a href="addhotel.html">Add Your Hotel Details</a>
+            <a href="updatehotel.html">Update Your Hotel Details</a>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-info">
+            <p>Support Mail: <a href="mailto:hotelmydigha@gmail.com">hotelmydigha@gmail.com</a></p>
+            <p><a href="#">Privacy Policy</a></p>
+            <p>This website is managed by Nexuzy Tech under My Digha Platform</p>
+            <p>
+                <span id="currentDateTime"></span>
+            </p>
+            <div class="event-holiday">
+                <p><strong>Upcoming Events & Holidays in India:</strong></p>
+                <ul id="eventsAndHolidays">
+                    </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        function fetchEventsAndHolidays() {
+            // In a real application, you would fetch this data from an API.
+            // For this example, I'll hardcode some for demonstration.
+            const events = [
+                "June 17: Bakrid (Eid al-Adha)",
+                "July 17: Muharram",
+                "August 15: Independence Day",
+                "August 26: Janmashtami",
+                "September 16: Milad un-Nabi"
+            ];
+
+            const eventsList = document.getElementById('eventsAndHolidays');
+            eventsList.innerHTML = ''; // Clear previous entries
+            events.forEach(event => {
+                const li = document.createElement('li');
+                li.textContent = event;
+                eventsList.appendChild(li);
+            });
+        }
+
+        // Update date and time every second
+        setInterval(updateDateTime, 1000);
+        // Initial call to display immediately
+        updateDateTime();
+        fetchEventsAndHolidays();
+    </script>
+
+</body>
+</html>
