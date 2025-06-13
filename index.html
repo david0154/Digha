@@ -9,19 +9,26 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #e0f2f7; /* Light blue, like a clear sky over the beach */
+            background-color: #f0f8ff; /* Light azure for a bright, airy feel */
             color: #333;
             line-height: 1.6;
         }
         header {
-            background-color: #2196f3; /* Deep blue, like the ocean */
+            background: linear-gradient(to right, #4fc3f7, #81d4fa); /* Gradient from light blue to a slightly lighter blue */
             color: white;
             padding: 20px 0;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        header img {
+            max-height: 100px; /* Adjust as needed */
+            margin-right: 20px;
         }
         nav {
-            background-color: #0d47a1; /* Even darker blue for navigation */
+            background-color: #1976d2; /* A deeper blue for the navigation bar */
             padding: 10px 0;
             text-align: center;
         }
@@ -34,7 +41,7 @@
             transition: background-color 0.3s ease;
         }
         nav a:hover {
-            background-color: #1565c0; /* Slightly lighter on hover */
+            background-color: #1565c0;
         }
         .container {
             width: 85%;
@@ -52,14 +59,14 @@
         }
         .right-sidebar {
             flex: 1;
-            background-color: #bbdefb; /* Lighter blue for sidebar */
+            background-color: #e1f5fe; /* A very light blue for the sidebar */
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-left: 20px;
         }
         .right-sidebar h3 {
-            color: #0d47a1;
+            color: #1976d2;
             margin-top: 0;
         }
         .right-sidebar ul {
@@ -71,18 +78,18 @@
         }
         .right-sidebar ul li a {
             text-decoration: none;
-            color: #3f51b5; /* A pleasant blue for links */
+            color: #3f51b5;
             font-weight: bold;
             transition: color 0.3s ease;
         }
         .right-sidebar ul li a:hover {
-            color: #0d47a1;
+            color: #1976d2;
         }
         h1, h2, h3 {
-            color: #0d47a1;
+            color: #1976d2;
         }
         .section {
-            background-color: #ffffff;
+            background-color: #fff;
             padding: 20px;
             margin-bottom: 20px;
             border-radius: 8px;
@@ -102,39 +109,75 @@
             gap: 20px;
         }
         .location-item {
-            background-color: #f5f5f5;
+            background-color: #f0f8ff;
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .location-item h3 {
-            color: #2196f3;
+            color: #1976d2;
             margin-top: 0;
         }
         .location-item img {
             max-width: 100%;
-            height: 180px; /* Fixed height for consistency */
-            object-fit: cover; /* Ensures images cover the area without distortion */
+            height: 180px;
+            object-fit: cover;
             display: block;
             margin: 10px 0;
             border-radius: 5px;
         }
         footer {
-            background-color: #0d47a1;
+            background-color: #1976d2;
             color: white;
             text-align: center;
             padding: 20px 0;
             margin-top: 20px;
             box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+            font-size: 0.9em;
         }
         footer a {
             color: white;
             text-decoration: none;
         }
+        .adsense-placeholder {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e3f2fd; /* Light blue for ad placeholder */
+            border-radius: 5px;
+            font-style: italic;
+            color: #777;
+        }
+        .contact-form {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .contact-form a {
+            background-color: #2e7d32; /* A shade of green for the contact button */
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .contact-form a:hover {
+            background-color: #1b5e20; /* Darker green on hover */
+        }
+        #privacy {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #privacy h3 {
+            color: #1976d2;
+        }
     </style>
 </head>
 <body>
     <header>
+        <img src="http://googleusercontent.com/generated_image_content/0" alt="Mydigha Logo">
         <h1>Welcome to Mydigha!</h1>
         <p>Your ultimate guide to exploring the beautiful beaches of Digha, West Bengal.</p>
     </header>
@@ -150,6 +193,10 @@
 
     <div class="container main-content">
         <div class="left-content">
+            <div class="adsense-placeholder">
+                [Google AdSense Placeholder 1]
+            </div>
+
             <section id="about" class="section">
                 <h2>Discover Digha, West Bengal</h2>
                 <p>Digha is a popular seaside resort town in the Purba Medinipur district of West Bengal, India. It is known for its beautiful beaches, serene atmosphere, and stunning sunsets. A perfect getaway for families and friends, Digha offers a blend of natural beauty and vibrant local culture. Originally known as Beerkul, Digha was discovered by the British in the late 18th century. Today, it stands as one of the most beloved beach destinations in Eastern India.</p>
@@ -187,13 +234,17 @@
                     </div>
 
                     <div class="location-item">
-                        <h3>Desu Sagar (Chandaneswar)</h3>
-                        <p>A tranquil spot known for the Chandaneswar Temple, dedicated to Lord Shiva, attracting devotees from far and wide.</p>
-                        <h4>Attraction:</h4>
+                        <h3>Dheusagar Park</h3>
+                        <p>A new and popular amusement park in Digha, offering a serene escape with various recreational facilities and a tranquil environment near the sea.</p>
+                        <h4>Attractions:</h4>
                         <ul>
-                            <li><strong>Chandaneswar Shiv Temple:</strong> A revered pilgrimage site.</li>
+                            <li><strong>Amusement Rides:</strong> Features a variety of rides for all ages.</li>
+                            <li><strong>Boating Facilities:</strong> Enjoy serene boat rides on the park's lake.</li>
+                            <li><strong>Toy Train:</strong> A delightful ride, especially for children.</li>
+                            <li><strong>Lush Greenery and Gardens:</strong> Beautifully maintained landscapes for relaxation and picnics.</li>
                         </ul>
-                        <img src="desu_sagar_attraction1.jpg" alt="Chandaneswar Temple">
+                        <img src="dheusagar_park1.jpg" alt="Dheusagar Park entrance">
+                        <img src="dheusagar_park2.jpg" alt="Boating at Dheusagar Park">
                     </div>
 
                     <div class="location-item">
@@ -257,6 +308,15 @@
                     </div>
                 </div>
             </section>
+
+            <div class="adsense-placeholder">
+                [Google AdSense Placeholder 2]
+            </div>
+
+            <section id="privacy" class="section">
+                <h3>Privacy Policy</h3>
+                <p>This website, Mydigha, is committed to protecting your privacy. We do not collect any personal information from our visitors. Any links to third-party websites are subject to their own privacy policies, which we encourage you to review.</p>
+            </section>
         </div>
 
         <div class="right-sidebar">
@@ -270,11 +330,16 @@
             </ul>
             <h3>Attraction Location Text</h3>
             <p>Each attraction is easily accessible by local transport. You can find more detailed location information and maps on our <a href="attraction.html">Attraction Map page</a>.</p>
+
+            <div class="contact-form">
+                 <a href="http://imdavid.in" target="_blank">Contact Us</a>
+            </div>
         </div>
     </div>
 
     <footer>
         <p>&copy; 2025 Mydigha. All rights reserved.</p>
+        <p>Website managed by Nexuzy Tech.</p>
         <p>Support Mail: <a href="mailto:Mydigha@gmail.com">Mydigha@gmail.com</a></p>
     </footer>
 </body>
