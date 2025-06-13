@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mydigha - Explore the Sea Beach</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f2f7; /* Light blue, like a clear sky over the beach */
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #2196f3; /* Deep blue, like the ocean */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        nav {
+            background-color: #0d47a1; /* Even darker blue for navigation */
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #1565c0; /* Slightly lighter on hover */
+        }
+        .container {
+            width: 85%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .left-content {
+            flex: 3;
+            padding-right: 20px;
+        }
+        .right-sidebar {
+            flex: 1;
+            background-color: #bbdefb; /* Lighter blue for sidebar */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-left: 20px;
+        }
+        .right-sidebar h3 {
+            color: #0d47a1;
+            margin-top: 0;
+        }
+        .right-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .right-sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .right-sidebar ul li a {
+            text-decoration: none;
+            color: #3f51b5; /* A pleasant blue for links */
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .right-sidebar ul li a:hover {
+            color: #0d47a1;
+        }
+        h1, h2, h3 {
+            color: #0d47a1;
+        }
+        .section {
+            background-color: #ffffff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 15px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .location-item {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .location-item h3 {
+            color: #2196f3;
+            margin-top: 0;
+        }
+        .location-item img {
+            max-width: 100%;
+            height: 180px; /* Fixed height for consistency */
+            object-fit: cover; /* Ensures images cover the area without distortion */
+            display: block;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #0d47a1;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 20px;
+            box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Mydigha!</h1>
+        <p>Your ultimate guide to exploring the beautiful beaches of Digha, West Bengal.</p>
+    </header>
+
+    <nav>
+        <a href="#about">About Digha</a>
+        <a href="#locations">Explore Locations</a>
+        <a href="hotel.html">Hotels</a>
+        <a href="bus_booking.html">Bus Booking</a>
+        <a href="restaurant.html">Restaurants</a>
+        <a href="attraction.html">Attractions Map</a>
+    </nav>
+
+    <div class="container main-content">
+        <div class="left-content">
+            <section id="about" class="section">
+                <h2>Discover Digha, West Bengal</h2>
+                <p>Digha is a popular seaside resort town in the Purba Medinipur district of West Bengal, India. It is known for its beautiful beaches, serene atmosphere, and stunning sunsets. A perfect getaway for families and friends, Digha offers a blend of natural beauty and vibrant local culture. Originally known as Beerkul, Digha was discovered by the British in the late 18th century. Today, it stands as one of the most beloved beach destinations in Eastern India.</p>
+                <img src="digha1.jpg" alt="Digha Beach View" width="700" height="400">
+                <img src="digha2.jpg" alt="Sunset at Digha Beach" width="700" height="400">
+            </section>
+
+            <section id="locations" class="section">
+                <h2>Explore Digha's Enchanting Locations</h2>
+                <div class="location-grid">
+                    <div class="location-item">
+                        <h3>Old Digha</h3>
+                        <p>The original charm of Digha, famous for its rip-rap stone structures, casuarina plantations, and the Subarnarekha River estuary.</p>
+                        <h4>Tourist Attractions:</h4>
+                        <ul>
+                            <li><strong>Mohona (Estuary):</strong> A picturesque spot where the river meets the sea.</li>
+                            <li><strong>Marine Aquarium and Regional Centre (MARC):</strong> Home to diverse marine life.</li>
+                            <li><strong>Digha Gate:</strong> An iconic entrance landmark.</li>
+                        </ul>
+                        <img src="old_digha_attraction1.jpg" alt="Mohona at Old Digha">
+                        <img src="old_digha_attraction2.jpg" alt="Digha Marine Aquarium">
+                    </div>
+
+                    <div class="location-item">
+                        <h3>New Digha</h3>
+                        <p>A more planned and modern extension of Digha, offering a cleaner beach and more developed tourist facilities.</p>
+                        <h4>Famous Attractions:</h4>
+                        <ul>
+                            <li><strong>New Digha Beach:</strong> Wider and less crowded beach ideal for relaxing.</li>
+                            <li><strong>Digha Science Centre & National Science Camp:</strong> Interactive exhibits and a planetarium.</li>
+                            <li><strong>Amarabati Park:</strong> A beautiful park with boating facilities.</li>
+                        </ul>
+                        <img src="new_digha_attraction1.jpg" alt="New Digha Beach">
+                        <img src="new_digha_attraction2.jpg" alt="Digha Science Centre">
+                    </div>
+
+                    <div class="location-item">
+                        <h3>Desu Sagar (Chandaneswar)</h3>
+                        <p>A tranquil spot known for the Chandaneswar Temple, dedicated to Lord Shiva, attracting devotees from far and wide.</p>
+                        <h4>Attraction:</h4>
+                        <ul>
+                            <li><strong>Chandaneswar Shiv Temple:</strong> A revered pilgrimage site.</li>
+                        </ul>
+                        <img src="desu_sagar_attraction1.jpg" alt="Chandaneswar Temple">
+                    </div>
+
+                    <div class="location-item">
+                        <h3>Udaipur Beach</h3>
+                        <p>Located on the border of West Bengal and Odisha, Udaipur Beach is known for its pristine beauty and casuarina trees.</p>
+                        <h4>Attraction:</h4>
+                        <ul>
+                            <li><strong>Pristine Beach and Casuarina Groves:</strong> Ideal for peaceful walks and picnics.</li>
+                        </ul>
+                        <img src="udaipur_attraction1.jpg" alt="Udaipur Beach">
+                    </div>
+
+                    <div class="location-item">
+                        <h3>Talsari Beach</h3>
+                        <p>A serene beach located in Odisha, just a short drive from Digha, famous for its red crabs and palm trees.</p>
+                        <h4>Attraction:</h4>
+                        <ul>
+                            <li><strong>Red Crabs and Palm Fringed Beach:</strong> A unique natural spectacle.</li>
+                        </ul>
+                        <img src="talsari_attraction1.jpg" alt="Talsari Beach with Red Crabs">
+                    </div>
+
+                    <div class="location-item">
+                        <h3>Digha Mohona</h3>
+                        <p>The confluence point of the Champa River and the Bay of Bengal, offering a vibrant fish market and scenic views.</p>
+                        <h4>Attraction:</h4>
+                        <ul>
+                            <li><strong>Fish Market and Estuary View:</strong> Experience local life and enjoy fresh seafood.</li>
+                        </ul>
+                        <img src="digha_mohona1.jpg" alt="Digha Mohona Fish Market">
+                    </div>
+
+                    <div class="location-item">
+                        <h3>Tajpur</h3>
+                        <p>An emerging beach destination known for its tranquility, dense casuarina groves, and thousands of red crabs.</p>
+                        <h4>Attraction:</h4>
+                        <ul>
+                            <li><strong>Red Crab Beach and Serene Environment:</strong> Perfect for a quiet retreat.</li>
+                        </ul>
+                        <img src="tajpur1.jpg" alt="Tajpur Beach Red Crabs">
+                    </div>
+
+                    <div class="location-item">
+                        <h3>Digha Jagannath Mandir</h3>
+                        <p>A newly built replica of the Puri Jagannath Temple, offering spiritual solace and architectural beauty.</p>
+                        <h4>Attraction:</h4>
+                        <ul>
+                            <li><strong>Spiritual Shrine and Architecture:</strong> A significant religious landmark.</li>
+                        </ul>
+                        <img src="digha_jagannath_mandir1.jpg" alt="Digha Jagannath Mandir">
+                    </div>
+
+                    <div class="location-item">
+                        <h3>Amaravati Park</h3>
+                        <p>A well-maintained park in New Digha with a toy train, boating facilities, and lush greenery, popular among families.</p>
+                        <h4>Attraction:</h4>
+                        <ul>
+                            <li><strong>Boating, Toy Train, and Greenery:</strong> Family-friendly entertainment.</li>
+                        </ul>
+                        <img src="amravati_park1.jpg" alt="Amaravati Park Boating">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="right-sidebar">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="hotel.html">Find Hotels</a></li>
+                <li><a href="bus_booking.html">Book Your Bus</a></li>
+                <li><a href="restaurant.html">Discover Restaurants</a></li>
+                <li><a href="attraction.html">View Attraction Map</a></li>
+                <li><a href="#locations">All Locations</a></li>
+            </ul>
+            <h3>Attraction Location Text</h3>
+            <p>Each attraction is easily accessible by local transport. You can find more detailed location information and maps on our <a href="attraction.html">Attraction Map page</a>.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Mydigha. All rights reserved.</p>
+        <p>Support Mail: <a href="mailto:Mydigha@gmail.com">Mydigha@gmail.com</a></p>
+    </footer>
+</body>
+</html>
