@@ -3,7 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mydigha - Explore the Sea Beach</title>
+    <title>My digha - Explore the Sea Beach</title>
+
+    <meta name="keywords" content="Digha, West Bengal, sea beach, tourist guide, Old Digha, New Digha, Dheusagar Park, Udaipur Beach, Talsari Beach, Digha Mohona, Tajpur, Jagannath Mandir, Amravati Park, hotels, bus booking, restaurants, attractions, travel, India, Purba Medinipur">
+    <meta name="description" content="Your ultimate guide to exploring the beautiful beaches and attractions of Digha, West Bengal. Discover hotels, restaurants, and top tourist spots.">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'GA_MEASUREMENT_ID'); // REPLACE 'GA_MEASUREMENT_ID' with your actual Google Analytics Measurement ID (e.g., G-XXXXXXXXXX)
+    </script>
+
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -20,12 +33,22 @@
             text-align: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             display: flex;
+            flex-direction: column; /* Stack logo, h1, p vertically */
             align-items: center;
             justify-content: center;
         }
         header img {
-            max-height: 100px; /* Adjust as needed */
-            margin-right: 20px;
+            max-height: 80px; /* Adjust as needed */
+            margin-bottom: 10px; /* Space between logo and text */
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.1em;
         }
         nav {
             background-color: #1976d2; /* A deeper blue for the navigation bar */
@@ -147,6 +170,10 @@
             border-radius: 5px;
             font-style: italic;
             color: #777;
+            min-height: 90px; /* Give some visual space for ads */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .contact-form {
             text-align: center;
@@ -163,22 +190,40 @@
         .contact-form a:hover {
             background-color: #1b5e20; /* Darker green on hover */
         }
-        #privacy {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #f5f5f5;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        /* New style for privacy policy within footer */
+        .footer-privacy-policy {
+            padding: 10px 20px;
+            font-size: 0.85em;
+            line-height: 1.4;
+            margin-top: 15px;
+            max-width: 800px; /* Constrain width for readability */
+            margin-left: auto;
+            margin-right: auto;
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white for contrast */
+            border-radius: 5px;
         }
-        #privacy h3 {
-            color: #1976d2;
+        .footer-privacy-policy h3 {
+            color: white; /* Make heading white to match footer text */
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+        .footer-privacy-policy p, .footer-privacy-policy a {
+            color: #e0e0e0; /* Lighter grey for readability on dark background */
+        }
+        .footer-privacy-policy a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+        .address-info {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <header>
-        <img src="http://googleusercontent.com/generated_image_content/0" alt="Mydigha Logo">
-        <h1>Welcome to Mydigha!</h1>
+        <img src="https://via.placeholder.com/150x80?text=Mydigha+Logo" alt="Mydigha Logo"> <h1>Welcome to My digha</h1>
         <p>Your ultimate guide to exploring the beautiful beaches of Digha, West Bengal.</p>
     </header>
 
@@ -187,19 +232,30 @@
         <a href="#locations">Explore Locations</a>
         <a href="hotel.html">Hotels</a>
         <a href="bus_booking.html">Bus Booking</a>
-        <a href="restaurant.html">Restaurants</a>
-        <a href="attraction.html">Attractions Map</a>
+        
+        <a href="attraction.html">Attractions place</a>
     </nav>
 
     <div class="container main-content">
         <div class="left-content">
             <div class="adsense-placeholder">
-                [Google AdSense Placeholder 1]
+                <h3>Advertisement</h3>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_PUBLISHER_ID"
+                     crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-YOUR_ADSENSE_PUBLISHER_ID"
+                     data-ad-slot="YOUR_AD_SLOT_ID_1"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
 
             <section id="about" class="section">
                 <h2>Discover Digha, West Bengal</h2>
-                <p>Digha is a popular seaside resort town in the Purba Medinipur district of West Bengal, India. It is known for its beautiful beaches, serene atmosphere, and stunning sunsets. A perfect getaway for families and friends, Digha offers a blend of natural beauty and vibrant local culture. Originally known as Beerkul, Digha was discovered by the British in the late 18th century. Today, it stands as one of the most beloved beach destinations in Eastern India.</p>
+                <p>Digha is a popular seaside resort town in the Purba Medinipur district of West Bengal, India. It is situated on the Bay of Bengal coast and is renowned for its shallow sand beaches, gentle waves, and picturesque sunsets. Digha serves as a perfect escape for tourists seeking relaxation and natural beauty. Historically known as Beerkul, Digha gained prominence during the British Raj as a tranquil retreat. Today, it offers a vibrant blend of tourism infrastructure and unspoiled natural charm, making it one of Eastern India's most beloved beach destinations, easily accessible from Kolkata and other major cities.</p>
                 <img src="digha1.jpg" alt="Digha Beach View" width="700" height="400">
                 <img src="digha2.jpg" alt="Sunset at Digha Beach" width="700" height="400">
             </section>
@@ -209,12 +265,21 @@
                 <div class="location-grid">
                     <div class="location-item">
                         <h3>Old Digha</h3>
-                        <p>The original charm of Digha, famous for its rip-rap stone structures, casuarina plantations, and the Subarnarekha River estuary.</p>
+                        <p>Old Digha is the traditional heart of Digha, characterized by its protective rip-rap stone walls and the serene presence of casuarina trees. While its beach might be less sandy due to erosion, it offers a unique charm with its rocky stretches, ideal for quiet contemplation and stunning sunrise/sunset views. It's also home to bustling local markets.</p>
                         <h4>Tourist Attractions:</h4>
                         <ul>
-                            <li><strong>Mohona (Estuary):</strong> A picturesque spot where the river meets the sea.</li>
-                            <li><strong>Marine Aquarium and Regional Centre (MARC):</strong> Home to diverse marine life.</li>
-                            <li><strong>Digha Gate:</strong> An iconic entrance landmark.</li>
+                            <li><strong>Mohona (Estuary):</strong> A picturesque spot where the Subarnarekha River meets the Bay of Bengal, offering a vibrant fish market and scenic views, especially during sunrise.
+                                <p class="address-info"><em>Location:</em> Near the eastern end of Old Digha beach, Digha Mohana Rd, Digha, Purba Medinipur, West Bengal.</p>
+                            </li>
+                            <li><strong>Marine Aquarium and Regional Centre (MARC):</strong> Asia's largest in-built aquarium, showcasing a diverse collection of marine species, providing an educational and fascinating experience for all ages.
+                                <p class="address-info"><em>Location:</em> Near Digha Mohona, Old Digha, Digha, West Bengal 721428.</p>
+                            </li>
+                            <li><strong>Digha Gate:</strong> An iconic welcome arch that serves as a landmark, signifying your arrival into the famous seaside town.
+                                <p class="address-info"><em>Location:</em> On the main road entering Old Digha, Purba Medinipur, West Bengal.</p>
+                            </li>
+                            <li><strong>Biswa Bangla Park:</strong> A newer addition to Old Digha, offering a landscaped garden with the Biswa Bangla theme.
+                                <p class="address-info"><em>Location:</em> Near Old Digha Sea Beach, Digha, West Bengal.</p>
+                            </li>
                         </ul>
                         <img src="old_digha_attraction1.jpg" alt="Mohona at Old Digha">
                         <img src="old_digha_attraction2.jpg" alt="Digha Marine Aquarium">
@@ -222,12 +287,21 @@
 
                     <div class="location-item">
                         <h3>New Digha</h3>
-                        <p>A more planned and modern extension of Digha, offering a cleaner beach and more developed tourist facilities.</p>
+                        <p>New Digha is a more modern and well-planned extension of Digha, featuring a wider, cleaner, and less crowded beach ideal for leisurely strolls, sunbathing, and enjoying the calm sea. It offers a more developed infrastructure with various hotels and tourist amenities.</p>
                         <h4>Famous Attractions:</h4>
                         <ul>
-                            <li><strong>New Digha Beach:</strong> Wider and less crowded beach ideal for relaxing.</li>
-                            <li><strong>Digha Science Centre & National Science Camp:</strong> Interactive exhibits and a planetarium.</li>
-                            <li><strong>Amarabati Park:</strong> A beautiful park with boating facilities.</li>
+                            <li><strong>New Digha Beach:</strong> The main highlight, offering a serene environment with a gentle slope into the sea, perfect for swimming and relaxation. Vendors offer local snacks and souvenirs.
+                                <p class="address-info"><em>Location:</em> New Digha, Digha, Purba Medinipur, West Bengal.</p>
+                            </li>
+                            <li><strong>Digha Science Centre & National Science Camp:</strong> An interactive science museum with engaging exhibits, a planetarium, and a 3D theatre, making learning fun for children and adults.
+                                <p class="address-info"><em>Location:</em> Near New Digha Bus Stand, New Digha, Digha, West Bengal 721428.</p>
+                            </li>
+                            <li><strong>Amaravati Park:</strong> A beautifully landscaped park with lush greenery, a serene lake with boating facilities, and a popular ropeway offering panoramic views of the surroundings. It's a great spot for family picnics.
+                                <p class="address-info"><em>Location:</em> JGF3+GC7, Unnamed Road, Chanpabani, New Digha, Digha, West Bengal 721428.</p>
+                            </li>
+                            <li><strong>Wonderland Kajal Dighi:</strong> An amusement park featuring a model toy train, various rides, and a calm lake, providing entertainment for all ages.
+                                <p class="address-info"><em>Location:</em> Near New Digha Beach, Digha, West Bengal.</p>
+                            </li>
                         </ul>
                         <img src="new_digha_attraction1.jpg" alt="New Digha Beach">
                         <img src="new_digha_attraction2.jpg" alt="Digha Science Centre">
@@ -235,101 +309,135 @@
 
                     <div class="location-item">
                         <h3>Dheusagar Park</h3>
-                        <p>A new and popular amusement park in Digha, offering a serene escape with various recreational facilities and a tranquil environment near the sea.</p>
+                        <p>Dheusagar Park, located in New Digha, is a burgeoning amusement and leisure park designed to provide a serene and enjoyable experience. It combines lush green nature with recreational facilities, making it a perfect spot for families and individuals looking for a peaceful escape by the sea.</p>
                         <h4>Attractions:</h4>
                         <ul>
-                            <li><strong>Amusement Rides:</strong> Features a variety of rides for all ages.</li>
-                            <li><strong>Boating Facilities:</strong> Enjoy serene boat rides on the park's lake.</li>
-                            <li><strong>Toy Train:</strong> A delightful ride, especially for children.</li>
-                            <li><strong>Lush Greenery and Gardens:</strong> Beautifully maintained landscapes for relaxation and picnics.</li>
+                            <li><strong>Amusement Rides:</strong> Features a variety of rides suitable for all age groups, adding an element of fun and excitement to your visit.</li>
+                            <li><strong>Boating Facilities:</strong> Enjoy serene boat rides on the park's tranquil lake, offering a relaxing way to take in the surroundings.</li>
+                            <li><strong>Toy Train:</strong> A delightful toy train ride that takes visitors on a tour of the park, particularly popular among children.</li>
+                            <li><strong>Lush Greenery and Gardens:</strong> The park boasts beautifully maintained landscapes, vibrant gardens, and ample green space, perfect for leisurely walks, picnics, and unwinding amidst nature.</li>
                         </ul>
+                        <p class="address-info"><em>Location:</em> JF8X+P8J, New Digha Sea Beach Rd, New Digha, Digha, West Bengal 721428.</p>
                         <img src="dheusagar_park1.jpg" alt="Dheusagar Park entrance">
                         <img src="dheusagar_park2.jpg" alt="Boating at Dheusagar Park">
                     </div>
 
                     <div class="location-item">
                         <h3>Udaipur Beach</h3>
-                        <p>Located on the border of West Bengal and Odisha, Udaipur Beach is known for its pristine beauty and casuarina trees.</p>
+                        <p>Nestled on the border of West Bengal and Odisha, Udaipur Beach is often referred to as a "virgin beach" due to its untouched beauty and serene ambiance. It's characterized by its long stretches of sandy beach and dense casuarina groves, offering a tranquil escape from the crowds.</p>
                         <h4>Attraction:</h4>
                         <ul>
-                            <li><strong>Pristine Beach and Casuarina Groves:</strong> Ideal for peaceful walks and picnics.</li>
+                            <li><strong>Pristine Beach and Casuarina Groves:</strong> Ideal for peaceful walks, enjoying solitude, and picnicking amidst nature's calm. The red crabs often found here add to its unique appeal.</li>
                         </ul>
+                        <p class="address-info"><em>Location:</em> Approximately 3 kilometers south of New Digha Beach, Purba Medinipur, West Bengal, close to the Odisha border.</p>
                         <img src="udaipur_attraction1.jpg" alt="Udaipur Beach">
                     </div>
 
                     <div class="location-item">
                         <h3>Talsari Beach</h3>
-                        <p>A serene beach located in Odisha, just a short drive from Digha, famous for its red crabs and palm trees.</p>
+                        <p>Located in Odisha, just about 8 km from Digha, Talsari Beach is a captivating estuarine beach known for its serene beauty, the confluence of the Subarnarekha River with the Bay of Bengal, and its unique red crabs. The beach is fringed by swaying palm and casuarina trees.</p>
                         <h4>Attraction:</h4>
                         <ul>
-                            <li><strong>Red Crabs and Palm Fringed Beach:</strong> A unique natural spectacle.</li>
+                            <li><strong>Red Crabs and Palm Fringed Beach:</strong> Witness thousands of tiny red crabs scurrying across the golden sands, creating a vibrant spectacle. The tranquil environment and lush greenery make it perfect for nature photography and peaceful strolls.</li>
+                            <li><strong>Boat Rides:</strong> Local boats often take visitors across the river estuary for a closer look at the unique ecosystem.</li>
                         </ul>
+                        <p class="address-info"><em>Location:</em> Baleswar district, Odisha, approximately 8 km from Digha Railway Station.</p>
                         <img src="talsari_attraction1.jpg" alt="Talsari Beach with Red Crabs">
                     </div>
 
                     <div class="location-item">
                         <h3>Digha Mohona</h3>
-                        <p>The confluence point of the Champa River and the Bay of Bengal, offering a vibrant fish market and scenic views.</p>
+                        <p>Digha Mohona is the captivating confluence point where the Champa River merges with the mighty Bay of Bengal. This spot is not just scenic but also a bustling hub of local life, particularly known for its vibrant fish market.</p>
                         <h4>Attraction:</h4>
                         <ul>
-                            <li><strong>Fish Market and Estuary View:</strong> Experience local life and enjoy fresh seafood.</li>
+                            <li><strong>Fish Market and Estuary View:</strong> Experience the lively atmosphere of the wholesale fish market where fresh catches are brought in daily. It's a great place to observe local fishing culture and sample fresh seafood. The estuary itself provides picturesque views, especially during sunrise.</li>
                         </ul>
+                        <p class="address-info"><em>Location:</em> Digha Mohana Rd, Atili, Begundiha, Digha, West Bengal 721441. (Near the eastern end of Old Digha beach).</p>
                         <img src="digha_mohona1.jpg" alt="Digha Mohona Fish Market">
                     </div>
 
                     <div class="location-item">
                         <h3>Tajpur</h3>
-                        <p>An emerging beach destination known for its tranquility, dense casuarina groves, and thousands of red crabs.</p>
+                        <p>An emerging and relatively untouched beach destination, Tajpur is known for its remarkable tranquility, dense casuarina groves, and the fascinating sight of thousands of red crabs that carpet the beach during low tide. It offers a more secluded and peaceful alternative to the busier Digha beaches.</p>
                         <h4>Attraction:</h4>
                         <ul>
-                            <li><strong>Red Crab Beach and Serene Environment:</strong> Perfect for a quiet retreat.</li>
+                            <li><strong>Red Crab Beach and Serene Environment:</strong> The major draw is the pristine beach teeming with red crabs, offering a unique natural spectacle. It's ideal for those seeking solitude, long walks, and reconnecting with nature.</li>
+                            <li><strong>Para-sailing and Water Sports:</strong> As it's developing, some water sports activities like para-sailing are becoming available.</li>
                         </ul>
+                        <p class="address-info"><em>Location:</em> Approximately 17 km from Digha, Purba Medinipur, West Bengal. It's located on the Digha-Contai Road.</p>
                         <img src="tajpur1.jpg" alt="Tajpur Beach Red Crabs">
                     </div>
 
                     <div class="location-item">
                         <h3>Digha Jagannath Mandir</h3>
-                        <p>A newly built replica of the Puri Jagannath Temple, offering spiritual solace and architectural beauty.</p>
+                        <p>This newly constructed temple is a significant spiritual landmark in Digha, designed as a replica of the famous Jagannath Temple in Puri, Odisha. It aims to provide spiritual solace and showcase magnificent architectural beauty.</p>
                         <h4>Attraction:</h4>
                         <ul>
-                            <li><strong>Spiritual Shrine and Architecture:</strong> A significant religious landmark.</li>
+                            <li><strong>Spiritual Shrine and Architecture:</strong> A place of worship for devotees of Lord Jagannath, Subhadra, and Balabhadra. The temple's grand architecture is also a major draw, offering a glimpse of traditional Kalinga style.</li>
                         </ul>
+                        <p class="address-info"><em>Location:</em> Shankar Mandal Road, New Digha Sea Beach Road, Digha New Township, West Bengal 721463 (Currently on Digha Marine Drive Road, near Nyaykali Kali Temple Road, is also mentioned).</p>
                         <img src="digha_jagannath_mandir1.jpg" alt="Digha Jagannath Mandir">
                     </div>
 
                     <div class="location-item">
                         <h3>Amaravati Park</h3>
-                        <p>A well-maintained park in New Digha with a toy train, boating facilities, and lush greenery, popular among families.</p>
+                        <p>Amaravati Park, located in New Digha, is a well-maintained and family-friendly park offering a refreshing green space. It's popular for its recreational facilities and serene environment, making it a great place to unwind after a day at the beach.</p>
                         <h4>Attraction:</h4>
                         <ul>
-                            <li><strong>Boating, Toy Train, and Greenery:</strong> Family-friendly entertainment.</li>
+                            <li><strong>Boating:</strong> Enjoy pleasant boat rides on the park's central lake.</li>
+                            <li><strong>Toy Train:</strong> A charming toy train offers a fun ride around the park, especially loved by children.</li>
+                            <li><strong>Ropeway:</strong> Offers an aerial view of the park and its surroundings, providing a unique perspective.</li>
+                            <li><strong>Greenery and Play Areas:</strong> Lush lawns, colorful flowerbeds, and designated play areas make it ideal for family outings and relaxation.</li>
                         </ul>
+                        <p class="address-info"><em>Location:</em> JGF3+GC7, Unnamed Road, Chanpabani, New Digha, Digha, West Bengal 721428 (Near New Digha Beach).</p>
                         <img src="amravati_park1.jpg" alt="Amaravati Park Boating">
                     </div>
                 </div>
             </section>
 
             <div class="adsense-placeholder">
-                [Google AdSense Placeholder 2]
+                <h3>Advertisement</h3>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_PUBLISHER_ID"
+                     crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-YOUR_ADSENSE_PUBLISHER_ID"
+                     data-ad-slot="YOUR_AD_SLOT_ID_2"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
 
-            <section id="privacy" class="section">
-                <h3>Privacy Policy</h3>
-                <p>This website, Mydigha, is committed to protecting your privacy. We do not collect any personal information from our visitors. Any links to third-party websites are subject to their own privacy policies, which we encourage you to review.</p>
-            </section>
         </div>
 
         <div class="right-sidebar">
+            <div class="adsense-placeholder">
+                <h3>Advertisement</h3>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_PUBLISHER_ID"
+                     crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-YOUR_ADSENSE_PUBLISHER_ID"
+                     data-ad-slot="YOUR_AD_SLOT_ID_3"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
             <h3>Quick Links</h3>
             <ul>
                 <li><a href="hotel.html">Find Hotels</a></li>
                 <li><a href="bus_booking.html">Book Your Bus</a></li>
-                <li><a href="restaurant.html">Discover Restaurants</a></li>
-                <li><a href="attraction.html">View Attraction Map</a></li>
+                
+             <li><a href="attraction.html">View Attraction Map</a></li>
                 <li><a href="#locations">All Locations</a></li>
             </ul>
             <h3>Attraction Location Text</h3>
-            <p>Each attraction is easily accessible by local transport. You can find more detailed location information and maps on our <a href="attraction.html">Attraction Map page</a>.</p>
+            <p>Each attraction is easily accessible by local transport like auto-rickshaws, cycle-rickshaws, or local buses. For detailed routes and real-time navigation, you can find more information on our <a href="attraction.html">Attraction Map page</a>, which will soon feature interactive maps.</p>
 
             <div class="contact-form">
                  <a href="http://imdavid.in" target="_blank">Contact Us</a>
@@ -338,9 +446,14 @@
     </div>
 
     <footer>
+        <div class="footer-privacy-policy">
+            <h3>Privacy Policy</h3>
+            <p>This website, Mydigha, is committed to protecting your privacy. We do not collect any personal information from our visitors directly. Any links to third-party websites are subject to their own privacy policies, which we encourage you to review. We use Google AdSense to display advertisements, which may use cookies to serve ads based on your prior visits to this or other websites. You may opt out of personalized advertising by visiting Ads Settings. For more information on how Google uses data, please refer to <a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google's policy on Partner Sites</a>.</p>
+        </div>
         <p>&copy; 2025 Mydigha. All rights reserved.</p>
         <p>Website managed by Nexuzy Tech.</p>
-        <p>Support Mail: <a href="mailto:Mydigha@gmail.com">Mydigha@gmail.com</a></p>
+        <p>Support Mail: <a href="mailto:mydigha1@gmail.com">mydigha1@gmail.com</a></p>
+        <p>Make in india</p>
     </footer>
 </body>
 </html>
