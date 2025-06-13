@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update or Add Hotel – My Digha</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f0ff;
+      color: #003366;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #004c99;
+    }
+
+    form {
+      max-width: 650px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 76, 153, 0.3);
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .range-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .range-group input {
+      width: 100%;
+    }
+
+    button {
+      background-color: #0073e6;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #005bb5;
+    }
+
+    #successMessage {
+      display: none;
+      text-align: center;
+      color: green;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🏨 Add or Update Your Hotel – My Digha</h2>
+  <form id="hotelForm">
+    <label>Hotel Name *</label>
+    <input type="text" id="hotelName" required>
+
+    <label>Page Number *</label>
+    <input type="number" id="pageNumber" required>
+
+    <label>Hotel Address *</label>
+    <input type="text" id="hotelAddress" required>
+
+    <label>Mobile Number *</label>
+    <input type="text" id="mobileNumber" required>
+
+    <label>WhatsApp Number *</label>
+    <input type="text" id="whatsappNumber" required>
+
+    <label>Email *</label>
+    <input type="email" id="email" required>
+
+    <label>Hotel Description *</label>
+    <textarea id="description" required></textarea>
+
+    <label>Upload Hotel Image 1 *</label>
+    <input type="file" id="image1" accept="image/*" required>
+
+    <label>Upload Hotel Image 2 *</label>
+    <input type="file" id="image2" accept="image/*" required>
+
+    <label>AC Room Price Range (INR) *</label>
+    <div class="range-group">
+      <input type="number" id="acPriceFrom" placeholder="From ₹" required>
+      <input type="number" id="acPriceTo" placeholder="To ₹" required>
+    </div>
+
+    <label>Non-AC Room Price Range (INR) *</label>
+    <div class="range-group">
+      <input type="number" id="nonAcPriceFrom" placeholder="From ₹" required>
+      <input type="number" id="nonAcPriceTo" placeholder="To ₹" required>
+    </div>
+
+    <label>Reason for Update or Add *</label>
+    <textarea id="updateReason" placeholder="Why are you updating this listing?" required></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="successMessage">✅ Successfully Submitted! Your Hotel Update Will Be Processed Soon.</div>
+
+  <script>
+    const botToken = "7896996099:AAFYT0hGuvZw-dYbLoWQaq4H6Vz5mCxTEBE";
+    const chatId = "1884399160";
+
+    document.getElementById("hotelForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const hotelName = document.getElementById("hotelName").value;
+      const pageNumber = document.getElementById("pageNumber").value;
+      const hotelAddress = document.getElementById("hotelAddress").value;
+      const mobile = document.getElementById("mobileNumber").value;
+      const whatsapp = document.getElementById("whatsappNumber").value;
+      const email = document.getElementById("email").value;
+      const desc = document.getElementById("description").value;
+      const acFrom = document.getElementById("acPriceFrom").value;
+      const acTo = document.getElementById("acPriceTo").value;
+      const nonAcFrom = document.getElementById("nonAcPriceFrom").value;
+      const nonAcTo = document.getElementById("nonAcPriceTo").value;
+      const reason = document.getElementById("updateReason").value;
+      const image1 = document.getElementById("image1").files[0];
+      const image2 = document.getElementById("image2").files[0];
+
+      const message = `
+🔄 *Hotel Add/Update Request – My Digha*
+------------------------------------
+📄 *Page Number:* ${pageNumber}
+🏨 *Hotel Name:* ${hotelName}
+📬 *Address:* ${hotelAddress}
+📱 *Mobile:* ${mobile}
+📞 *WhatsApp:* ${whatsapp}
+✉️ *Email:* ${email}
+📝 *Description:* ${desc}
+💸 *AC Room Price:* ₹${acFrom} to ₹${acTo}
+💸 *Non-AC Room Price:* ₹${nonAcFrom} to ₹${nonAcTo}
+❓ *Reason for Update/Add:* ${reason}
+------------------------------------`;
+
+      // Send main message
+      await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message,
+          parse_mode: "Markdown"
+        })
+      });
+
+      // Send both images
+      async function sendImage(file) {
+        const formData = new FormData();
+        formData.append("chat_id", chatId);
+        formData.append("photo", file);
+
+        await fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+          method: "POST",
+          body: formData
+        });
+      }
+
+      await sendImage(image1);
+      await sendImage(image2);
+
+      document.getElementById("hotelForm").reset();
+      document.getElementById("successMessage").style.display = "block";
+
+      setTimeout(() => {
+        location.reload();
+      }, 6000);
+    });
+  </script>
+</body>
+</html>
