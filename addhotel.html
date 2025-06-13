@@ -1,28 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Add Your Hotel – My Digha</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #e0f0ff;
       color: #003366;
-      padding: 20px;
+      margin: 0;
+      padding: 10px;
     }
 
     h2 {
       text-align: center;
       color: #004c99;
+      margin-top: 20px;
+      margin-bottom: 20px;
     }
 
     form {
-      max-width: 600px;
-      margin: 0 auto;
       background: #ffffff;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0, 76, 153, 0.3);
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      box-sizing: border-box;
     }
 
     label {
@@ -33,30 +39,35 @@
 
     input, textarea {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-top: 5px;
       margin-bottom: 15px;
       border: 1px solid #ccc;
       border-radius: 5px;
+      box-sizing: border-box;
+      font-size: 16px;
     }
 
     .range-group {
       display: flex;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .range-group input {
-      width: 100%;
+      flex: 1;
+      min-width: 48%;
     }
 
     button {
       background-color: #0073e6;
       color: white;
-      padding: 12px;
+      padding: 14px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       width: 100%;
+      font-size: 16px;
     }
 
     button:hover {
@@ -70,45 +81,59 @@
       font-weight: bold;
       margin-top: 20px;
     }
+
+    @media screen and (max-width: 480px) {
+      form {
+        padding: 15px;
+      }
+
+      .range-group {
+        flex-direction: column;
+      }
+
+      .range-group input {
+        min-width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
   <h2>🛎️ Add Your Hotel – My Digha</h2>
   <form id="hotelForm">
     <label>Hotel Name *</label>
-    <input type="text" id="hotelName" required>
+    <input type="text" id="hotelName" required />
 
     <label>Hotel Address *</label>
-    <input type="text" id="hotelAddress" required>
+    <input type="text" id="hotelAddress" required />
 
     <label>Mobile Number *</label>
-    <input type="text" id="mobileNumber" required>
+    <input type="text" id="mobileNumber" required />
 
     <label>WhatsApp Number *</label>
-    <input type="text" id="whatsappNumber" required>
+    <input type="text" id="whatsappNumber" required />
 
     <label>Email *</label>
-    <input type="email" id="email" required>
+    <input type="email" id="email" required />
 
     <label>Hotel Description *</label>
     <textarea id="description" required></textarea>
 
     <label>Upload Hotel Image 1 *</label>
-    <input type="file" id="image1" accept="image/*" required>
+    <input type="file" id="image1" accept="image/*" required />
 
     <label>Upload Hotel Image 2 *</label>
-    <input type="file" id="image2" accept="image/*" required>
+    <input type="file" id="image2" accept="image/*" required />
 
     <label>AC Room Price Range (INR) *</label>
     <div class="range-group">
-      <input type="number" id="acPriceFrom" placeholder="From ₹" required>
-      <input type="number" id="acPriceTo" placeholder="To ₹" required>
+      <input type="number" id="acPriceFrom" placeholder="From ₹" required />
+      <input type="number" id="acPriceTo" placeholder="To ₹" required />
     </div>
 
     <label>Non-AC Room Price Range (INR) *</label>
     <div class="range-group">
-      <input type="number" id="nonAcPriceFrom" placeholder="From ₹" required>
-      <input type="number" id="nonAcPriceTo" placeholder="To ₹" required>
+      <input type="number" id="nonAcPriceFrom" placeholder="From ₹" required />
+      <input type="number" id="nonAcPriceTo" placeholder="To ₹" required />
     </div>
 
     <button type="submit">Submit</button>
@@ -160,7 +185,7 @@
         })
       });
 
-      // Function to upload images
+      // Send images
       async function sendImage(file) {
         const formData = new FormData();
         formData.append("chat_id", chatId);
@@ -174,12 +199,11 @@
       await sendImage(image1);
       await sendImage(image2);
 
+      // Show success message
       document.getElementById("hotelForm").reset();
       document.getElementById("successMessage").style.display = "block";
 
-      setTimeout(() => {
-        location.reload();
-      }, 6000);
+      setTimeout(() => location.reload(), 6000);
     });
   </script>
 </body>
