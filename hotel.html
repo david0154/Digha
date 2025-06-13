@@ -57,18 +57,28 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .hotel-listing {
+        /* Styling for the dynamically loaded hotel content */
+        #hotel-details-container {
             background-color: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 25px;
+            min-height: 300px; /* To prevent layout jumps when content loads */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
-        .hotel-listing h2 {
+        #hotel-details-container.loading {
+            color: #555;
+        }
+        #hotel-details-container h2 {
             color: #007BFF;
             margin-top: 0;
         }
-        .hotel-listing p {
+        #hotel-details-container p {
             margin: 5px 0;
         }
         .contact-info, .price-info, .address-info {
@@ -111,6 +121,54 @@
             align-items: center;
             justify-content: center;
         }
+
+        .navigation-controls {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .navigation-controls button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .navigation-controls button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        .navigation-controls button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #hotel-page-numbers {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #hotel-page-numbers a {
+            text-decoration: none;
+            color: #007BFF;
+            border: 1px solid #007BFF;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        #hotel-page-numbers a.active,
+        #hotel-page-numbers a:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+
         footer {
             background-color: #333;
             color: white;
@@ -176,12 +234,16 @@
             .hotel-photos img {
                 max-width: 100%; /* Stack images on small screens */
             }
+            .ad-container {
+                margin: 15px 0;
+            }
+            .navigation-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
             .footer-buttons a {
                 display: block;
                 margin-bottom: 10px;
-            }
-            .ad-container {
-                margin: 15px 0;
             }
         }
     </style>
@@ -214,67 +276,15 @@
             <p>Advertisement Top (AdSense)</p>
         </div>
 
-        <div class="hotel-listing">
-            <h2>Hotel Sea View</h2>
-            <p>A beautiful hotel offering stunning views of the sea, perfect for a relaxing getaway.</p>
-            <div class="address-info">
-                <p><strong>Address:</strong> Plot No. 123, Old Digha Main Road, Near Sea Beach, Digha, Purba Medinipur, West Bengal - 721428</p>
-            </div>
-            <div class="contact-info">
-                <p><strong>Mobile Number:</strong> <a href="tel:+919876512345">+91 98765 12345</a></p>
-                <p><strong>WhatsApp Number:</strong> <a href="https://wa.me/919876512345" target="_blank">+91 98765 12345</a></p>
-                <p><strong>Email:</strong> <a href="mailto:seaview@example.com">seaview@example.com</a></p>
-            </div>
-            <div class="price-info">
-                <p><strong>AC Room Price Range:</strong> ₹1500 - ₹2500 per night</p>
-                <p><strong>Non-AC Room Price Range:</strong> ₹800 - ₹1200 per night</p>
-            </div>
-            <div class="hotel-photos">
-                <img src="https://via.placeholder.com/600x400?text=Hotel+Sea+View+1" alt="Hotel Sea View Photo 1">
-                <img src="https://via.placeholder.com/600x400?text=Hotel+Sea+View+2" alt="Hotel Sea View Photo 2">
-            </div>
+        <div id="hotel-details-container">
+            <p class="loading-message">Loading hotel details...</p>
         </div>
 
-        <div class="hotel-listing">
-            <h2>Digha Grand Resort</h2>
-            <p>Experience luxury and comfort at Digha Grand Resort, featuring modern amenities and excellent service.</p>
-            <div class="address-info">
-                <p><strong>Address:</strong> New Digha Road, Beside Digha Science Centre, Digha, Purba Medinipur, West Bengal - 721428</p>
-            </div>
-            <div class="contact-info">
-                <p><strong>Mobile Number:</strong> <a href="tel:+917777788888">+91 77777 88888</a></p>
-                <p><strong>WhatsApp Number:</strong> <a href="https://wa.me/917777788888" target="_blank">+91 77777 88888</a></p>
-                <p><strong>Email:</strong> <a href="mailto:grandresort@example.com">grandresort@example.com</a></p>
-            </div>
-            <div class="price-info">
-                <p><strong>AC Room Price Range:</strong> ₹3000 - ₹5000 per night</p>
-                <p><strong>Non-AC Room Price Range:</strong> ₹1800 - ₹2500 per night</p>
-            </div>
-            <div class="hotel-photos">
-                <img src="https://via.placeholder.com/600x400?text=Digha+Grand+Resort+1" alt="Digha Grand Resort Photo 1">
-                <img src="https://via.placeholder.com/600x400?text=Digha+Grand+Resort+2" alt="Digha Grand Resort Photo 2">
-            </div>
-        </div>
-
-        <div class="hotel-listing">
-            <h2>Coastal Breeze Inn</h2>
-            <p>A cozy and budget-friendly option, perfect for travelers looking for a comfortable stay near the beach.</p>
-            <div class="address-info">
-                <p><strong>Address:</strong> Sea Hawk Road, Near Digha Mohana, Digha, Purba Medinipur, West Bengal - 721428</p>
-            </div>
-            <div class="contact-info">
-                <p><strong>Mobile Number:</strong> <a href="tel:+919123456789">+91 91234 56789</a></p>
-                <p><strong>WhatsApp Number:</strong> <a href="https://wa.me/919123456789" target="_blank">+91 91234 56789</a></p>
-                <p><strong>Email:</strong> <a href="mailto:coastalbreeze@example.com">coastalbreeze@example.com</a></p>
-            </div>
-            <div class="price-info">
-                <p><strong>AC Room Price Range:</strong> ₹1000 - ₹1800 per night</p>
-                <p><strong>Non-AC Room Price Range:</strong> ₹600 - ₹900 per night</p>
-            </div>
-            <div class="hotel-photos">
-                <img src="https://via.placeholder.com/600x400?text=Coastal+Breeze+Inn+1" alt="Coastal Breeze Inn Photo 1">
-                <img src="https://via.placeholder.com/600x400?text=Coastal+Breeze+Inn+2" alt="Coastal Breeze Inn Photo 2">
-            </div>
+        <div class="navigation-controls">
+            <button id="prevBtn">Previous Hotel</button>
+            <div id="hotel-page-numbers">
+                </div>
+            <button id="nextBtn">Next Hotel</button>
         </div>
 
         <div class="ad-container">
@@ -313,31 +323,146 @@
     </footer>
 
     <script>
+        const hotelDetailsContainer = document.getElementById('hotel-details-container');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const hotelPageNumbers = document.getElementById('hotel-page-numbers');
+
+        // IMPORTANT: Manually update this to the total number of hotel.html files you have!
+        const totalHotels = 3; // Example: if you have 1.html, 2.html, 3.html
+
+        let currentHotelId = 1;
+
+        // Function to load hotel details from a file
+        async function loadHotel(id) {
+            if (id < 1 || id > totalHotels) {
+                // Invalid hotel ID, maybe show an error or default to the first hotel
+                console.warn(`Hotel ID ${id} is out of range.`);
+                return;
+            }
+
+            currentHotelId = id;
+            hotelDetailsContainer.innerHTML = '<p class="loading-message">Loading hotel details...</p>';
+            hotelDetailsContainer.classList.add('loading'); // Add loading indicator
+
+            try {
+                const response = await fetch(`hotel/${id}.html`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const htmlContent = await response.text();
+                hotelDetailsContainer.innerHTML = htmlContent;
+                updateURL(id); // Update URL in browser's address bar
+            } catch (error) {
+                console.error("Failed to load hotel details:", error);
+                hotelDetailsContainer.innerHTML = '<p style="color: red;">Error loading hotel details. Please try again later.</p>';
+            } finally {
+                hotelDetailsContainer.classList.remove('loading'); // Remove loading indicator
+                updateNavigationButtons();
+                highlightCurrentPageNumber();
+            }
+        }
+
+        // Update URL without reloading the page
+        function updateURL(id) {
+            history.pushState({ hotelId: id }, `Hotel ${id}`, `?hotel=${id}`);
+        }
+
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', (event) => {
+            if (event.state && event.state.hotelId) {
+                loadHotel(event.state.hotelId);
+            } else {
+                // Default to hotel 1 if no state is found (e.g., initial load or direct access without ID)
+                loadHotel(1);
+            }
+        });
+
+        // Update navigation buttons (Previous/Next) status
+        function updateNavigationButtons() {
+            prevBtn.disabled = (currentHotelId === 1);
+            nextBtn.disabled = (currentHotelId === totalHotels);
+        }
+
+        // Generate clickable page numbers
+        function generatePageNumbers() {
+            hotelPageNumbers.innerHTML = ''; // Clear existing numbers
+            for (let i = 1; i <= totalHotels; i++) {
+                const link = document.createElement('a');
+                link.href = `#`; // Use # for client-side navigation
+                link.textContent = i;
+                link.dataset.hotelId = i; // Store hotel ID in data attribute
+                link.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent default link behavior (page jump)
+                    loadHotel(parseInt(e.target.dataset.hotelId));
+                });
+                hotelPageNumbers.appendChild(link);
+            }
+        }
+
+        // Highlight the currently active page number
+        function highlightCurrentPageNumber() {
+            const pageLinks = hotelPageNumbers.querySelectorAll('a');
+            pageLinks.forEach(link => {
+                if (parseInt(link.dataset.hotelId) === currentHotelId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+
+        // --- Event Listeners for Navigation ---
+        prevBtn.addEventListener('click', () => {
+            if (currentHotelId > 1) {
+                loadHotel(currentHotelId - 1);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentHotelId < totalHotels) {
+                loadHotel(currentHotelId + 1);
+            }
+        });
+
+        // --- Initial Load Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get hotel ID from URL if present (e.g., index.html?hotel=2)
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialHotelId = parseInt(urlParams.get('hotel')) || 1;
+
+            currentHotelId = initialHotelId; // Set currentHotelId based on URL or default to 1
+
+            generatePageNumbers(); // Generate the 1 | 2 | 3... links
+            loadHotel(currentHotelId); // Load the initial hotel
+        });
+
+
+        // --- Footer Date and Holidays Logic ---
         function updateDateTime() {
             const now = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('en-IN', options); // Using en-IN for Indian locale
+            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('en-IN', options);
         }
 
         function fetchEventsAndHolidays() {
             const now = new Date();
             const currentYear = now.getFullYear();
-            const today = new Date(currentYear, now.getMonth(), now.getDate()); // Date object for comparison without time
+            const today = new Date(currentYear, now.getMonth(), now.getDate());
 
             const holidays = [
-                // Fixed-date holidays
                 { name: "Independence Day", month: 7, day: 15, tentative: false }, // August is month 7
                 { name: "Gandhi Jayanti", month: 9, day: 2, tentative: false },   // October is month 9
                 { name: "Christmas", month: 11, day: 25, tentative: false },     // December is month 11
 
-                // Variable-date holidays (Dates for 2025 and 2026 pre-populated)
                 { name: "Bakrid (Eid al-Adha)", dates: {
                     2025: { month: 5, day: 17 }, // June 17, 2025
-                    2026: { month: 4, day: 6 }   // May 26, 2026 (approx) - usually 10-11 days earlier
+                    2026: { month: 4, day: 6 }   // May 26, 2026 (approx)
                 }, tentative: true },
                 { name: "Muharram", dates: {
                     2025: { month: 6, day: 6 }, // July 6, 2025
-                    2026: { month: 5, day: 26 } // June 25, 2026 (approx) - usually 10-11 days earlier
+                    2026: { month: 5, day: 26 } // June 25, 2026 (approx)
                 }, tentative: true },
                 { name: "Janmashtami", dates: {
                     2025: { month: 7, day: 18 }, // August 18, 2025
@@ -362,72 +487,78 @@
             ];
 
             const eventsList = document.getElementById('eventsAndHolidays');
-            eventsList.innerHTML = ''; // Clear previous entries
+            eventsList.innerHTML = '';
 
-            holidays.sort((a, b) => {
+            // Filter out events whose dates are not defined for the current or next year
+            const availableHolidays = holidays.filter(event => {
+                if (event.fixed) return true;
+                return event.dates[currentYear] || event.dates[currentYear + 1];
+            });
+
+
+            availableHolidays.sort((a, b) => {
                 let dateA, dateB;
                 let yearA = currentYear, yearB = currentYear;
 
-                if (a.fixed) {
-                    dateA = new Date(yearA, a.month, a.day);
-                    if (dateA < today) dateA.setFullYear(yearA + 1); // If past, show next year
-                } else {
-                    dateA = new Date(yearA, a.dates[yearA].month, a.dates[yearA].day);
-                    if (dateA < today && a.dates[yearA + 1]) {
-                        dateA = new Date(yearA + 1, a.dates[yearA + 1].month, a.dates[yearA + 1].day);
-                        yearA = yearA + 1;
+                const getDateForEvent = (event, year) => {
+                    if (event.fixed) {
+                        return new Date(year, event.month, event.day);
+                    } else {
+                        return event.dates[year] ? new Date(year, event.dates[year].month, event.dates[year].day) : null;
                     }
+                };
+
+                dateA = getDateForEvent(a, currentYear);
+                if (dateA && dateA < today && a.dates && a.dates[currentYear + 1]) {
+                    dateA = getDateForEvent(a, currentYear + 1);
+                } else if (!dateA && a.dates && a.dates[currentYear + 1]) {
+                    dateA = getDateForEvent(a, currentYear + 1);
                 }
 
-                if (b.fixed) {
-                    dateB = new Date(yearB, b.month, b.day);
-                    if (dateB < today) dateB.setFullYear(yearB + 1); // If past, show next year
-                } else {
-                    dateB = new Date(yearB, b.dates[yearB].month, b.dates[yearB].day);
-                    if (dateB < today && b.dates[yearB + 1]) {
-                        dateB = new Date(yearB + 1, b.dates[yearB + 1].month, b.dates[yearB + 1].day);
-                        yearB = yearB + 1;
-                    }
+                dateB = getDateForEvent(b, currentYear);
+                if (dateB && dateB < today && b.dates && b.dates[currentYear + 1]) {
+                    dateB = getDateForEvent(b, currentYear + 1);
+                } else if (!dateB && b.dates && b.dates[currentYear + 1]) {
+                    dateB = getDateForEvent(b, currentYear + 1);
                 }
-                return dateA - dateB; // Sort by date
+
+                if (!dateA && !dateB) return 0;
+                if (!dateA) return 1;
+                if (!dateB) return -1;
+                return dateA - dateB;
             });
 
-            holidays.forEach(event => {
+            availableHolidays.forEach(event => {
                 let displayYear = currentYear;
                 let month, day;
                 let isTentative = event.tentative;
+                let eventDateActual;
 
                 if (event.fixed) {
                     month = event.month;
                     day = event.day;
-                    let eventDate = new Date(currentYear, month, day);
-                    if (eventDate < today) {
-                        displayYear = currentYear + 1; // Show next year's date if current year's has passed
+                    eventDateActual = new Date(currentYear, month, day);
+                    if (eventDateActual < today) {
+                        displayYear = currentYear + 1;
                     }
                 } else {
-                    // For variable holidays, check if current year's date is passed
-                    let eventDateForCurrentYear = new Date(currentYear, event.dates[currentYear].month, event.dates[currentYear].day);
-                    if (eventDateForCurrentYear < today && event.dates[currentYear + 1]) {
-                        displayYear = currentYear + 1; // Use next year's date
+                    eventDateActual = event.dates[currentYear] ? new Date(currentYear, event.dates[currentYear].month, event.dates[currentYear].day) : null;
+                    if (eventDateActual && eventDateActual < today && event.dates[currentYear + 1]) {
+                        displayYear = currentYear + 1;
                         month = event.dates[displayYear].month;
                         day = event.dates[displayYear].day;
                     } else if (event.dates[currentYear]) {
                         month = event.dates[currentYear].month;
                         day = event.dates[currentYear].day;
-                    } else {
-                         // Fallback if current year's date isn't defined, go to next available year
+                    } else if (event.dates[currentYear + 1]) { // Fallback if current year's date isn't explicitly defined, try next year
                         displayYear = currentYear + 1;
-                        if(event.dates[displayYear]) {
-                            month = event.dates[displayYear].month;
-                            day = event.dates[displayYear].day;
-                        } else {
-                            // If no next year defined, just skip or handle as error
-                            return;
-                        }
+                        month = event.dates[displayYear].month;
+                        day = event.dates[displayYear].day;
+                    } else {
+                        return; // Skip if no date is found for current or next year
                     }
                 }
 
-                // Create a temporary date object to get the month name
                 const tempDate = new Date(displayYear, month, day);
                 const monthName = tempDate.toLocaleString('en-IN', { month: 'long' });
 
@@ -437,13 +568,8 @@
             });
         }
 
-        setInterval(updateDateTime, 1000); // Update date and time every second
-        updateDateTime(); // Initial call to display immediately
-
-        // Fetch events and holidays daily or upon page load.
-        // For simplicity, we call it once on load. If you want it to check more frequently
-        // (e.g., in case a holiday date passes while the page is open), you could use setInterval,
-        // but for a static page, refreshing the page is usually enough.
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
         fetchEventsAndHolidays();
     </script>
 
