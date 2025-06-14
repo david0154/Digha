@@ -399,19 +399,7 @@
                 });
                 hotelPageNumbers.appendChild(link);
             }
-        }
 
-        // Highlight the currently active page number
-        function highlightCurrentPageNumber() {
-            const pageLinks = hotelPageNumbers.querySelectorAll('a');
-            pageLinks.forEach(link => {
-                if (parseInt(link.dataset.hotelId) === currentHotelId) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-        }
 
 
         // --- Event Listeners for Navigation ---
