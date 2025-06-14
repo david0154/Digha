@@ -2,86 +2,95 @@
 <html>
 <head>
   <title>Hotels – My Digha</title>
+
+  <!-- ✅ REQUIRED: Firebase core SDK (missing before) -->
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
   
+  <!-- Other Firebase services -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+
+  <!-- Your Firebase config -->
   <script src="hotel/firebase-config.js"></script>
-  <script src="hotel/public.js"></script>
+
   <style>
     body {
-      font-family: Arial, sans-serif; /* Add a fallback font */
+      font-family: Arial, sans-serif;
       background: #fffaf2;
       text-align: center;
       padding: 20px;
     }
     img {
       width: 250px;
-      height: auto; /* Maintain aspect ratio */
+      height: auto;
       margin: 5px;
       border-radius: 10px;
-      object-fit: cover; /* Ensures images fill their space nicely */
+      object-fit: cover;
     }
-    .button-container { /* New container for buttons */
+    .button-container {
       margin-top: 20px;
-      text-align: center; /* Center the buttons within their container */
+      text-align: center;
     }
     button {
-      background-color: #007bff; /* Example Digha blue - you can adjust this hex code */
+      background-color: #007bff;
       color: white;
       border: none;
-      padding: 10px 20px; /* More padding for better feel */
+      padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
-      border-radius: 5px; /* Slightly rounded corners for buttons */
-      margin: 0 10px; /* Margin between buttons */
-      transition: background-color 0.3s ease; /* Smooth hover effect */
+      border-radius: 5px;
+      margin: 0 10px;
+      transition: background-color 0.3s ease;
     }
     button:hover {
-      background-color: #0056b3; /* Darker shade on hover */
+      background-color: #0056b3;
     }
     #hotelDisplay {
-      margin-bottom: 20px; /* Space between content and buttons */
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
   <h2>Welcome to My Digha Hotels</h2>
-  <div id="hotelDisplay"></div>
-  <div class="button-container"> <button onclick="prevHotel()">Previous</button>
+  <div id="hotelDisplay">Loading...</div>
+  <div class="button-container">
+    <button onclick="prevHotel()">Previous</button>
     <button onclick="nextHotel()">Next</button>
   </div>
 
   <script>
-    let hotels = [], currentIndex = 0;
+    // ✅ Initialize services from firebase-config.js
+    const db = firebase.firestore();
+
+    let hotels = [];
+    let currentIndex = 0;
 
     async function fetchHotels() {
       try {
         const snapshot = await db.collection("hotels").get();
         if (snapshot.empty) {
           console.log("No hotel data found in Firestore.");
-          document.getElementById("hotelDisplay").innerHTML = "<p>No hotels found. Please add data to your 'hotels' collection in Firestore.</p>";
+          document.getElementById("hotelDisplay").innerHTML =
+            "<p>No hotels found. Please add data to your 'hotels' collection in Firestore.</p>";
           return;
         }
         hotels = snapshot.docs.map(doc => doc.data());
         showHotel(0);
       } catch (error) {
         console.error("Error fetching hotels:", error);
-        document.getElementById("hotelDisplay").innerHTML = `<p>Error loading hotels: ${error.message}. Please check your Firebase configuration and security rules.</p>`;
+        document.getElementById("hotelDisplay").innerHTML =
+          `<p>Error loading hotels: ${error.message}. Please check your Firebase configuration and security rules.</p>`;
       }
     }
 
     function showHotel(index) {
       if (hotels.length === 0) {
-          document.getElementById("hotelDisplay").innerHTML = "<p>No hotels available to display.</p>";
-          return;
+        document.getElementById("hotelDisplay").innerHTML = "<p>No hotels available to display.</p>";
+        return;
       }
-      // Ensure index is within bounds, especially if navigation goes out of sync
-      if (index < 0) currentIndex = 0;
-      else if (index >= hotels.length) currentIndex = hotels.length - 1;
-      else currentIndex = index;
-
-      const h = hotels[currentIndex]; // Use currentIndex for consistency
+      currentIndex = Math.max(0, Math.min(index, hotels.length - 1));
+      const h = hotels[currentIndex];
       const container = document.getElementById("hotelDisplay");
       container.innerHTML = `
         <h3>${h.name || 'Hotel Name N/A'}</h3>
@@ -99,15 +108,13 @@
 
     function nextHotel() {
       if (currentIndex < hotels.length - 1) {
-        currentIndex++;
-        showHotel(currentIndex);
+        showHotel(currentIndex + 1);
       }
     }
 
     function prevHotel() {
       if (currentIndex > 0) {
-        currentIndex--;
-        showHotel(currentIndex);
+        showHotel(currentIndex - 1);
       }
     }
 
