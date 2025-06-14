@@ -1,33 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Digha Hotels</title>
+  <title>Hotels – My Digha</title>
+
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-  <script src="hotel/firebase-config.js"></script>
-  <script src="hotel/public.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
+
   <style>
     body {
-      font-family: Arial;
-      background: #f0f8ff;
+      font-family: Arial, sans-serif;
+      background: #fffaf2;
+      padding: 20px;
+      margin: 0;
       text-align: center;
     }
-    img {
-      border-radius: 10px;
-      margin: 10px;
+
+    h2 {
+      color: #004c99;
     }
-    button {
-      padding: 10px;
-      margin: 10px;
+
+    #hotelList {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .hotel-card {
+      background: #f0f8ff;
+      border: 2px solid #004c99;
+      border-radius: 10px;
+      padding: 15px;
+      width: 300px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    .hotel-card h3 {
+      color: #004c99;
+      margin-bottom: 5px;
+    }
+
+    .hotel-card p {
+      margin: 4px 0;
+      font-size: 14px;
+    }
+
+    .hotel-card img {
+      width: 100%;
+      height: auto;
+      margin-top: 10px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .loading {
+      color: #555;
+      font-size: 16px;
+    }
+
+    .reload-btn {
+      margin-top: 20px;
+      background-color: #004c99;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .reload-btn:hover {
+      background-color: #003366;
     }
   </style>
 </head>
 <body>
-  <h2>Welcome to My Digha Hotels</h2>
-  <div id="hotelDisplay">Loading...</div>
-  <div>
-    <button onclick="prevHotel()">Previous</button>
-    <button onclick="nextHotel()">Next</button>
-  </div>
+  <h2>My Digha Hotels</h2>
+  <p class="loading" id="loading">Loading hotels...</p>
+  <div id="hotelList"></div>
+  <button class="reload-btn" onclick="fetchHotels()">Reload Hotels</button>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB9SGeSzQSP63szOYyzEFCd9-f26KRNA5I",
+      authDomain: "dk-chats-2919c.firebaseapp.com",
+      databaseURL: "https://dk-chats-2919c-default-rtdb.firebaseio.com",
+      projectId: "dk-chats-2919c",
+      storageBucket: "dk-chats-2919c.appspot.com",
+      messagingSenderId: "620357656811",
+      appId: "1:620357656811:web:ee4ada3c2e8baa0d679eae",
+      measurementId: "G-XHS1E7PRKL"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    async function fetchHotels() {
+      const list = document.getElementById("hotelList");
+      const loadingText = document.getElementById("loading");
+      list.innerHTML = '';
+      loadingText.style.display = 'block';
+
+      try {
+        const snapshot = await db.collection("hotels").get();
+
+        if (snapshot.empty) {
+          loadingText.innerText = "No hotels found.";
+          return;
+        }
+
+        snapshot.forEach(doc => {
+          const h = doc.data();
+          const div = document.createElement("div");
+          div.className = "hotel-card";
+          div.innerHTML = `
+            <h3>${h.name || 'Hotel Name N/A'}</h3>
+            <p><strong>Address:</strong> ${h.address || 'N/A'}</p>
+            <p><strong>Mobile:</strong> ${h.mobile || 'N/A'}</p>
+            <p><strong>WhatsApp:</strong> ${h.whatsapp || 'N/A'}</p>
+            <p><strong>Email:</strong> ${h.email || 'N/A'}</p>
+            <p><strong>Price Range:</strong> ${h.price_range || 'N/A'}</p>
+            <p><strong>AC Room:</strong> ₹${h.ac_price || 'N/A'}</p>
+            <p><strong>Non-AC Room:</strong> ₹${h.non_ac_price || 'N/A'}</p>
+            ${h.image1 ? `<img src="${h.image1}" alt="Hotel Image 1">` : ''}
+            ${h.image2 ? `<img src="${h.image2}" alt="Hotel Image 2">` : ''}
+          `;
+          list.appendChild(div);
+        });
+
+        loadingText.style.display = 'none';
+      } catch (error) {
+        console.error("Error fetching hotels:", error);
+        loadingText.innerText = "Error loading hotel data.";
+      }
+    }
+
+    // Load hotels on page load
+    fetchHotels();
+  </script>
 </body>
 </html>
