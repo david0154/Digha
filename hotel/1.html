@@ -3,17 +3,15 @@
 <head>
   <title>Hotels – My Digha</title>
 
-  <!-- ✅ REQUIRED: Firebase core SDK (missing before) -->
+  <!-- ✅ Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-  
-  <!-- Other Firebase services -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
 
-  <!-- Your Firebase config -->
+  <!-- ✅ Firebase config -->
   <script src="hotel/firebase-config.js"></script>
- <script src="hotel/public.js"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -60,27 +58,26 @@
   </div>
 
   <script>
-    // ✅ Initialize services from firebase-config.js
-    const db = firebase.firestore();
-
+    // ✅ Use db from firebase-config.js (DO NOT reinitialize Firebase here)
     let hotels = [];
     let currentIndex = 0;
 
     async function fetchHotels() {
       try {
         const snapshot = await db.collection("hotels").get();
+
         if (snapshot.empty) {
-          console.log("No hotel data found in Firestore.");
           document.getElementById("hotelDisplay").innerHTML =
             "<p>No hotels found. Please add data to your 'hotels' collection in Firestore.</p>";
           return;
         }
+
         hotels = snapshot.docs.map(doc => doc.data());
         showHotel(0);
       } catch (error) {
         console.error("Error fetching hotels:", error);
         document.getElementById("hotelDisplay").innerHTML =
-          `<p>Error loading hotels: ${error.message}. Please check your Firebase configuration and security rules.</p>`;
+          `<p>Error loading hotels: ${error.message}. Please check your Firebase rules.</p>`;
       }
     }
 
@@ -89,9 +86,11 @@
         document.getElementById("hotelDisplay").innerHTML = "<p>No hotels available to display.</p>";
         return;
       }
+
       currentIndex = Math.max(0, Math.min(index, hotels.length - 1));
       const h = hotels[currentIndex];
       const container = document.getElementById("hotelDisplay");
+
       container.innerHTML = `
         <h3>${h.name || 'Hotel Name N/A'}</h3>
         <p>${h.address || 'Address N/A'}</p>
