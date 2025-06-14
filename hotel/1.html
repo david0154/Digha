@@ -6,41 +6,91 @@
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
   <script src="../firebase-config.js"></script>
   <style>
-    body { font-family: Arial; background: #fffaf2; text-align: center; padding: 20px; }
-    img { width: 250px; margin: 5px; border-radius: 10px; }
-    button { margin: 10px; padding: 10px; font-size: 16px; }
+    body {
+      font-family: Arial, sans-serif; /* Add a fallback font */
+      background: #fffaf2;
+      text-align: center;
+      padding: 20px;
+    }
+    img {
+      width: 250px;
+      height: auto; /* Maintain aspect ratio */
+      margin: 5px;
+      border-radius: 10px;
+      object-fit: cover; /* Ensures images fill their space nicely */
+    }
+    .button-container { /* New container for buttons */
+      margin-top: 20px;
+      text-align: center; /* Center the buttons within their container */
+    }
+    button {
+      background-color: #007bff; /* Example Digha blue - you can adjust this hex code */
+      color: white;
+      border: none;
+      padding: 10px 20px; /* More padding for better feel */
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px; /* Slightly rounded corners for buttons */
+      margin: 0 10px; /* Margin between buttons */
+      transition: background-color 0.3s ease; /* Smooth hover effect */
+    }
+    button:hover {
+      background-color: #0056b3; /* Darker shade on hover */
+    }
+    #hotelDisplay {
+      margin-bottom: 20px; /* Space between content and buttons */
+    }
   </style>
 </head>
 <body>
   <h2>Welcome to My Digha Hotels</h2>
   <div id="hotelDisplay"></div>
-  <button onclick="prevHotel()">Previous</button>
-  <button onclick="nextHotel()">Next</button>
+  <div class="button-container"> <button onclick="prevHotel()">Previous</button>
+    <button onclick="nextHotel()">Next</button>
+  </div>
 
   <script>
     let hotels = [], currentIndex = 0;
 
     async function fetchHotels() {
-      const snapshot = await db.collection("hotels").get();
-      hotels = snapshot.docs.map(doc => doc.data());
-      showHotel(0);
+      try {
+        const snapshot = await db.collection("hotels").get();
+        if (snapshot.empty) {
+          console.log("No hotel data found in Firestore.");
+          document.getElementById("hotelDisplay").innerHTML = "<p>No hotels found. Please add data to your 'hotels' collection in Firestore.</p>";
+          return;
+        }
+        hotels = snapshot.docs.map(doc => doc.data());
+        showHotel(0);
+      } catch (error) {
+        console.error("Error fetching hotels:", error);
+        document.getElementById("hotelDisplay").innerHTML = `<p>Error loading hotels: ${error.message}. Please check your Firebase configuration and security rules.</p>`;
+      }
     }
 
     function showHotel(index) {
-      if (hotels.length === 0) return;
-      const h = hotels[index];
+      if (hotels.length === 0) {
+          document.getElementById("hotelDisplay").innerHTML = "<p>No hotels available to display.</p>";
+          return;
+      }
+      // Ensure index is within bounds, especially if navigation goes out of sync
+      if (index < 0) currentIndex = 0;
+      else if (index >= hotels.length) currentIndex = hotels.length - 1;
+      else currentIndex = index;
+
+      const h = hotels[currentIndex]; // Use currentIndex for consistency
       const container = document.getElementById("hotelDisplay");
       container.innerHTML = `
-        <h3>${h.name}</h3>
-        <p>${h.address}</p>
+        <h3>${h.name || 'Hotel Name N/A'}</h3>
+        <p>${h.address || 'Address N/A'}</p>
         <p><b>Mobile:</b> ${h.mobile || 'N/A'}</p>
         <p><b>WhatsApp:</b> ${h.whatsapp || 'N/A'}</p>
         <p><b>Email:</b> ${h.email || 'N/A'}</p>
-        <p><b>Price Range:</b> ${h.price_range}</p>
-        <p><b>AC Room:</b> ${h.ac_price}</p>
-        <p><b>Non-AC Room:</b> ${h.non_ac_price}</p>
-        <img src="${h.image1}" alt="Hotel Photo 1">
-        <img src="${h.image2}" alt="Hotel Photo 2">
+        <p><b>Price Range:</b> ${h.price_range || 'N/A'}</p>
+        <p><b>AC Room:</b> ${h.ac_price || 'N/A'}</p>
+        <p><b>Non-AC Room:</b> ${h.non_ac_price || 'N/A'}</p>
+        ${h.image1 ? `<img src="${h.image1}" alt="Hotel Photo 1">` : ''}
+        ${h.image2 ? `<img src="${h.image2}" alt="Hotel Photo 2">` : ''}
       `;
     }
 
