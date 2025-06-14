@@ -1,0 +1,5 @@
+body { font-family: Arial; padding: 20px; background-color: #f9f9f9; }
+input, textarea { margin: 8px 0; padding: 6px; width: 280px; }
+button { padding: 8px 16px; margin: 10px; font-size: 16px; cursor: pointer; }
+.hotel-card, #hotelDisplay { background: #fff; padding: 15px; margin: 10px auto; max-width: 500px; border-radius: 10px; box-shadow: 0 2px 4px #ccc; }
+img { width: 200px; margin: 5px; border-radius: 10px; }
