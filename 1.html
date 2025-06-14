@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Digha Hotels</title>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eef7ff;
+      padding: 20px;
+      text-align: center;
+    }
+    .hotel-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hotel-card img {
+      width: 90%;
+      max-height: 250px;
+      object-fit: cover;
+      margin: 10px auto;
+      border-radius: 8px;
+    }
+    .button-container {
+      margin-top: 20px;
+    }
+    button {
+      background-color: #0056b3;
+      color: white;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00408d;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to My Digha Hotels</h1>
+  <div id="hotelDisplay">Loading hotels...</div>
+  <div class="button-container">
+    <button onclick="prevHotel()">Previous</button>
+    <button onclick="nextHotel()">Next</button>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB9SGeSzQSP63szOYyzEFCd9-f26KRNA5I",
+      authDomain: "dk-chats-2919c.firebaseapp.com",
+      projectId: "dk-chats-2919c",
+      storageBucket: "dk-chats-2919c.appspot.com",
+      messagingSenderId: "620357656811",
+      appId: "1:620357656811:web:ee4ada3c2e8baa0d679eae"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    let hotels = [];
+    let currentIndex = 0;
+
+    async function loadHotels() {
+      const list = document.getElementById("hotelDisplay");
+      list.innerHTML = "Loading hotels...";
+      try {
+        const snapshot = await db.collection("hotels").get();
+        hotels = snapshot.docs.map(doc => doc.data());
+        if (hotels.length > 0) {
+          showHotel(0);
+        } else {
+          list.innerHTML = "No hotels found.";
+        }
+      } catch (e) {
+        list.innerHTML = "Error loading hotels: " + e.message;
+      }
+    }
+
+    function showHotel(index) {
+      const h = hotels[index];
+      const html = `
+        <div class="hotel-card">
+          <h2>${h.name || "No Name"}</h2>
+          <p><b>Address:</b> ${h.address || "N/A"}</p>
+          <p><b>Mobile:</b> ${h.mobile || "N/A"}</p>
+          <p><b>WhatsApp:</b> ${h.whatsapp || "N/A"}</p>
+          <p><b>Email:</b> ${h.email || "N/A"}</p>
+          <p><b>AC Room Price:</b> ₹${h.ac_min_price || "-"} – ₹${h.ac_max_price || "-"}</p>
+          <p><b>Non-AC Room Price:</b> ₹${h.non_ac_min_price || "-"} – ₹${h.non_ac_max_price || "-"}</p>
+          ${h.image1 ? `<img src="${h.image1}" alt="Image 1">` : ""}
+          ${h.image2 ? `<img src="${h.image2}" alt="Image 2">` : ""}
+        </div>
+      `;
+      document.getElementById("hotelDisplay").innerHTML = html;
+    }
+
+    function nextHotel() {
+      if (currentIndex < hotels.length - 1) {
+        currentIndex++;
+        showHotel(currentIndex);
+      }
+    }
+
+    function prevHotel() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        showHotel(currentIndex);
+      }
+    }
+
+    loadHotels();
+  </script>
+</body>
+</html>
