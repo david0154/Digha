@@ -1,73 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Digha Hotels</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #fffaf2;
+      background-color: #eef7ff;
       padding: 20px;
       text-align: center;
     }
-
-    h2 {
-      color: #004c99;
-    }
-
     .hotel-card {
-      background: #e0f0ff;
-      border: 2px solid #004c99;
+      background: white;
       border-radius: 10px;
-      padding: 15px;
-      margin: 20px auto;
-      max-width: 500px;
-      text-align: left;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
-
     .hotel-card img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      margin-top: 10px;
+      width: 90%;
+      max-height: 250px;
+      object-fit: cover;
+      margin: 10px auto;
+      border-radius: 8px;
     }
-
     .button-container {
       margin-top: 20px;
     }
-
     button {
-      background-color: #004c99;
+      background-color: #0056b3;
       color: white;
-      border: none;
       padding: 10px 20px;
-      font-size: 16px;
+      margin: 10px;
+      border: none;
       border-radius: 5px;
-      margin: 0 10px;
+      font-size: 16px;
       cursor: pointer;
     }
-
     button:hover {
-      background-color: #003366;
-    }
-
-    #status {
-      color: #666;
-      margin-top: 10px;
+      background-color: #00408d;
     }
   </style>
 </head>
 <body>
-
-  <h2>Welcome to My Digha Hotels</h2>
-  <div id="status">Loading hotels...</div>
-  <div id="hotelList"></div>
-
+  <h1>Welcome to My Digha Hotels</h1>
+  <div id="hotelDisplay">Loading hotels...</div>
   <div class="button-container">
     <button onclick="prevHotel()">Previous</button>
     <button onclick="nextHotel()">Next</button>
@@ -90,53 +73,50 @@
     let currentIndex = 0;
 
     async function loadHotels() {
-      document.getElementById("status").innerText = "Loading hotels...";
+      const list = document.getElementById("hotelDisplay");
+      list.innerHTML = "Loading hotels...";
       try {
         const snapshot = await db.collection("hotels").get();
-        snapshot.forEach(doc => {
-          hotels.push(doc.data());
-        });
-
-        if (hotels.length === 0) {
-          document.getElementById("status").innerText = "No hotels found.";
-        } else {
-          document.getElementById("status").innerText = "";
+        hotels = snapshot.docs.map(doc => doc.data());
+        if (hotels.length > 0) {
           showHotel(0);
+        } else {
+          list.innerHTML = "No hotels found.";
         }
-      } catch (error) {
-        console.error(error);
-        document.getElementById("status").innerText = "Error loading hotels.";
+      } catch (e) {
+        list.innerHTML = "Error loading hotels: " + e.message;
       }
     }
 
     function showHotel(index) {
-      currentIndex = index;
       const h = hotels[index];
-      const div = document.getElementById("hotelList");
-      div.innerHTML = `
+      const html = `
         <div class="hotel-card">
-          <h3>${h.name || "Hotel Name"}</h3>
-          <p><strong>Address:</strong> ${h.address || "N/A"}</p>
-          <p><strong>Mobile:</strong> ${h.mobile || "N/A"}</p>
-          <p><strong>WhatsApp:</strong> ${h.whatsapp || "N/A"}</p>
-          <p><strong>Email:</strong> ${h.email || "N/A"}</p>
-          <p><strong>AC Room Price:</strong> ₹${h.ac_min_price || "N/A"} - ₹${h.ac_max_price || "N/A"}</p>
-          <p><strong>Non-AC Room Price:</strong> ₹${h.non_ac_min_price || "N/A"} - ₹${h.non_ac_max_price || "N/A"}</p>
-          ${h.image1 ? `<img src="${h.image1}" alt="Hotel Image 1">` : ""}
-          ${h.image2 ? `<img src="${h.image2}" alt="Hotel Image 2">` : ""}
+          <h2>${h.name || "No Name"}</h2>
+          <p><b>Address:</b> ${h.address || "N/A"}</p>
+          <p><b>Mobile:</b> ${h.mobile || "N/A"}</p>
+          <p><b>WhatsApp:</b> ${h.whatsapp || "N/A"}</p>
+          <p><b>Email:</b> ${h.email || "N/A"}</p>
+          <p><b>AC Room Price:</b> ₹${h.ac_min_price || "-"} – ₹${h.ac_max_price || "-"}</p>
+          <p><b>Non-AC Room Price:</b> ₹${h.non_ac_min_price || "-"} – ₹${h.non_ac_max_price || "-"}</p>
+          ${h.image1 ? `<img src="${h.image1}" alt="Image 1">` : ""}
+          ${h.image2 ? `<img src="${h.image2}" alt="Image 2">` : ""}
         </div>
       `;
+      document.getElementById("hotelDisplay").innerHTML = html;
     }
 
     function nextHotel() {
       if (currentIndex < hotels.length - 1) {
-        showHotel(currentIndex + 1);
+        currentIndex++;
+        showHotel(currentIndex);
       }
     }
 
     function prevHotel() {
       if (currentIndex > 0) {
-        showHotel(currentIndex - 1);
+        currentIndex--;
+        showHotel(currentIndex);
       }
     }
 
