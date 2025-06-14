@@ -1,4 +1,4 @@
-// Replace with your Firebase project config
+// hotel/firebase-config.js
 const firebaseConfig = {
   apiKey: "AIzaSyB9SGeSzQSP63szOYyzEFCd9-f26KRNA5I",
   authDomain: "dk-chats-2919c.firebaseapp.com",
@@ -12,5 +12,3 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-const storage = firebase.storage();
-const auth = firebase.auth();
