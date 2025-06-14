@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>My Digha Hotels</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
@@ -119,9 +120,8 @@
           <p><strong>Mobile:</strong> ${h.mobile || "N/A"}</p>
           <p><strong>WhatsApp:</strong> ${h.whatsapp || "N/A"}</p>
           <p><strong>Email:</strong> ${h.email || "N/A"}</p>
-          <p><strong>Price Range:</strong> ${h.price_range || "N/A"}</p>
-          <p><strong>AC Price:</strong> ₹${h.ac_price || "N/A"}</p>
-          <p><strong>Non-AC Price:</strong> ₹${h.non_ac_price || "N/A"}</p>
+          <p><strong>AC Room Price:</strong> ₹${h.ac_min_price || "N/A"} - ₹${h.ac_max_price || "N/A"}</p>
+          <p><strong>Non-AC Room Price:</strong> ₹${h.non_ac_min_price || "N/A"} - ₹${h.non_ac_max_price || "N/A"}</p>
           ${h.image1 ? `<img src="${h.image1}" alt="Hotel Image 1">` : ""}
           ${h.image2 ? `<img src="${h.image2}" alt="Hotel Image 2">` : ""}
         </div>
