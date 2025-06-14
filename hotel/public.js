@@ -8,47 +8,44 @@ async function fetchHotels() {
     if (snapshot.empty) {
       console.log("No hotel data found in Firestore.");
       document.getElementById("hotelDisplay").innerHTML = "<p>No hotels found. Please add hotel documents to your 'hotels' collection.</p>";
-      document.querySelector('button[onclick="prevHotel()"]').disabled = true;
-      document.querySelector('button[onclick="nextHotel()"]').disabled = true;
+      disableNavigationButtons();
       return;
     }
 
-    hotels = snapshot.docs.map(doc => doc.data());
+    // Include document ID (hotelId) using doc.id
+    hotels = snapshot.docs.map(doc => ({
+      id: doc.id,      // This is the hotel ID (document ID)
+      ...doc.data()    // Merge all hotel fields
+    }));
+
     currentIndex = 0;
     showHotel(currentIndex);
-
-    document.querySelector('button[onclick="prevHotel()"]').disabled = false;
-    document.querySelector('button[onclick="nextHotel()"]').disabled = false;
+    enableNavigationButtons();
 
   } catch (error) {
     console.error("Error fetching hotels:", error);
     document.getElementById("hotelDisplay").innerHTML = `<p>Error loading hotels: ${error.message}</p>`;
-    document.querySelector('button[onclick="prevHotel()"]').disabled = true;
-    document.querySelector('button[onclick="nextHotel()"]').disabled = true;
+    disableNavigationButtons();
   }
 }
 
 function showHotel(indexToShow) {
   if (hotels.length === 0) {
     document.getElementById("hotelDisplay").innerHTML = "<p>No hotels available to display.</p>";
-    document.querySelector('button[onclick="prevHotel()"]').disabled = true;
-    document.querySelector('button[onclick="nextHotel()"]').disabled = true;
+    disableNavigationButtons();
     return;
   }
 
-  if (indexToShow < 0) {
-    currentIndex = 0;
-  } else if (indexToShow >= hotels.length) {
-    currentIndex = hotels.length - 1;
-  } else {
-    currentIndex = indexToShow;
-  }
+  if (indexToShow < 0) currentIndex = 0;
+  else if (indexToShow >= hotels.length) currentIndex = hotels.length - 1;
+  else currentIndex = indexToShow;
 
   const h = hotels[currentIndex];
   const container = document.getElementById("hotelDisplay");
 
   container.innerHTML = `
     <h3>${h.name || 'Hotel Name N/A'}</h3>
+    <p><b>hotelid:</b> ${h.id}</p>
     <p>${h.address || 'Address N/A'}</p>
     <p><b>Mobile:</b> ${h.mobile || 'N/A'}</p>
     <p><b>WhatsApp:</b> ${h.whatsapp || 'N/A'}</p>
@@ -75,4 +72,15 @@ function prevHotel() {
   }
 }
 
+function disableNavigationButtons() {
+  document.querySelector('button[onclick="prevHotel()"]').disabled = true;
+  document.querySelector('button[onclick="nextHotel()"]').disabled = true;
+}
+
+function enableNavigationButtons() {
+  document.querySelector('button[onclick="prevHotel()"]').disabled = false;
+  document.querySelector('button[onclick="nextHotel()"]').disabled = false;
+}
+
+// Start fetching data
 fetchHotels();
