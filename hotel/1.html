@@ -2,8 +2,6 @@
 <html>
 <head>
   <title>Hotels – My Digha</title>
-
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
 
@@ -11,9 +9,8 @@
     body {
       font-family: Arial, sans-serif;
       background: #fffaf2;
-      margin: 0;
-      padding: 20px;
       text-align: center;
+      padding: 20px;
     }
 
     h2 {
@@ -21,18 +18,17 @@
     }
 
     .hotel-card {
-      margin: auto;
-      padding: 20px;
-      background: #e6f0ff;
       border: 2px solid #004c99;
+      padding: 15px;
+      margin: 20px auto;
       border-radius: 12px;
+      background: #e0f0ff;
       max-width: 500px;
       text-align: left;
     }
 
     img {
       width: 100%;
-      height: auto;
       border-radius: 8px;
       margin-top: 10px;
     }
@@ -44,12 +40,12 @@
     button {
       background-color: #004c99;
       color: white;
-      border: none;
       padding: 10px 20px;
-      margin: 0 10px;
       font-size: 16px;
+      border: none;
       border-radius: 6px;
       cursor: pointer;
+      margin: 0 10px;
     }
 
     button:hover {
@@ -57,7 +53,7 @@
     }
 
     #loading {
-      color: #888;
+      color: #999;
     }
   </style>
 </head>
@@ -71,11 +67,9 @@
   </div>
 
   <script>
-    // Firebase config (same as admin)
     const firebaseConfig = {
       apiKey: "AIzaSyB9SGeSzQSP63szOYyzEFCd9-f26KRNA5I",
       authDomain: "dk-chats-2919c.firebaseapp.com",
-      databaseURL: "https://dk-chats-2919c-default-rtdb.firebaseio.com",
       projectId: "dk-chats-2919c",
       storageBucket: "dk-chats-2919c.appspot.com",
       messagingSenderId: "620357656811",
@@ -93,24 +87,27 @@
       list.innerHTML = '';
       document.getElementById("loading").style.display = "block";
 
-      const snapshot = await db.collection("hotels").get();
-      snapshot.forEach(doc => {
-        hotels.push(doc.data());
-      });
+      try {
+        const snapshot = await db.collection("hotels").get();
+        snapshot.forEach(doc => {
+          hotels.push(doc.data());
+        });
 
-      document.getElementById("loading").style.display = "none";
+        document.getElementById("loading").style.display = "none";
 
-      if (hotels.length > 0) {
-        showHotel(0);
-      } else {
-        list.innerHTML = "<p>No hotels found.</p>";
+        if (hotels.length > 0) {
+          showHotel(0);
+        } else {
+          list.innerHTML = "<p>No hotels available.</p>";
+        }
+      } catch (error) {
+        document.getElementById("loading").innerText = "Error loading: " + error.message;
       }
     }
 
     function showHotel(index) {
       const h = hotels[index];
       const list = document.getElementById("hotelList");
-
       list.innerHTML = `
         <div class="hotel-card">
           <h3>${h.name || 'N/A'}</h3>
@@ -121,8 +118,8 @@
           <p><b>Price Range:</b> ${h.price_range || 'N/A'}</p>
           <p><b>AC Room:</b> ₹${h.ac_price || 'N/A'}</p>
           <p><b>Non-AC Room:</b> ₹${h.non_ac_price || 'N/A'}</p>
-          ${h.image1 ? `<img src="${h.image1}" alt="Hotel Image 1">` : ''}
-          ${h.image2 ? `<img src="${h.image2}" alt="Hotel Image 2">` : ''}
+          ${h.image1 ? `<img src="${h.image1}">` : ''}
+          ${h.image2 ? `<img src="${h.image2}">` : ''}
         </div>
       `;
     }
