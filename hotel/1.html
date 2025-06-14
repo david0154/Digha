@@ -3,17 +3,16 @@
 <head>
   <title>Hotels – My Digha</title>
 
-  <!-- Firebase SDKs -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
 
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #fffaf2;
-      padding: 20px;
       margin: 0;
+      padding: 20px;
       text-align: center;
     }
 
@@ -21,69 +20,58 @@
       color: #004c99;
     }
 
-    #hotelList {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
-    }
-
     .hotel-card {
-      background: #f0f8ff;
+      margin: auto;
+      padding: 20px;
+      background: #e6f0ff;
       border: 2px solid #004c99;
-      border-radius: 10px;
-      padding: 15px;
-      width: 300px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      max-width: 500px;
       text-align: left;
     }
 
-    .hotel-card h3 {
-      color: #004c99;
-      margin-bottom: 5px;
-    }
-
-    .hotel-card p {
-      margin: 4px 0;
-      font-size: 14px;
-    }
-
-    .hotel-card img {
+    img {
       width: 100%;
       height: auto;
-      margin-top: 10px;
       border-radius: 8px;
-      object-fit: cover;
+      margin-top: 10px;
     }
 
-    .loading {
-      color: #555;
-      font-size: 16px;
-    }
-
-    .reload-btn {
+    .button-container {
       margin-top: 20px;
+    }
+
+    button {
       background-color: #004c99;
       color: white;
-      padding: 10px 20px;
       border: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      font-size: 16px;
       border-radius: 6px;
       cursor: pointer;
     }
 
-    .reload-btn:hover {
+    button:hover {
       background-color: #003366;
+    }
+
+    #loading {
+      color: #888;
     }
   </style>
 </head>
 <body>
   <h2>My Digha Hotels</h2>
-  <p class="loading" id="loading">Loading hotels...</p>
+  <p id="loading">Loading hotels...</p>
   <div id="hotelList"></div>
-  <button class="reload-btn" onclick="fetchHotels()">Reload Hotels</button>
+  <div class="button-container">
+    <button onclick="prevHotel()">Previous</button>
+    <button onclick="nextHotel()">Next</button>
+  </div>
 
   <script>
+    // Firebase config (same as admin)
     const firebaseConfig = {
       apiKey: "AIzaSyB9SGeSzQSP63szOYyzEFCd9-f26KRNA5I",
       authDomain: "dk-chats-2919c.firebaseapp.com",
@@ -91,55 +79,69 @@
       projectId: "dk-chats-2919c",
       storageBucket: "dk-chats-2919c.appspot.com",
       messagingSenderId: "620357656811",
-      appId: "1:620357656811:web:ee4ada3c2e8baa0d679eae",
-      measurementId: "G-XHS1E7PRKL"
+      appId: "1:620357656811:web:ee4ada3c2e8baa0d679eae"
     };
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    async function fetchHotels() {
+    let hotels = [];
+    let currentIndex = 0;
+
+    async function loadHotels() {
       const list = document.getElementById("hotelList");
-      const loadingText = document.getElementById("loading");
       list.innerHTML = '';
-      loadingText.style.display = 'block';
+      document.getElementById("loading").style.display = "block";
 
-      try {
-        const snapshot = await db.collection("hotels").get();
+      const snapshot = await db.collection("hotels").get();
+      snapshot.forEach(doc => {
+        hotels.push(doc.data());
+      });
 
-        if (snapshot.empty) {
-          loadingText.innerText = "No hotels found.";
-          return;
-        }
+      document.getElementById("loading").style.display = "none";
 
-        snapshot.forEach(doc => {
-          const h = doc.data();
-          const div = document.createElement("div");
-          div.className = "hotel-card";
-          div.innerHTML = `
-            <h3>${h.name || 'Hotel Name N/A'}</h3>
-            <p><strong>Address:</strong> ${h.address || 'N/A'}</p>
-            <p><strong>Mobile:</strong> ${h.mobile || 'N/A'}</p>
-            <p><strong>WhatsApp:</strong> ${h.whatsapp || 'N/A'}</p>
-            <p><strong>Email:</strong> ${h.email || 'N/A'}</p>
-            <p><strong>Price Range:</strong> ${h.price_range || 'N/A'}</p>
-            <p><strong>AC Room:</strong> ₹${h.ac_price || 'N/A'}</p>
-            <p><strong>Non-AC Room:</strong> ₹${h.non_ac_price || 'N/A'}</p>
-            ${h.image1 ? `<img src="${h.image1}" alt="Hotel Image 1">` : ''}
-            ${h.image2 ? `<img src="${h.image2}" alt="Hotel Image 2">` : ''}
-          `;
-          list.appendChild(div);
-        });
-
-        loadingText.style.display = 'none';
-      } catch (error) {
-        console.error("Error fetching hotels:", error);
-        loadingText.innerText = "Error loading hotel data.";
+      if (hotels.length > 0) {
+        showHotel(0);
+      } else {
+        list.innerHTML = "<p>No hotels found.</p>";
       }
     }
 
-    // Load hotels on page load
-    fetchHotels();
+    function showHotel(index) {
+      const h = hotels[index];
+      const list = document.getElementById("hotelList");
+
+      list.innerHTML = `
+        <div class="hotel-card">
+          <h3>${h.name || 'N/A'}</h3>
+          <p><b>Address:</b> ${h.address || 'N/A'}</p>
+          <p><b>Mobile:</b> ${h.mobile || 'N/A'}</p>
+          <p><b>WhatsApp:</b> ${h.whatsapp || 'N/A'}</p>
+          <p><b>Email:</b> ${h.email || 'N/A'}</p>
+          <p><b>Price Range:</b> ${h.price_range || 'N/A'}</p>
+          <p><b>AC Room:</b> ₹${h.ac_price || 'N/A'}</p>
+          <p><b>Non-AC Room:</b> ₹${h.non_ac_price || 'N/A'}</p>
+          ${h.image1 ? `<img src="${h.image1}" alt="Hotel Image 1">` : ''}
+          ${h.image2 ? `<img src="${h.image2}" alt="Hotel Image 2">` : ''}
+        </div>
+      `;
+    }
+
+    function nextHotel() {
+      if (currentIndex < hotels.length - 1) {
+        currentIndex++;
+        showHotel(currentIndex);
+      }
+    }
+
+    function prevHotel() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        showHotel(currentIndex);
+      }
+    }
+
+    loadHotels();
   </script>
 </body>
 </html>
