@@ -1,126 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hotels – My Digha</title>
+  <title>My Digha Hotels</title>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
-
+  <script src="hotel/firebase-config.js"></script>
+  <script src="hotel/public.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #fffaf2;
+      font-family: Arial;
+      background: #f0f8ff;
       text-align: center;
-      padding: 20px;
     }
     img {
-      width: 250px;
-      height: auto;
-      margin: 5px;
       border-radius: 10px;
-      object-fit: cover;
-    }
-    .button-container {
-      margin-top: 20px;
+      margin: 10px;
     }
     button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
-      margin: 0 10px;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    #hotelDisplay {
-      margin-bottom: 20px;
+      padding: 10px;
+      margin: 10px;
     }
   </style>
 </head>
 <body>
   <h2>Welcome to My Digha Hotels</h2>
   <div id="hotelDisplay">Loading...</div>
-  <div class="button-container">
+  <div>
     <button onclick="prevHotel()">Previous</button>
     <button onclick="nextHotel()">Next</button>
   </div>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyB9SGeSzQSP63szOYyzEFCd9-f26KRNA5I",
-      authDomain: "dk-chats-2919c.firebaseapp.com",
-      databaseURL: "https://dk-chats-2919c-default-rtdb.firebaseio.com",
-      projectId: "dk-chats-2919c",
-      storageBucket: "dk-chats-2919c.appspot.com",
-      messagingSenderId: "620357656811",
-      appId: "1:620357656811:web:ee4ada3c2e8baa0d679eae",
-      measurementId: "G-XHS1E7PRKL"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    let hotels = [];
-    let currentIndex = 0;
-
-    async function fetchHotels() {
-      try {
-        const snapshot = await db.collection("hotels").get();
-        if (snapshot.empty) {
-          document.getElementById("hotelDisplay").innerHTML =
-            "<p>No hotels found.</p>";
-          return;
-        }
-
-        hotels = snapshot.docs.map(doc => doc.data());
-        showHotel(0);
-      } catch (error) {
-        console.error("Error fetching hotels:", error);
-        document.getElementById("hotelDisplay").innerHTML =
-          `<p>Error loading hotels: ${error.message}</p>`;
-      }
-    }
-
-    function showHotel(index) {
-      if (hotels.length === 0) return;
-
-      currentIndex = Math.max(0, Math.min(index, hotels.length - 1));
-      const h = hotels[currentIndex];
-      const container = document.getElementById("hotelDisplay");
-
-      container.innerHTML = `
-        <h3>${h.name || 'Hotel Name N/A'}</h3>
-        <p><b>Address:</b> ${h.address || 'N/A'}</p>
-        <p><b>Mobile:</b> ${h.mobile || 'N/A'}</p>
-        <p><b>WhatsApp:</b> ${h.whatsapp || 'N/A'}</p>
-        <p><b>Email:</b> ${h.email || 'N/A'}</p>
-        <p><b>Price Range:</b> ${h.price_range || 'N/A'}</p>
-        <p><b>AC Room Price:</b> ${h.ac_price || 'N/A'}</p>
-        <p><b>Non-AC Room Price:</b> ${h.non_ac_price || 'N/A'}</p>
-        ${h.image1 ? `<img src="${h.image1}" alt="Hotel Image 1">` : ''}
-        ${h.image2 ? `<img src="${h.image2}" alt="Hotel Image 2">` : ''}
-        <p>Hotel ${currentIndex + 1} of ${hotels.length}</p>
-      `;
-    }
-
-    function nextHotel() {
-      if (currentIndex < hotels.length - 1) {
-        showHotel(currentIndex + 1);
-      }
-    }
-
-    function prevHotel() {
-      if (currentIndex > 0) {
-        showHotel(currentIndex - 1);
-      }
-    }
-
-    fetchHotels();
-  </script>
 </body>
 </html>
