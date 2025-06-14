@@ -1,17 +1,64 @@
-<h2>Hotel Raj Sonia</h2>
-<p>A beautiful hotel offering stunning views of the sea, perfect for a relaxing getaway.</p>
-<div class="address-info">
-    <p><strong>Address:</strong> JGFC+M7W, Near C.S.T.C Bus Stand, Behind Home Guard Barrack OLD DIGHA POLICE STATION OLD, Digha, West Bengal 721428</p>
-</div>
-<div class="contact-info">
-    <p><strong>Mobile Number:</strong> <a href="tel:+919831147433">+91 98311 47433</a></p>
-    <p><strong>WhatsApp Number:</strong> <a href="https://wa.me/919831147433" target="_blank">+91 98311 47433</a></p>
-</div>
-<div class="price-info">
-    <p><strong>AC Room Price Range:</strong> ₹1500 - ₹2500 per night</p>
-    <p><strong>Non-AC Room Price Range:</strong> ₹800 - ₹1200 per night</p>
-</div>
-<div class="hotel-photos">
-    <img src="hotel/imeges/hotelrajsonia1.jpg" alt="Hotel Raj Sonia Photo 1">
-    <img src="hotel/imeges/hotelrajsonia2.jpg" alt="Hotel Raj Sonia Photo 2">
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hotels – My Digha</title>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+  <script src="../firebase-config.js"></script>
+  <style>
+    body { font-family: Arial; background: #fffaf2; text-align: center; padding: 20px; }
+    img { width: 250px; margin: 5px; border-radius: 10px; }
+    button { margin: 10px; padding: 10px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h2>Welcome to My Digha Hotels</h2>
+  <div id="hotelDisplay"></div>
+  <button onclick="prevHotel()">Previous</button>
+  <button onclick="nextHotel()">Next</button>
+
+  <script>
+    let hotels = [], currentIndex = 0;
+
+    async function fetchHotels() {
+      const snapshot = await db.collection("hotels").get();
+      hotels = snapshot.docs.map(doc => doc.data());
+      showHotel(0);
+    }
+
+    function showHotel(index) {
+      if (hotels.length === 0) return;
+      const h = hotels[index];
+      const container = document.getElementById("hotelDisplay");
+      container.innerHTML = `
+        <h3>${h.name}</h3>
+        <p>${h.address}</p>
+        <p><b>Mobile:</b> ${h.mobile || 'N/A'}</p>
+        <p><b>WhatsApp:</b> ${h.whatsapp || 'N/A'}</p>
+        <p><b>Email:</b> ${h.email || 'N/A'}</p>
+        <p><b>Price Range:</b> ${h.price_range}</p>
+        <p><b>AC Room:</b> ${h.ac_price}</p>
+        <p><b>Non-AC Room:</b> ${h.non_ac_price}</p>
+        <img src="${h.image1}" alt="Hotel Photo 1">
+        <img src="${h.image2}" alt="Hotel Photo 2">
+      `;
+    }
+
+    function nextHotel() {
+      if (currentIndex < hotels.length - 1) {
+        currentIndex++;
+        showHotel(currentIndex);
+      }
+    }
+
+    function prevHotel() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        showHotel(currentIndex);
+      }
+    }
+
+    fetchHotels();
+  </script>
+</body>
+</html>
