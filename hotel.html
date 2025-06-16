@@ -166,22 +166,25 @@
         .ads-container {
             margin: 20px auto;
             text-align: center;
-            /* Further restrict ad size for "decent" display */
-            max-width: 468px; /* Standard banner width or less */
-            max-height: 120px; /* Standard banner height or less */
-            overflow: hidden; /* Hide anything that spills over */
             background-color: #f0f0f0;
             padding: 10px;
             border-radius: 5px;
             border: 1px dashed #ccc;
             color: #666;
             font-style: italic;
+            display: flex; /* Use flexbox to center content */
+            justify-content: center;
+            align-items: center;
+            min-height: 60px; /* Ensure a minimum height so it doesn't collapse too much */
         }
 
-        .ads-container .adsbygoogle {
-            display: block; /* Ensure it respects parent container */
-            width: 100%;
-            height: 100%;
+        /* Ensure the AdSense ins tag itself is styled to fit within its parent */
+        .ads-container ins.adsbygoogle {
+            display: inline-block; /* Allows it to shrink/grow within limits */
+            width: 100%; /* Take full width of parent .ads-container */
+            height: 100%; /* Take full height of parent .ads-container */
+            min-width: 200px; /* AdSense recommended minimum widths for responsive */
+            min-height: 50px; /* AdSense recommended minimum heights for responsive */
         }
 
         footer {
@@ -226,8 +229,8 @@
             <span class="tagline">Your ultimate guide to finding the perfect stay in Digha!</span>
         </div>
         <nav style="display: none;">
-            <button onclick="location.href='addhotel.html'">Add Hotel</button>
-            <button onclick="location.href='updatehotel.html'">Update Hotel</button>
+            <button onclick="location.href='adhotel.html'">Add Hotel</button>
+            <button onclick="location.href='update.html'">Update Hotel</button>
         </nav>
     </header>
 
@@ -240,17 +243,13 @@
     <div class="container">
         <h2>Hotel Details</h2>
 
-        <div class="ads-container" style="max-width: 320px; max-height: 100px;">
+        <div class="ads-container" id="ad-unit-1" style="max-width: 320px; max-height: 100px;">
             <ins class="adsbygoogle"
-                 style="display:block"
+                 style="display:block;"
                  data-ad-client="YOUR_ADSENSE_CLIENT_ID"
                  data-ad-slot="YOUR_ADSENSE_SLOT_1"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-            <p>Advertisement</p>
         </div>
 
         <div id="hotelDetails">
@@ -262,17 +261,13 @@
         </div>
     </div>
 
-    <div class="ads-container" style="max-width: 468px; max-height: 120px;">
+    <div class="ads-container" id="ad-unit-3" style="max-width: 336px; max-height: 280px;">
         <ins class="adsbygoogle"
-             style="display:block"
+             style="display:block;"
              data-ad-client="YOUR_ADSENSE_CLIENT_ID"
              data-ad-slot="YOUR_ADSENSE_SLOT_3"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-        <p>Advertisement</p>
     </div>
 
     <div class="container">
@@ -284,8 +279,8 @@
         <p>Support: <a href="mailto:hotelmydigha@gmail.com">hotelmydigha@gmail.com</a></p>
         <p>This website managed by Nexuzy Tech Pvt Ltd</p>
         <div>
-            <button class="add-hotel-button" onclick="location.href='adhotel.html'">Add Hotel</button>
-            <button onclick="location.href='update.html'">Update Hotel</button>
+            <button class="add-hotel-button" onclick="location.href='addhotel.html'">Add Hotel</button>
+            <button onclick="location.href='updatehotel.html'">Update Hotel</button>
         </div>
     </footer>
 
@@ -364,6 +359,13 @@
                 showHotel(currentHotelIndex);
                 updateNavigationButtons();
 
+                // Manually push calls for the static ad units (Ad 1 and Ad 3)
+                // These are here to ensure they render, especially if content above them causes a re-flow.
+                // However, they should generally already be handled by the initial global AdSense script.
+                // It's safer to ensure they exist on page load.
+                (window.adsbygoogle = window.adsbygoogle || []).push({}); // For Ad Unit 1
+                (window.adsbygoogle = window.adsbygoogle || []).push({}); // For Ad Unit 3
+
             } catch (error) {
                 console.error("Error fetching hotels: ", error);
                 hotelDetailsDiv.innerHTML = "<p>Error loading hotels. Please try again later.</p>";
@@ -400,20 +402,16 @@
 
             // AdSense Ad Unit 2: Placed between image1 and image2 if both exist
             // This ad unit will only show up IF there's at least one image.
-            // Adjust the max-width/height here for smaller, in-content ads.
+            // Notice: The <script> tag for push is now *outside* this string, called after innerHTML is set.
             if (h.image1 && h.image2) { 
                 html += `
-                <div class="ads-container" style="max-width: 300px; max-height: 60px; margin: 15px auto;">
+                <div class="ads-container in-content-ad" id="ad-unit-2" style="max-width: 300px; max-height: 50px; margin: 15px auto;">
                     <ins class="adsbygoogle"
-                         style="display:block"
+                         style="display:block;"
                          data-ad-client="YOUR_ADSENSE_CLIENT_ID"
                          data-ad-slot="YOUR_ADSENSE_SLOT_2"
                          data-ad-format="auto"
                          data-full-width-responsive="true"></ins>
-                    <script>
-                         (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                    <p>Advertisement</p>
                 </div>`;
             }
 
@@ -426,6 +424,13 @@
             hotelDetailsDiv.innerHTML = html;
             currentHotelIndex = index;
             updateNavigationButtons();
+
+            // IMPORTANT: Manually push the AdSense call for the dynamically added Ad Unit 2
+            // ONLY if it was actually inserted (i.e., if h.image1 and h.image2 were true)
+            const adUnit2Container = document.getElementById('ad-unit-2');
+            if (adUnit2Container) {
+                 (window.adsbygoogle = window.adsbygoogle || []).push({});
+            }
         }
 
         function updateNavigationButtons() {
