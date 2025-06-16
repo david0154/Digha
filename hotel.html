@@ -3,564 +3,452 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Digha Hotel - Your Guide to Stays in Digha!</title>
+    <title>My Digha Hotel - Your ultimate guide to finding the perfect stay in Digha!</title>
+    <link rel="icon" href="mydighahotel.png" type="image/png">
+    <style>
+        :root {
+            --deep-blue: #00008B; /* Digha West Bengal Official Color: Deep Blue */
+            --button-blue: #0056b3; /* Primary button color */
+            --button-hover-blue: #00408d; /* Primary button hover color */
+            --green-button: #28a745; /* Green color for Add Hotel button */
+            --green-button-hover: #218838; /* Darker green for hover */
+        }
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-PWKWKW78"></script>
+        body {
+            font-family: Arial, sans-serif; /* Updated font family */
+            background-color: #eef7ff; /* New background color */
+            padding: 20px; /* New padding */
+            text-align: center; /* New text alignment for body */
+            color: #333; /* Kept text color for general content */
+            margin: 0; /* Ensures no default margin */
+        }
+
+        header {
+            background-color: var(--deep-blue);
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        header .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        header .logo img {
+            height: 70px;
+            margin-bottom: 5px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        header .tagline {
+            font-size: 1.2em;
+            font-style: italic;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        nav {
+            display: none; /* Hide the nav buttons from the header */
+        }
+
+        /* Styling for all buttons, derived from user's new button styles */
+        button {
+            background-color: var(--button-blue);
+            color: white;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--button-hover-blue);
+        }
+
+        /* Specific style for the Add Hotel button */
+        .add-hotel-button {
+            background-color: var(--green-button);
+        }
+
+        .add-hotel-button:hover {
+            background-color: var(--green-button-hover);
+        }
+
+        .welcome-section {
+            background-color: #e3f2fd;
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 900px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 5px solid var(--deep-blue);
+        }
+
+        .welcome-section h2 {
+            color: var(--deep-blue);
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .welcome-section p {
+            font-size: 1.1em;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .hotel-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            border: none;
+        }
+
+        .hotel-card h2 {
+            color: var(--deep-blue);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .hotel-card p {
+            margin: 8px 0;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .hotel-card img {
+            width: 90%;
+            max-height: 250px;
+            object-fit: cover;
+            margin: 10px auto;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .navigation-buttons {
+            margin-top: 20px;
+        }
+
+        .navigation-buttons button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .ads-container {
+            margin: 20px auto;
+            text-align: center;
+            max-width: 728px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px dashed #ccc;
+            color: #666;
+            font-style: italic;
+        }
+
+        footer {
+            background-color: var(--deep-blue);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR_ADSENSE_CLIENT_ID"
+     crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_MEASUREMENT_ID"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'GTM-PWKWKW78'); /* REPLACE 'G-XXXXXXXXXX' with YOUR Google Analytics Measurement ID */
+      gtag('config', 'YOUR_GA_MEASUREMENT_ID');
     </script>
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9882958790444340"
-     crossorigin="anonymous"></script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        header {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-            position: relative;
-        }
-        header h1 {
-            margin: 0;
-        }
-        .logo {
-            max-width: 150px;
-            height: auto;
-            margin-bottom: 10px;
-            display: block; /* Ensures logo is on its own line */
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .container {
-            width: 85%;
-            margin: auto;
-            overflow: hidden;
-            padding: 20px 0;
-        }
-        .welcome-message {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background-color: #e9f7fe;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        /* Styling for the dynamically loaded hotel content */
-        #hotel-details-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-            min-height: 300px; /* To prevent layout jumps when content loads */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        #hotel-details-container.loading {
-            color: #555;
-        }
-        #hotel-details-container h2 {
-            color: #007BFF;
-            margin-top: 0;
-        }
-        #hotel-details-container p {
-            margin: 5px 0;
-        }
-        .contact-info, .price-info, .address-info {
-            margin-top: 10px;
-            font-size: 0.95em;
-        }
-        .contact-info a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-        .contact-info a:hover {
-            text-decoration: underline;
-        }
-        .price-info strong {
-            color: #28a745; /* Green for pricing */
-        }
-        .hotel-photos {
-            display: flex;
-            flex-wrap: wrap; /* Allows photos to wrap on smaller screens */
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .hotel-photos img {
-            max-width: 48%; /* Adjust for two images per row, with some gap */
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            object-fit: cover; /* Ensures images cover the area without distortion */
-            min-width: 250px; /* Minimum width for images to prevent them from becoming too small */
-        }
-        .ad-container {
-            margin: 20px 0;
-            text-align: center;
-            background-color: #e0e0e0;
-            padding: 10px;
-            border-radius: 5px;
-            min-height: 90px; /* To give some space for the ad */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .navigation-controls {
-            text-align: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .navigation-controls button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
-        }
-        .navigation-controls button:hover:not(:disabled) {
-            background-color: #0056b3;
-        }
-        .navigation-controls button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
-        #hotel-page-numbers {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        #hotel-page-numbers a {
-            text-decoration: none;
-            color: #007BFF;
-            border: 1px solid #007BFF;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        #hotel-page-numbers a.active,
-        #hotel-page-numbers a:hover {
-            background-color: #007BFF;
-            color: white;
-        }
-
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            font-size: 0.9em;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-            box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
-        }
-        footer a {
-            color: #007BFF;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-        .footer-info p {
-            margin: 5px 0;
-        }
-        .event-holiday {
-            margin-top: 15px;
-            font-size: 0.85em;
-            border-top: 1px solid #555;
-            padding-top: 10px;
-            margin-top: 10px;
-        }
-        .event-holiday ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 5px 0;
-        }
-        .event-holiday li {
-            margin-bottom: 3px;
-        }
-        .footer-buttons {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #555;
-            margin-bottom: 15px; /* Space between buttons and other footer info */
-        }
-        .footer-buttons a {
-            display: inline-block;
-            background-color: #28a745;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin: 0 10px;
-            transition: background-color 0.3s ease;
-        }
-        .footer-buttons a:hover {
-            background-color: #218838;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .container {
-                width: 95%;
-            }
-            .hotel-photos img {
-                max-width: 100%; /* Stack images on small screens */
-            }
-            .ad-container {
-                margin: 15px 0;
-            }
-            .navigation-controls {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .footer-buttons a {
-                display: block;
-                margin-bottom: 10px;
-            }
-        }
-    </style>
 </head>
 <body>
-
     <header>
-    <img src="mydighahotel.png" alt="My Digha Hotel Logo" class="logo">
-    <h1>My Digha Hotel</h1>
-    <p>Your ultimate guide to finding the perfect stay in Digha!</p>
-</header>
+        <div class="logo">
+            <img src="mydighahotel.png" alt="My Digha Hotel Logo">
+            <h1>My Digha Hotel</h1>
+            <span class="tagline">Your ultimate guide to finding the perfect stay in Digha!</span>
+        </div>
+        <nav style="display: none;">
+            <button onclick="location.href='adhotel.html'">Add Hotel</button>
+            <button onclick="location.href='update.html'">Update Hotel</button>
+        </nav>
+    </header>
 
+    <div class="welcome-section">
+        <h2>Welcome to Digha!</h2>
+        <p>Discover the serene beaches and vibrant atmosphere of Digha. We're here to help every tourist find a comfortable and memorable stay. Explore the best hotels and make your trip unforgettable!</p>
+        <p>Our aim is to provide easy access to hotel information, making your Digha journey smooth and enjoyable.</p>
+    </div>
 
     <div class="container">
-        <div class="welcome-message">
-            <h2>Welcome to Digha!</h2>
-            <p>Discover the serene beaches and vibrant atmosphere of Digha. We're here to help every tourist find a comfortable and memorable stay. Explore the best hotels and make your trip unforgettable!</p>
-            <p>Our aim is to provide easy access to hotel information, making your Digha journey smooth and enjoyable.</p>
+        <h2>Hotel Details</h2>
+        <div id="hotelDetails">
+            Loading hotel data...
         </div>
+        <div class="navigation-buttons">
+            <button id="prevBtn" disabled>Previous Hotel</button>
+            <button id="nextBtn" disabled>Next Hotel</button>
+        </div>
+    </div>
 
-        <div class="ad-container">
+    <div class="ads-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="YOUR_ADSENSE_CLIENT_ID"
+             data-ad-slot="YOUR_ADSENSE_SLOT_ID_1"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <p>Advertisement</p>
+    </div>
+
+    <div class="container">
+        <div class="ads-container">
             <ins class="adsbygoogle"
                  style="display:block"
-                 data-ad-client="ca-pub-9882958790444340" /* REPLACE with YOUR AdSense Publisher ID */
-                 data-ad-slot="9284360394" /* REPLACE with YOUR Ad Unit Slot ID */
+                 data-ad-client="YOUR_ADSENSE_CLIENT_ID"
+                 data-ad-slot="YOUR_ADSENSE_SLOT_ID_2"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
             <script>
                  (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
-            <p>Advertisement Top (AdSense)</p>
+            <p>Advertisement</p>
         </div>
+    </div>
 
-        <div id="hotel-details-container">
-            <p class="loading-message">Loading hotel details...</p>
-        </div>
-
-        <div class="navigation-controls">
-            <button id="prevBtn">Previous Hotel</button>
-            <div id="hotel-page-numbers">
-                </div>
-            <button id="nextBtn">Next Hotel</button>
-        </div>
-
-        <div class="ad-container">
+    <div class="container">
+        <div class="ads-container">
             <ins class="adsbygoogle"
                  style="display:block"
-                 data-ad-client="ca-pub-9882958790444340" /* REPLACE with YOUR AdSense Publisher ID */
-                 data-ad-slot="1715462768" /* REPLACE with YOUR Ad Unit Slot ID */
+                 data-ad-client="YOUR_ADSENSE_CLIENT_ID"
+                 data-ad-slot="YOUR_ADSENSE_SLOT_ID_3"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-            <p>Advertisement Bottom (AdSense)</p>
-        </div>
-
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <p>Advertisement</p>
+    </div>
     </div>
 
     <footer>
-        <div class="footer-info">
-            <p>Support Mail: <a href="mailto:hotelmydigha@gmail.com">hotelmydigha@gmail.com</a></p>
-            <p><a href="#">Privacy Policy</a></p>
-            <div class="footer-buttons">
-                <a href="addhotel.html">Add Your Hotel Details</a>
-                <a href="updatehotel.html">Update Hotel Details</a>
-            </div>
-            <p>This website is managed by Nexuzy Tech under My Digha Platform</p>
-            <p>
-                <span id="currentDateTime"></span>
-            </p>
-            <div class="event-holiday">
-                <p><strong>Upcoming Events & Holidays in India:</strong></p>
-                <ul id="eventsAndHolidays">
-                    </ul>
-            </div>
+        <p>Support: <a href="mailto:hotelmydigha@gmail.com">hotelmydigha@gmail.com</a></p>
+        <p>This website managed by Nexuzy Tech Pvt Ltd</p>
+        <div>
+            <button class="add-hotel-button" onclick="location.href='adhotel.html'">Add Hotel</button>
+            <button onclick="location.href='update.html'">Update Hotel</button>
         </div>
     </footer>
 
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
     <script>
-        const hotelDetailsContainer = document.getElementById('hotel-details-container');
+        let hotels = []; // All hotels fetched from Firebase
+        let currentHotelIndex = 0; // Index for current manual display in `hotels` array
+
+        // Variables for automatic rotation
+        let shuffledHotelOrder = [];
+        let shuffledOrderPointer = 0; // Pointer in the shuffled list
+        const TWELVE_HOURS_MS = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+
+        const hotelDetailsDiv = document.getElementById('hotelDetails');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
-        const hotelPageNumbers = document.getElementById('hotel-page-numbers');
 
-        // IMPORTANT: Manually update this to the total number of hotel.html files you have!
-        const totalHotels = 4; // Example: if you have 1.html, 2.html, 3.html
+        // Utility to shuffle an array (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
-        let currentHotelId = 1;
+        async function fetchHotelsAndInitializeDisplay() {
+            try {
+                const db = firebase.firestore(); // If using Firestore
+                // const dbRef = firebase.database().ref('hotels'); // For Realtime Database
 
-        // Function to load hotel details from a file
-        async function loadHotel(id) {
-            if (id < 1 || id > totalHotels) {
-                // Invalid hotel ID, maybe show an error or default to the first hotel
-                console.warn(`Hotel ID ${id} is out of range.`);
+                // Fetch hotels (Firestore example)
+                const snapshot = await db.collection('hotels').get();
+                hotels = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                // Fetch hotels (Realtime Database example - uncomment if using this)
+                /*
+                const snapshot = await dbRef.once('value');
+                const data = snapshot.val();
+                if (data) {
+                    hotels = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+                } else {
+                    hotels = [];
+                }
+                */
+
+                if (hotels.length === 0) {
+                    hotelDetailsDiv.innerHTML = "<p>No hotels found.</p>";
+                    prevBtn.disabled = true;
+                    nextBtn.disabled = true;
+                    return;
+                }
+
+                // --- Automatic Rotation Logic ---
+                const storedTimestamp = localStorage.getItem('lastAutoDisplayTimestamp');
+                const storedShuffledOrder = JSON.parse(localStorage.getItem('shuffledHotelOrder'));
+                let storedPointer = parseInt(localStorage.getItem('shuffledOrderPointer') || '0', 10);
+
+                const now = Date.now();
+                let needsNewAutoDisplay = true;
+
+                if (storedTimestamp && storedShuffledOrder && storedShuffledOrder.length > 0 && storedPointer < storedShuffledOrder.length) {
+                    const timeElapsed = now - parseInt(storedTimestamp, 10);
+                    if (timeElapsed < TWELVE_HOURS_MS) {
+                        // Less than 12 hours passed, display the last automatically shown hotel
+                        needsNewAutoDisplay = false;
+                        shuffledHotelOrder = storedShuffledOrder;
+                        // The storedPointer indicates the *next* hotel to show in the rotation.
+                        // So, the currently displayed hotel is the one *before* storedPointer.
+                        const lastShownHotelId = shuffledHotelOrder[(storedPointer - 1 + shuffledHotelOrder.length) % shuffledHotelOrder.length].id;
+                        currentHotelIndex = hotels.findIndex(h => h.id === lastShownHotelId);
+
+                        if (currentHotelIndex === -1) { // Fallback if last shown hotel from shuffled order is not found
+                            needsNewAutoDisplay = true; // Force a new shuffle and display
+                        }
+                    }
+                }
+
+                if (needsNewAutoDisplay) {
+                    // Either first load, 12 hours passed, or a problem with stored data
+                    shuffledHotelOrder = shuffleArray([...hotels]); // Shuffle a copy of all hotels
+                    shuffledOrderPointer = 0; // Start at the beginning of the new shuffled list
+
+                    // Determine the hotel to display based on the current pointer
+                    const hotelToDisplay = shuffledHotelOrder[shuffledOrderPointer];
+                    currentHotelIndex = hotels.findIndex(h => h.id === hotelToDisplay.id);
+                    
+                    // Advance the pointer for the *next* automatic rotation
+                    shuffledOrderPointer = (shuffledOrderPointer + 1) % shuffledHotelOrder.length;
+
+                    // Save the new state to localStorage
+                    localStorage.setItem('lastAutoDisplayTimestamp', now.toString());
+                    localStorage.setItem('shuffledHotelOrder', JSON.stringify(shuffledHotelOrder));
+                    localStorage.setItem('shuffledOrderPointer', shuffledOrderPointer.toString());
+                }
+                // --- End Automatic Rotation Logic ---
+
+                // Finally, display the hotel determined by the above logic (either auto or previously shown)
+                showHotel(currentHotelIndex);
+                updateNavigationButtons();
+
+            } catch (error) {
+                console.error("Error fetching hotels: ", error);
+                hotelDetailsDiv.innerHTML = "<p>Error loading hotels. Please try again later.</p>";
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+            }
+        }
+
+        function showHotel(index) {
+            if (hotels.length === 0) {
+                hotelDetailsDiv.innerHTML = "<p>No hotel data available.</p>";
+                return;
+            }
+            if (index < 0 || index >= hotels.length) {
+                console.warn("Invalid hotel index.");
                 return;
             }
 
-            currentHotelId = id;
-            hotelDetailsContainer.innerHTML = '<p class="loading-message">Loading hotel details...</p>';
-            hotelDetailsContainer.classList.add('loading'); // Add loading indicator
-
-            try {
-                const response = await fetch(`hotel/${id}.html`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const htmlContent = await response.text();
-                hotelDetailsContainer.innerHTML = htmlContent;
-                updateURL(id); // Update URL in browser's address bar
-            } catch (error) {
-                console.error("Failed to load hotel details:", error);
-                hotelDetailsContainer.innerHTML = '<p style="color: red;">Error loading hotel details. Please try again later.</p>';
-            } finally {
-                hotelDetailsContainer.classList.remove('loading'); // Remove loading indicator
-                updateNavigationButtons();
-                highlightCurrentPageNumber();
-            }
+            const h = hotels[index];
+            const html = `
+                <div class="hotel-card">
+                    <h2>${h.name || "No Name"}</h2>
+                    <p><b>Address:</b> ${h.address || "N/A"}</p>
+                    <p><b>Mobile:</b> ${h.mobile || "N/A"}</p>
+                    <p><b>WhatsApp:</b> ${h.whatsapp || "N/A"}</p>
+                    <p><b>Email:</b> ${h.email || "N/A"}</p>
+                    <p><b>AC Room Price:</b> ₹${h.ac_min_price || "-"} – ₹${h.ac_max_price || "-"}</p>
+                    <p><b>Non-AC Room Price:</b> ₹${h.non_ac_min_price || "-"} – ₹${h.non_ac_max_price || "-"}</p>
+                    ${h.image1 ? `<img src="${h.image1}" alt="Image 1">` : ""}
+                    ${h.image2 ? `<img src="${h.image2}" alt="Image 2">` : ""}
+                </div>
+            `;
+            hotelDetailsDiv.innerHTML = html;
+            currentHotelIndex = index; // Update the index for manual navigation
+            updateNavigationButtons();
         }
 
-        // Update URL without reloading the page
-        function updateURL(id) {
-            history.pushState({ hotelId: id }, `Hotel ${id}`, `?hotel=${id}`);
-        }
-
-        // Handle browser back/forward buttons
-        window.addEventListener('popstate', (event) => {
-            if (event.state && event.state.hotelId) {
-                loadHotel(event.state.hotelId);
-            } else {
-                // Default to hotel 1 if no state is found (e.g., initial load or direct access without ID)
-                loadHotel(1);
-            }
-        });
-
-        // Update navigation buttons (Previous/Next) status
         function updateNavigationButtons() {
-            prevBtn.disabled = (currentHotelId === 1);
-            nextBtn.disabled = (currentHotelId === totalHotels);
+            prevBtn.disabled = currentHotelIndex === 0;
+            nextBtn.disabled = currentHotelIndex === hotels.length - 1;
         }
 
-        // Generate clickable page numbers
-        function generatePageNumbers() {
-            hotelPageNumbers.innerHTML = ''; // Clear existing numbers
-            for (let i = 1; i <= totalHotels; i++) {
-                const link = document.createElement('a');
-                link.href = `#`; // Use # for client-side navigation
-                link.textContent = i;
-                link.dataset.hotelId = i; // Store hotel ID in data attribute
-                link.addEventListener('click', (e) => {
-                    e.preventDefault(); // Prevent default link behavior (page jump)
-                    loadHotel(parseInt(e.target.dataset.hotelId));
-                });
-                hotelPageNumbers.appendChild(link);
-            }
-
-
-
-        // --- Event Listeners for Navigation ---
+        // Manual navigation event listeners (still use currentHotelIndex)
         prevBtn.addEventListener('click', () => {
-            if (currentHotelId > 1) {
-                loadHotel(currentHotelId - 1);
+            if (currentHotelIndex > 0) {
+                showHotel(currentHotelIndex - 1);
             }
         });
 
         nextBtn.addEventListener('click', () => {
-            if (currentHotelId < totalHotels) {
-                loadHotel(currentHotelId + 1);
+            if (currentHotelIndex < hotels.length - 1) {
+                showHotel(currentHotelIndex + 1);
             }
         });
 
-        // --- Initial Load Logic ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Get hotel ID from URL if present (e.g., index.html?hotel=2)
-            const urlParams = new URLSearchParams(window.location.search);
-            const initialHotelId = parseInt(urlParams.get('hotel')) || 1;
-
-            currentHotelId = initialHotelId; // Set currentHotelId based on URL or default to 1
-
-            generatePageNumbers(); // Generate the 1 | 2 | 3... links
-            loadHotel(currentHotelId); // Load the initial hotel
-        });
-
-
-        // --- Footer Date and Holidays Logic ---
-        function updateDateTime() {
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('en-IN', options);
-        }
-
-        function fetchEventsAndHolidays() {
-            const now = new Date();
-            const currentYear = now.getFullYear();
-            const today = new Date(currentYear, now.getMonth(), now.getDate());
-
-            const holidays = [
-                { name: "Independence Day", month: 7, day: 15, tentative: false }, // August is month 7
-                { name: "Gandhi Jayanti", month: 9, day: 2, tentative: false },   // October is month 9
-                { name: "Christmas", month: 11, day: 25, tentative: false },     // December is month 11
-
-                { name: "Bakrid (Eid al-Adha)", dates: {
-                    2025: { month: 5, day: 17 }, // June 17, 2025
-                    2026: { month: 4, day: 6 }   // May 26, 2026 (approx)
-                }, tentative: true },
-                { name: "Muharram", dates: {
-                    2025: { month: 6, day: 6 }, // July 6, 2025
-                    2026: { month: 5, day: 26 } // June 25, 2026 (approx)
-                }, tentative: true },
-                { name: "Janmashtami", dates: {
-                    2025: { month: 7, day: 18 }, // August 18, 2025
-                    2026: { month: 8, day: 6 }   // September 6, 2026
-                }, tentative: true },
-                { name: "Milad un-Nabi (Prophet's Birthday)", dates: {
-                    2025: { month: 8, day: 5 }, // September 5, 2025
-                    2026: { month: 7, day: 25 } // August 25, 2026 (approx)
-                }, tentative: true },
-                { name: "Dussehra", dates: {
-                    2025: { month: 9, day: 1 }, // October 1, 2025
-                    2026: { month: 9, day: 20 } // October 20, 2026
-                }, tentative: true },
-                { name: "Diwali (Lakshmi Puja)", dates: {
-                    2025: { month: 9, day: 20 }, // October 20, 2025
-                    2026: { month: 10, day: 8 }  // November 8, 2026
-                }, tentative: true },
-                 { name: "Guru Nanak Jayanti", dates: {
-                    2025: { month: 10, day: 15 }, // November 15, 2025
-                    2026: { month: 10, day: 4 }   // November 4, 2026
-                }, tentative: true }
-            ];
-
-            const eventsList = document.getElementById('eventsAndHolidays');
-            eventsList.innerHTML = '';
-
-            // Filter out events whose dates are not defined for the current or next year
-            const availableHolidays = holidays.filter(event => {
-                if (event.fixed) return true;
-                return event.dates[currentYear] || event.dates[currentYear + 1];
-            });
-
-
-            availableHolidays.sort((a, b) => {
-                let dateA, dateB;
-                let yearA = currentYear, yearB = currentYear;
-
-                const getDateForEvent = (event, year) => {
-                    if (event.fixed) {
-                        return new Date(year, event.month, event.day);
-                    } else {
-                        return event.dates[year] ? new Date(year, event.dates[year].month, event.dates[year].day) : null;
-                    }
-                };
-
-                dateA = getDateForEvent(a, currentYear);
-                if (dateA && dateA < today && a.dates && a.dates[currentYear + 1]) {
-                    dateA = getDateForEvent(a, currentYear + 1);
-                } else if (!dateA && a.dates && a.dates[currentYear + 1]) {
-                    dateA = getDateForEvent(a, currentYear + 1);
-                }
-
-                dateB = getDateForEvent(b, currentYear);
-                if (dateB && dateB < today && b.dates && b.dates[currentYear + 1]) {
-                    dateB = getDateForEvent(b, currentYear + 1);
-                } else if (!dateB && b.dates && b.dates[currentYear + 1]) {
-                    dateB = getDateForEvent(b, currentYear + 1);
-                }
-
-                if (!dateA && !dateB) return 0;
-                if (!dateA) return 1;
-                if (!dateB) return -1;
-                return dateA - dateB;
-            });
-
-            availableHolidays.forEach(event => {
-                let displayYear = currentYear;
-                let month, day;
-                let isTentative = event.tentative;
-                let eventDateActual;
-
-                if (event.fixed) {
-                    month = event.month;
-                    day = event.day;
-                    eventDateActual = new Date(currentYear, month, day);
-                    if (eventDateActual < today) {
-                        displayYear = currentYear + 1;
-                    }
-                } else {
-                    eventDateActual = event.dates[currentYear] ? new Date(currentYear, event.dates[currentYear].month, event.dates[currentYear].day) : null;
-                    if (eventDateActual && eventDateActual < today && event.dates[currentYear + 1]) {
-                        displayYear = currentYear + 1;
-                        month = event.dates[displayYear].month;
-                        day = event.dates[displayYear].day;
-                    } else if (event.dates[currentYear]) {
-                        month = event.dates[currentYear].month;
-                        day = event.dates[currentYear].day;
-                    } else if (event.dates[currentYear + 1]) { // Fallback if current year's date isn't explicitly defined, try next year
-                        displayYear = currentYear + 1;
-                        month = event.dates[displayYear].month;
-                        day = event.dates[displayYear].day;
-                    } else {
-                        return; // Skip if no date is found for current or next year
-                    }
-                }
-
-                const tempDate = new Date(displayYear, month, day);
-                const monthName = tempDate.toLocaleString('en-IN', { month: 'long' });
-
-                const li = document.createElement('li');
-                li.textContent = `${monthName} ${day}: ${event.name} ${isTentative ? '(Tentative)' : ''}`;
-                eventsList.appendChild(li);
-            });
-        }
-
-        setInterval(updateDateTime, 1000);
-        updateDateTime();
-        fetchEventsAndHolidays();
+        // Initial fetch of hotels and display logic when the page loads
+        document.addEventListener('DOMContentLoaded', fetchHotelsAndInitializeDisplay);
     </script>
-
 </body>
 </html>
