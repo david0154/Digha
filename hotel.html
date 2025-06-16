@@ -13,6 +13,8 @@
             --button-hover-blue: #0056b3; /* Standard button hover blue */
             --green-button: #28a745; /* Green color for Add Hotel button */
             --green-button-hover: #218838; /* Darker green for hover */
+            --filter-bg: #f9f9f9;
+            --filter-border: #ddd;
         }
 
         body {
@@ -187,6 +189,59 @@
             min-height: 50px; /* AdSense recommended minimum heights for responsive */
         }
 
+        .filter-section {
+            background-color: var(--filter-bg);
+            border: 1px solid var(--filter-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: left;
+            display: none; /* Hidden by default */
+        }
+
+        .filter-section h3 {
+            color: var(--darker-sky-blue);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .filter-group {
+            margin-bottom: 15px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .filter-group input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .filter-group input[type="number"] {
+            width: calc(50% - 10px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+
+        .filter-group input[type="number"]:last-child {
+            margin-right: 0;
+        }
+
+        .filter-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .filter-buttons button {
+            margin: 0 10px;
+        }
+
         footer {
             background-color: var(--sky-blue);
             color: #fff;
@@ -242,6 +297,29 @@
 
     <div class="container">
         <h2>Hotel Details</h2>
+        <button id="toggleFilterBtn" class="add-hotel-button">Show Filter Options</button>
+
+        <div class="filter-section" id="filterSection">
+            <h3>Filter Hotels</h3>
+            <div class="filter-group">
+                <label>Room Type:</label>
+                <input type="radio" id="acRoom" name="roomType" value="ac">
+                <label for="acRoom">AC Room</label>
+                <input type="radio" id="nonAcRoom" name="roomType" value="non_ac">
+                <label for="nonAcRoom">Non-AC Room</label>
+                <input type="radio" id="anyRoom" name="roomType" value="any" checked>
+                <label for="anyRoom">Any Room Type</label>
+            </div>
+            <div class="filter-group">
+                <label for="minPrice">Price Range (INR):</label>
+                <input type="number" id="minPrice" placeholder="Min Price">
+                <input type="number" id="maxPrice" placeholder="Max Price">
+            </div>
+            <div class="filter-buttons">
+                <button id="applyFilterBtn">Apply Filter</button>
+                <button id="clearFilterBtn" class="add-hotel-button">Clear Filter</button>
+            </div>
+        </div>
 
         <div class="ads-container" id="ad-unit-1" style="max-width: 320px; max-height: 50px;">
             <ins class="adsbygoogle"
@@ -288,7 +366,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
     <script>
-        let hotels = [];
+        let allHotels = []; // Store all fetched hotels
+        let displayedHotels = []; // Hotels currently being displayed (all or filtered)
         let currentHotelIndex = 0;
 
         let shuffledHotelOrder = [];
@@ -298,6 +377,13 @@
         const hotelDetailsDiv = document.getElementById('hotelDetails');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
+        const toggleFilterBtn = document.getElementById('toggleFilterBtn');
+        const filterSection = document.getElementById('filterSection');
+        const applyFilterBtn = document.getElementById('applyFilterBtn');
+        const clearFilterBtn = document.getElementById('clearFilterBtn');
+        const roomTypeRadios = document.querySelectorAll('input[name="roomType"]');
+        const minPriceInput = document.getElementById('minPrice');
+        const maxPriceInput = document.getElementById('maxPrice');
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -311,15 +397,16 @@
             try {
                 const db = firebase.firestore();
                 const snapshot = await db.collection('hotels').get();
-                hotels = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                allHotels = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-                if (hotels.length === 0) {
+                if (allHotels.length === 0) {
                     hotelDetailsDiv.innerHTML = "<p>No hotels found.</p>";
                     prevBtn.disabled = true;
                     nextBtn.disabled = true;
                     return;
                 }
 
+                // Initial display logic (random hotel for the first visit in 12 hours)
                 const storedTimestamp = localStorage.getItem('lastAutoDisplayTimestamp');
                 const storedShuffledOrder = JSON.parse(localStorage.getItem('shuffledHotelOrder'));
                 let storedPointer = parseInt(localStorage.getItem('shuffledOrderPointer') || '0', 10);
@@ -334,7 +421,7 @@
                         shuffledHotelOrder = storedShuffledOrder;
                         const lastShownPointer = (storedPointer - 1 + shuffledHotelOrder.length) % shuffledHotelOrder.length;
                         const lastShownHotelId = shuffledHotelOrder[lastShownPointer].id;
-                        currentHotelIndex = hotels.findIndex(h => h.id === lastShownHotelId);
+                        currentHotelIndex = allHotels.findIndex(h => h.id === lastShownHotelId);
 
                         if (currentHotelIndex === -1) {
                             needsNewAutoDisplay = true;
@@ -343,11 +430,11 @@
                 }
 
                 if (needsNewAutoDisplay) {
-                    shuffledHotelOrder = shuffleArray([...hotels]);
+                    shuffledHotelOrder = shuffleArray([...allHotels]);
                     shuffledOrderPointer = 0;
 
                     const hotelToDisplay = shuffledHotelOrder[shuffledOrderPointer];
-                    currentHotelIndex = hotels.findIndex(h => h.id === hotelToDisplay.id);
+                    currentHotelIndex = allHotels.findIndex(h => h.id === hotelToDisplay.id);
                     
                     shuffledOrderPointer = (shuffledOrderPointer + 1) % shuffledHotelOrder.length;
 
@@ -356,6 +443,7 @@
                     localStorage.setItem('shuffledOrderPointer', shuffledOrderPointer.toString());
                 }
 
+                displayedHotels = [...allHotels]; // Initially display all hotels
                 showHotel(currentHotelIndex);
                 updateNavigationButtons();
 
@@ -373,16 +461,18 @@
         }
 
         function showHotel(index) {
-            if (hotels.length === 0) {
+            const hotelsToDisplay = displayedHotels; // Use displayedHotels array
+
+            if (hotelsToDisplay.length === 0) {
                 hotelDetailsDiv.innerHTML = "<p>No hotel data available.</p>";
                 return;
             }
-            if (index < 0 || index >= hotels.length) {
+            if (index < 0 || index >= hotelsToDisplay.length) {
                 console.warn("Invalid hotel index.");
                 return;
             }
 
-            const h = hotels[index];
+            const h = hotelsToDisplay[index];
             let html = `
                 <div class="hotel-card">
                     <h2>${h.name || "No Name"}</h2>
@@ -432,9 +522,74 @@
 
         function updateNavigationButtons() {
             prevBtn.disabled = currentHotelIndex === 0;
-            nextBtn.disabled = currentHotelIndex === hotels.length - 1;
+            nextBtn.disabled = currentHotelIndex === displayedHotels.length - 1;
         }
 
+        function applyFilter() {
+            const roomType = document.querySelector('input[name="roomType"]:checked').value;
+            const minPrice = parseFloat(minPriceInput.value) || 0;
+            const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
+
+            displayedHotels = allHotels.filter(hotel => {
+                let passesRoomType = true;
+                let passesPrice = true;
+
+                // Room Type Filter
+                if (roomType === 'ac') {
+                    passesRoomType = (hotel.ac_min_price && hotel.ac_min_price !== "-") || (hotel.ac_max_price && hotel.ac_max_price !== "-");
+                } else if (roomType === 'non_ac') {
+                    passesRoomType = (hotel.non_ac_min_price && hotel.non_ac_min_price !== "-") || (hotel.non_ac_max_price && hotel.non_ac_max_price !== "-");
+                }
+                // 'any' room type always passes
+
+                // Price Range Filter
+                let hotelMinPrice = Infinity;
+                let hotelMaxPrice = 0;
+
+                // Consider both AC and Non-AC prices for the range
+                if (hotel.ac_min_price && hotel.ac_min_price !== "-") hotelMinPrice = Math.min(hotelMinPrice, parseFloat(hotel.ac_min_price));
+                if (hotel.ac_max_price && hotel.ac_max_price !== "-") hotelMaxPrice = Math.max(hotelMaxPrice, parseFloat(hotel.ac_max_price));
+                if (hotel.non_ac_min_price && hotel.non_ac_min_price !== "-") hotelMinPrice = Math.min(hotelMinPrice, parseFloat(hotel.non_ac_min_price));
+                if (hotel.non_ac_max_price && hotel.non_ac_max_price !== "-") hotelMaxPrice = Math.max(hotelMaxPrice, parseFloat(hotel.non_ac_max_price));
+                
+                // If the hotel has no price information, it doesn't pass the price filter if one is applied
+                if (hotelMinPrice === Infinity && hotelMaxPrice === 0 && (minPrice > 0 || maxPrice < Infinity)) {
+                    passesPrice = false;
+                } else {
+                    // Check for overlap between hotel's price range and filter range
+                    const overlapMin = Math.max(minPrice, hotelMinPrice);
+                    const overlapMax = Math.min(maxPrice, hotelMaxPrice);
+                    passesPrice = overlapMin <= overlapMax;
+                }
+
+
+                return passesRoomType && passesPrice;
+            });
+
+            currentHotelIndex = 0; // Reset to the first hotel in the filtered list
+            if (displayedHotels.length === 0) {
+                hotelDetailsDiv.innerHTML = "<p>No hotels found matching your criteria.</p>";
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+            } else {
+                showHotel(currentHotelIndex);
+            }
+            filterSection.style.display = 'block'; // Keep filter section visible after applying filter
+            toggleFilterBtn.textContent = 'Hide Filter Options';
+        }
+
+        function clearFilter() {
+            displayedHotels = [...allHotels]; // Reset to all hotels
+            currentHotelIndex = 0; // Reset to the first hotel
+            minPriceInput.value = '';
+            maxPriceInput.value = '';
+            document.getElementById('anyRoom').checked = true; // Select "Any Room Type"
+            showHotel(currentHotelIndex);
+            filterSection.style.display = 'none'; // Hide filter section after clearing
+            toggleFilterBtn.textContent = 'Show Filter Options';
+        }
+
+        // Event Listeners
         prevBtn.addEventListener('click', () => {
             if (currentHotelIndex > 0) {
                 showHotel(currentHotelIndex - 1);
@@ -442,10 +597,23 @@
         });
 
         nextBtn.addEventListener('click', () => {
-            if (currentHotelIndex < hotels.length - 1) {
+            if (currentHotelIndex < displayedHotels.length - 1) {
                 showHotel(currentHotelIndex + 1);
             }
         });
+
+        toggleFilterBtn.addEventListener('click', () => {
+            if (filterSection.style.display === 'none' || filterSection.style.display === '') {
+                filterSection.style.display = 'block';
+                toggleFilterBtn.textContent = 'Hide Filter Options';
+            } else {
+                filterSection.style.display = 'none';
+                toggleFilterBtn.textContent = 'Show Filter Options';
+            }
+        });
+
+        applyFilterBtn.addEventListener('click', applyFilter);
+        clearFilterBtn.addEventListener('click', clearFilter);
 
         document.addEventListener('DOMContentLoaded', fetchHotelsAndInitializeDisplay);
     </script>
