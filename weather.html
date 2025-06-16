@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digha Weather Forecast (Open-Meteo)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #e3f2fd; /* Light blue background */
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            color: #333;
+        }
+
+        .ad-slot {
+            margin: 20px 0; /* Spacing for ads */
+            border: 1px dashed #ccc; /* Visual border for ad placement */
+            padding: 10px;
+            text-align: center;
+            background-color: #f9f9f9;
+            width: 100%;
+            max-width: 728px; /* Common ad width */
+            box-sizing: border-box;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .weather-container {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 35px;
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            border: 1px solid #bbdefb; /* Subtle blue border */
+            margin-bottom: 30px;
+        }
+
+        .logo-container {
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            max-width: 150px;
+            height: auto;
+        }
+
+        h1 {
+            color: #1976d2; /* Primary blue */
+            margin-bottom: 20px;
+            font-size: 2.2em;
+        }
+
+        #location {
+            font-size: 1.8em;
+            color: #2196f3; /* Lighter blue */
+            margin-bottom: 18px;
+            font-weight: bold;
+        }
+
+        #temperature {
+            font-size: 4em;
+            font-weight: bold;
+            color: #1e88e5; /* Another shade of blue */
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .weather-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 25px;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .info-item {
+            text-align: center;
+            flex: 1 1 auto; /* Allow items to grow/shrink */
+            min-width: 120px; /* Minimum width for items */
+        }
+
+        .info-label {
+            font-size: 1.1em;
+            color: #757575;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #1565c0; /* Darker blue */
+        }
+
+        #description {
+            font-size: 1.4em;
+            color: #424242;
+            margin-bottom: 25px;
+            text-transform: capitalize;
+        }
+
+        #error-message {
+            color: #d32f2f; /* Red error text */
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #1976d2; /* Primary blue footer */
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            border-top: 2px solid #1565c0; /* Darker blue border for contrast */
+            margin-top: auto; /* Push footer to the bottom */
+        }
+
+        .footer-links {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #bbdefb; /* Lighter blue for links */
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-info {
+            font-size: 0.9em;
+        }
+    </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX'); // REPLACE with your actual Google Analytics Measurement ID
+    </script>
+
+</head>
+<body>
+    <div class="ad-slot">
+        <p>Advertisement Space 1</p>
+    </div>
+
+    <div class="weather-container">
+        <div class="logo-container">
+            <img src="mydigha.png" alt="MyDigha Logo" class="logo">
+        </div>
+        <h1>Current Weather in</h1>
+        <div id="location">Digha, West Bengal</div>
+        <div id="temperature">Loading...</div>
+        <div id="description"></div>
+        <div class="weather-info">
+            <div class="info-item">
+                <div class="info-label">Humidity</div>
+                <div class="info-value"><span id="humidity"></span></div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Wind Speed</div>
+                <div class="info-value"><span id="wind-speed"></span></div>
+            </div>
+        </div>
+        <div id="error-message" class="error"></div>
+    </div>
+
+    <div class="ad-slot">
+        <p>Advertisement Space 2</p>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Support</a> | <a href="#">Policy</a>
+        </div>
+        <div class="footer-info">
+            Contact: <a href="mailto:mydigha1@gmail.com" style="color: #bbdefb; text-decoration: none;">mydigha1@gmail.com</a><br>
+            This website is managed by Nexuzy Tech Pvt Ltd.
+        </div>
+    </footer>
+
+    <script>
+        // Precise coordinates for Digha, West Bengal
+        const latitude = 21.638333;
+        const longitude = 87.509722;
+        const timezone = 'Asia/Kolkata'; // Or 'auto' for automatic detection
+
+        // Open-Meteo API endpoint for current weather
+        // We will fetch hourly data to get humidity and a more detailed description.
+        const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,weathercode&temperature_unit=celsius&windspeed_unit=ms&precipitation_unit=mm&timezone=${timezone}`;
+
+        // Basic weather code to description mapping (you can expand this significantly)
+        const weatherCodeDescriptions = {
+            0: 'Clear sky',
+            1: 'Mainly clear',
+            2: 'Partly cloudy',
+            3: 'Overcast',
+            45: 'Fog',
+            48: 'Depositing rime fog',
+            51: 'Light Drizzle',
+            53: 'Moderate Drizzle',
+            55: 'Dense Drizzle',
+            56: 'Light Freezing Drizzle',
+            57: 'Dense Freezing Drizzle',
+            61: 'Slight Rain',
+            63: 'Moderate Rain',
+            65: 'Heavy Rain',
+            66: 'Light Freezing Rain',
+            67: 'Heavy Freezing Rain',
+            71: 'Slight Snow fall',
+            73: 'Moderate Snow fall',
+            75: 'Heavy Snow fall',
+            77: 'Snow grains',
+            80: 'Slight Rain showers',
+            81: 'Moderate Rain showers',
+            82: 'Violent Rain showers',
+            85: 'Slight Snow showers',
+            86: 'Heavy Snow showers',
+            95: 'Thunderstorm',
+            96: 'Thunderstorm with slight hail',
+            99: 'Thunderstorm with heavy hail',
+            // Add more as needed from Open-Meteo documentation
+        };
+
+        async function getWeatherData() {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.current_weather) {
+                    const currentWeather = data.current_weather;
+                    document.getElementById('temperature').textContent = `${Math.round(currentWeather.temperature)}°C`;
+                    document.getElementById('wind-speed').textContent = `${currentWeather.windspeed} m/s`;
+
+                    // For humidity and description, we need the hourly data
+                    const currentTimeIndex = data.hourly.time.findIndex(time => {
+                        // Find the index of the closest hourly data point to the current time
+                        // Open-Meteo provides hourly data. We need to find the data point
+                        // that matches the current time or is the most recent one.
+                        return new Date(time) >= new Date();
+                    });
+
+                    if (currentTimeIndex !== -1 && data.hourly.relativehumidity_2m && data.hourly.weathercode) {
+                        const humidityValue = data.hourly.relativehumidity_2m[currentTimeIndex];
+                        const weatherCode = data.hourly.weathercode[currentTimeIndex];
+
+                        document.getElementById('humidity').textContent = humidityValue !== undefined ? `${humidityValue}%` : 'N/A';
+                        document.getElementById('description').textContent = weatherCodeDescriptions.hasOwnProperty(weatherCode) ? weatherCodeDescriptions[weatherCode] : 'Weather conditions available';
+                    } else {
+                         document.getElementById('humidity').textContent = 'N/A';
+                         document.getElementById('description').textContent = 'Detailed info not available';
+                    }
+
+                    document.getElementById('error-message').textContent = ''; // Clear any previous errors
+
+                } else if (data.error) {
+                    document.getElementById('error-message').textContent = `API Error: ${data.reason}`;
+                    document.getElementById('temperature').textContent = '--';
+                    document.getElementById('description').textContent = '';
+                    document.getElementById('humidity').textContent = '';
+                    document.getElementById('wind-speed').textContent = '';
+                } else {
+                    document.getElementById('error-message').textContent = 'Could not retrieve weather data.';
+                    document.getElementById('temperature').textContent = '--';
+                    document.getElementById('description').textContent = '';
+                    document.getElementById('humidity').textContent = '';
+                    document.getElementById('wind-speed').textContent = '';
+                }
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                document.getElementById('error-message').textContent = 'Network error or unable to fetch data.';
+                document.getElementById('temperature').textContent = '--';
+                document.getElementById('description').textContent = '';
+                document.getElementById('humidity').textContent = '';
+                document.getElementById('wind-speed').textContent = '';
+            }
+        }
+
+        // Call the function to get weather data when the page loads
+        document.addEventListener('DOMContentLoaded', getWeatherData);
+
+        // Refresh weather data every 5 minutes (300000 milliseconds)
+        setInterval(getWeatherData, 300000);
+    </script>
+</body>
+</html>
