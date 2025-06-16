@@ -243,7 +243,7 @@
     <div class="container">
         <h2>Hotel Details</h2>
 
-        <div class="ads-container" id="ad-unit-1" style="max-width: 320px; max-height: 100px;">
+        <div class="ads-container" id="ad-unit-1" style="max-width: 320px; max-height: 50px;">
             <ins class="adsbygoogle"
                  style="display:block;"
                  data-ad-client="YOUR_ADSENSE_CLIENT_ID"
@@ -261,7 +261,7 @@
         </div>
     </div>
 
-    <div class="ads-container" id="ad-unit-3" style="max-width: 336px; max-height: 280px;">
+    <div class="ads-container" id="ad-unit-3" style="max-width: 728px; max-height: 90px;">
         <ins class="adsbygoogle"
              style="display:block;"
              data-ad-client="YOUR_ADSENSE_CLIENT_ID"
@@ -279,8 +279,8 @@
         <p>Support: <a href="mailto:hotelmydigha@gmail.com">hotelmydigha@gmail.com</a></p>
         <p>This website managed by Nexuzy Tech Pvt Ltd</p>
         <div>
-            <button class="add-hotel-button" onclick="location.href='addhotel.html'">Add Hotel</button>
-            <button onclick="location.href='updatehotel.html'">Update Hotel</button>
+            <button class="add-hotel-button" onclick="location.href='adhotel.html'">Add Hotel</button>
+            <button onclick="location.href='update.html'">Update Hotel</button>
         </div>
     </footer>
 
@@ -359,10 +359,8 @@
                 showHotel(currentHotelIndex);
                 updateNavigationButtons();
 
-                // Manually push calls for the static ad units (Ad 1 and Ad 3)
-                // These are here to ensure they render, especially if content above them causes a re-flow.
-                // However, they should generally already be handled by the initial global AdSense script.
-                // It's safer to ensure they exist on page load.
+                // Manually push calls for the static ad units (Ad 1 and Ad 3) to ensure they render
+                // after the DOM is fully loaded.
                 (window.adsbygoogle = window.adsbygoogle || []).push({}); // For Ad Unit 1
                 (window.adsbygoogle = window.adsbygoogle || []).push({}); // For Ad Unit 3
 
@@ -401,8 +399,7 @@
             }
 
             // AdSense Ad Unit 2: Placed between image1 and image2 if both exist
-            // This ad unit will only show up IF there's at least one image.
-            // Notice: The <script> tag for push is now *outside* this string, called after innerHTML is set.
+            // Aiming for 300x50 (Mobile Banner)
             if (h.image1 && h.image2) { 
                 html += `
                 <div class="ads-container in-content-ad" id="ad-unit-2" style="max-width: 300px; max-height: 50px; margin: 15px auto;">
