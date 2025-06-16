@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digha Weather Forecast (Open-Meteo)</title>
+    <title>Digha Weather Forecast</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -204,22 +204,6 @@
             font-size: 0.95em;
         }
 
-        .footer-links {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: #90caf9; /* Lighter blue for links */
-            text-decoration: none;
-            margin: 0 12px;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: #fff;
-            text-decoration: underline;
-        }
-
         .footer-info {
             line-height: 1.6;
         }
@@ -287,9 +271,6 @@ India</div>
     </div>
 
     <footer>
-        <div class="footer-links">
-            <a href="#">Support</a> | <a href="#">Policy</a>
-        </div>
         <div class="footer-info">
             Contact: <a href="mailto:mydigha1@gmail.com" style="color: #90caf9; text-decoration: none;">mydigha1@gmail.com</a><br>
             This website is managed by Nexuzy Tech Pvt Ltd.
@@ -303,7 +284,8 @@ India</div>
         const timezone = 'Asia/Kolkata';
 
         // Open-Meteo API endpoint for current and 7-day forecast
-        const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,weathercode,windspeed_10m,winddirection_10m,pressure_msl&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max,winddirection_10m_dominant,pressure_msl_mean,weathercode&forecast_days=7&temperature_unit=celsius&windspeed_unit=ms&precipitation_unit=mm&timezone=${timezone}`;
+        // Added precipitation_probability_max to daily parameters
+        const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,weathercode,windspeed_10m,winddirection_10m,pressure_msl&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,windspeed_10m_max,winddirection_10m_dominant,pressure_msl_mean,weathercode&forecast_days=7&temperature_unit=celsius&windspeed_unit=ms&precipitation_unit=mm&timezone=${timezone}`;
 
         // Basic weather code to description mapping (expand as needed from Open-Meteo docs)
         const weatherCodeDescriptions = {
@@ -379,7 +361,7 @@ India</div>
                         const currentHumidityValue = hourlyData.relativehumidity_2m[currentHourIndex];
                         const currentWindDirectionDeg = hourlyData.winddirection_10m[currentHourIndex];
                         const currentSeaLevelPressure = hourlyData.pressure_msl[currentHourIndex];
-                        const currentWeatherCode = hourlyData.weathercode[currentHourIndex];
+                        const currentWeatherCode = hourly.weathercode[currentHourIndex];
 
                         document.getElementById('current-humidity').textContent = currentHumidityValue !== undefined ? `${currentHumidityValue}%` : 'N/A';
                         document.getElementById('current-wind-direction').textContent = getWindDirection(currentWindDirectionDeg);
@@ -406,9 +388,9 @@ India</div>
                         const maxTemp = Math.round(dailyData.temperature_2m_max[i]);
                         const minTemp = Math.round(dailyData.temperature_2m_min[i]);
                         const precipitation = dailyData.precipitation_sum[i];
+                        const precipitationProbability = dailyData.precipitation_probability_max[i]; // New: Precipitation probability
                         const maxWindSpeed = dailyData.windspeed_10m_max[i];
                         const dominantWindDirectionDeg = dailyData.winddirection_10m_dominant[i];
-                        // Removed dailyData.relativehumidity_2m_max[i] as it's not a valid daily variable
                         const meanSeaLevelPressure = dailyData.pressure_msl_mean[i];
                         const weatherCode = dailyData.weathercode[i];
 
@@ -423,6 +405,7 @@ India</div>
                             <p>${description}</p>
                             ${isThunderstorm ? '<p class="thunderstorm">⚡ Thunderstorm Likely</p>' : ''}
                             <p>Rain: <span class="detail-value">${precipitation !== undefined ? precipitation.toFixed(1) : 'N/A'} mm</span></p>
+                            <p>Rain Chance: <span class="detail-value rain-chance">${precipitationProbability !== undefined ? precipitationProbability : 'N/A'}%</span></p>
                             <p>Wind: <span class="detail-value">${maxWindSpeed !== undefined ? maxWindSpeed.toFixed(1) : 'N/A'} m/s ${getWindDirection(dominantWindDirectionDeg)}</span></p>
                             <p>Pressure: <span class="detail-value">${meanSeaLevelPressure !== undefined ? Math.round(meanSeaLevelPressure) : 'N/A'} hPa</span></p>
                         `;
