@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digha Weather Forecast</title>
+    <title>Digha Weather Forecast (Open-Meteo)</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,26 +11,26 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(to bottom, #e3f2fd, #bbdefb); /* Light blue gradient */
+            background: linear-gradient(to bottom, #e3f2fd, #bbdefb);
             margin: 0;
-            padding: 20px 0; /* Add some vertical padding */
+            padding: 20px 0;
             box-sizing: border-box;
             color: #333;
         }
 
         .ad-slot {
-            margin: 25px auto; /* Centered with vertical spacing */
-            border: 1px dashed #90caf9; /* Soft blue dashed border */
+            margin: 25px auto;
+            border: 1px dashed #90caf9;
             padding: 15px;
             text-align: center;
-            background-color: rgba(255, 255, 255, 0.7); /* Slightly transparent white */
+            background-color: rgba(255, 255, 255, 0.7);
             width: 90%;
-            max-width: 728px; /* Common ad width */
+            max-width: 728px;
             box-sizing: border-box;
             font-size: 0.95em;
             color: #424242;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .weather-container {
@@ -39,9 +39,9 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 40px;
             text-align: center;
-            max-width: 500px; /* Slightly wider for more content */
+            max-width: 500px;
             width: 100%;
-            border: 1px solid #90caf9; /* Match ad slot border */
+            border: 1px solid #90caf9;
             margin-bottom: 30px;
         }
 
@@ -50,32 +50,32 @@
         }
 
         .logo {
-            max-width: 180px; /* Slightly larger logo */
+            max-width: 180px;
             height: auto;
-            display: block; /* Ensures centering works */
+            display: block;
             margin: 0 auto;
         }
 
         h1 {
-            color: #0d47a1; /* Darker primary blue */
+            color: #0d47a1;
             margin-bottom: 20px;
             font-size: 2.5em;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
         }
 
         #location {
             font-size: 1.9em;
-            color: #1976d2; /* Primary blue */
+            color: #1976d2;
             margin-bottom: 25px;
             font-weight: bold;
         }
 
         #current-temp {
-            font-size: 5em; /* Larger current temperature */
+            font-size: 5em;
             font-weight: bold;
-            color: #2196f3; /* Bright blue */
+            color: #2196f3;
             margin-bottom: 15px;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         #current-description {
@@ -99,7 +99,7 @@
         .detail-item {
             text-align: center;
             min-width: 100px;
-            flex: 1; /* Allow items to share space */
+            flex: 1;
         }
 
         .detail-label {
@@ -117,7 +117,7 @@
         /* 7-Day Forecast Styling */
         .forecast-section {
             width: 90%;
-            max-width: 800px; /* Wider for forecast cards */
+            max-width: 800px;
             margin: 40px auto;
             background-color: #fff;
             border-radius: 15px;
@@ -135,13 +135,13 @@
 
         .forecast-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsive grid */
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px;
             justify-content: center;
         }
 
         .forecast-card {
-            background-color: #e3f2fd; /* Lighter blue for cards */
+            background-color: #e3f2fd;
             border-radius: 10px;
             padding: 15px;
             text-align: center;
@@ -171,42 +171,65 @@
             margin: 8px 0;
         }
 
-        .forecast-card .detail-value { /* Reusing existing style for consistency */
+        .forecast-card .detail-value {
             font-size: 1em;
             color: #1565c0;
         }
 
         .forecast-card .rain-chance {
-            color: #388e3c; /* Green for rain */
+            color: #388e3c;
             font-weight: bold;
         }
 
         .forecast-card .thunderstorm {
-            color: #d32f2f; /* Red for thunderstorm */
+            color: #d32f2f;
             font-weight: bold;
         }
 
         #error-message {
-            color: #d32f2f; /* Red error text */
+            color: #d32f2f;
             margin-top: 20px;
             font-weight: bold;
         }
 
         footer {
-            background-color: #0d47a1; /* Darker primary blue footer */
-            color: #e3f2fd; /* Light text for contrast */
+            background-color: #0d47a1;
+            color: #e3f2fd;
             text-align: center;
             padding: 25px;
             width: 100%;
             box-sizing: border-box;
-            border-top: 3px solid #1565c0; /* Stronger blue border */
-            margin-top: auto; /* Push footer to the bottom */
+            border-top: 3px solid #1565c0;
+            margin-top: auto;
             font-size: 0.95em;
         }
 
         .footer-info {
             line-height: 1.6;
         }
+
+        /* Highlighted Current Day Styles */
+        .current-day-highlight {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .current-day-highlight.rain {
+            color: #388e3c; /* Green for rain */
+        }
+
+        .current-day-highlight.wind {
+            color: #1565c0; /* Blue for wind */
+        }
+
+        .current-day-highlight.thunderstorm {
+            color: #d32f2f; /* Red for thunderstorm */
+        }
+
+        .current-day-highlight.humidity {
+            color: #2196f3; /* Bright blue for humidity */
+        }
+
     </style>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -214,9 +237,8 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX'); // REPLACE with your actual Google Analytics Measurement ID
+      gtag('config', 'G-XXXXXXXXXX'); // Replace with your actual Google Analytics Measurement ID
     </script>
-
 </head>
 <body>
 
@@ -229,9 +251,7 @@
             <img src="mydigha.png" alt="MyDigha Logo" class="logo">
         </div>
         <h1>Current Weather in</h1>
-        <div id="location">Digha, Purba Medinipur District,
-West Bengal – 721428,
-India</div>
+        <div id="location">Digha, Purba Medinipur District, West Bengal – 721428, India</div>
         <div id="current-temp">Loading...</div>
         <div id="current-description"></div>
         <div class="current-details">
@@ -239,7 +259,7 @@ India</div>
                 <div class="detail-label">Humidity</div>
                 <div class="detail-value"><span id="current-humidity"></span></div>
             </div>
-            <div class="detail-item">
+             <div class="detail-item">
                 <div class="detail-label">Wind Speed</div>
                 <div class="detail-value"><span id="current-wind-speed"></span></div>
             </div>
@@ -250,6 +270,14 @@ India</div>
             <div class="detail-item">
                 <div class="detail-label">Sea Level Pressure</div>
                 <div class="detail-value"><span id="current-sea-level-pressure"></span></div>
+            </div>
+             <div class="detail-item">
+                <div class="detail-label">Rain</div>
+                <div class="detail-value"><span id="current-rain"></span></div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Thunderstorm</div>
+                 <div class="detail-value"><span id="current-thunderstorm"></span></div>
             </div>
         </div>
         <div id="error-message" class="error"></div>
@@ -284,10 +312,9 @@ India</div>
         const timezone = 'Asia/Kolkata';
 
         // Open-Meteo API endpoint for current and 7-day forecast
-        // Added precipitation_probability_max to daily parameters
-        const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,weathercode,windspeed_10m,winddirection_10m,pressure_msl&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,windspeed_10m_max,winddirection_10m_dominant,pressure_msl_mean,weathercode&forecast_days=7&temperature_unit=celsius&windspeed_unit=ms&precipitation_unit=mm&timezone=${timezone}`;
+        const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,weathercode,windspeed_10m,winddirection_10m,pressure_msl,precipitation_probability,windgusts_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,windspeed_10m_max,winddirection_10m_dominant,pressure_msl_mean,weathercode&forecast_days=7&temperature_unit=celsius&windspeed_unit=ms&precipitation_unit=mm&timezone=${timezone}`;
 
-        // Basic weather code to description mapping (expand as needed from Open-Meteo docs)
+        // Basic weather code to description mapping
         const weatherCodeDescriptions = {
             0: 'Clear sky',
             1: 'Mainly clear',
@@ -336,6 +363,9 @@ India</div>
         async function getWeatherData() {
             try {
                 const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const data = await response.json();
 
                 if (data.current_weather && data.hourly && data.daily) {
@@ -347,7 +377,7 @@ India</div>
                     document.getElementById('current-temp').textContent = `${Math.round(currentWeather.temperature)}°C`;
                     document.getElementById('current-wind-speed').textContent = `${currentWeather.windspeed} m/s`;
 
-                    const now = new Date();
+                     const now = new Date();
                     // Find the index for the current hour in hourly data
                     const currentHourIndex = hourlyData.time.findIndex(timeStr => {
                         const date = new Date(timeStr);
@@ -361,24 +391,31 @@ India</div>
                         const currentHumidityValue = hourlyData.relativehumidity_2m[currentHourIndex];
                         const currentWindDirectionDeg = hourlyData.winddirection_10m[currentHourIndex];
                         const currentSeaLevelPressure = hourlyData.pressure_msl[currentHourIndex];
-                        const currentWeatherCode = hourly.weathercode[currentHourIndex];
+                         const currentWeatherCode = hourlyData.weathercode[currentHourIndex];
+                        const currentRainChance = hourlyData.precipitation_probability[currentHourIndex];
+                         const currentWindGust = hourlyData.windgusts_10m[currentHourIndex];
 
-                        document.getElementById('current-humidity').textContent = currentHumidityValue !== undefined ? `${currentHumidityValue}%` : 'N/A';
+                        document.getElementById('current-humidity').textContent = currentHumidityValue !== undefined ? `<span class="current-day-highlight humidity">${currentHumidityValue}%</span>` : 'N/A';
+                         document.getElementById('current-wind-speed').textContent = currentWindGust !== undefined ? `<span class="current-day-highlight wind">${currentWindGust} m/s</span>` : 'N/A';
                         document.getElementById('current-wind-direction').textContent = getWindDirection(currentWindDirectionDeg);
                         document.getElementById('current-sea-level-pressure').textContent = currentSeaLevelPressure !== undefined ? `${Math.round(currentSeaLevelPressure)} hPa` : 'N/A';
+                         document.getElementById('current-rain').textContent = currentRainChance !== undefined ? `<span class="current-day-highlight rain">${currentRainChance}%</span>` : 'N/A';
+                        document.getElementById('current-thunderstorm').textContent = weatherCodeDescriptions.hasOwnProperty(currentWeatherCode) && (currentWeatherCode >= 95 && currentWeatherCode <= 99) ? `<span class="current-day-highlight thunderstorm">Yes</span>` : 'No';
                         document.getElementById('current-description').textContent = weatherCodeDescriptions.hasOwnProperty(currentWeatherCode) ? weatherCodeDescriptions[currentWeatherCode] : 'Conditions available';
 
                     } else {
                         document.getElementById('current-humidity').textContent = 'N/A';
-                        document.getElementById('current-wind-direction').textContent = 'N/A';
+                        document.getElementById('current-wind-speed').textContent = 'N/A';
+                         document.getElementById('current-wind-direction').textContent = 'N/A';
                         document.getElementById('current-sea-level-pressure').textContent = 'N/A';
+                        document.getElementById('current-rain').textContent = 'N/A';
+                        document.getElementById('current-thunderstorm').textContent = 'No';
                         document.getElementById('current-description').textContent = 'Detailed info not available';
                     }
 
-
                     // --- Update 7-Day Forecast ---
                     const forecastGrid = document.getElementById('forecast-grid');
-                    forecastGrid.innerHTML = ''; // Clear previous loading message/cards
+                    forecastGrid.innerHTML = '';
 
                     for (let i = 0; i < dailyData.time.length; i++) {
                         const date = new Date(dailyData.time[i]);
@@ -388,14 +425,14 @@ India</div>
                         const maxTemp = Math.round(dailyData.temperature_2m_max[i]);
                         const minTemp = Math.round(dailyData.temperature_2m_min[i]);
                         const precipitation = dailyData.precipitation_sum[i];
-                        const precipitationProbability = dailyData.precipitation_probability_max[i]; // New: Precipitation probability
+                        const precipitationProbability = dailyData.precipitation_probability_max[i];
                         const maxWindSpeed = dailyData.windspeed_10m_max[i];
                         const dominantWindDirectionDeg = dailyData.winddirection_10m_dominant[i];
                         const meanSeaLevelPressure = dailyData.pressure_msl_mean[i];
                         const weatherCode = dailyData.weathercode[i];
 
                         const description = weatherCodeDescriptions.hasOwnProperty(weatherCode) ? weatherCodeDescriptions[weatherCode] : 'N/A';
-                        const isThunderstorm = weatherCode >= 95 && weatherCode <= 99; // Check for thunderstorm codes
+                        const isThunderstorm = weatherCode >= 95 && weatherCode <= 99;
 
                         const card = document.createElement('div');
                         card.classList.add('forecast-card');
@@ -412,7 +449,7 @@ India</div>
                         forecastGrid.appendChild(card);
                     }
 
-                    document.getElementById('error-message').textContent = ''; // Clear any previous errors
+                document.getElementById('error-message').textContent = '';
 
                 } else if (data.error) {
                     document.getElementById('error-message').textContent = `API Error: ${data.reason}`;
@@ -420,37 +457,40 @@ India</div>
                     document.getElementById('current-description').textContent = '';
                     document.getElementById('current-humidity').textContent = '';
                     document.getElementById('current-wind-speed').textContent = '';
-                    document.getElementById('current-wind-direction').textContent = '';
+                     document.getElementById('current-wind-direction').textContent = '';
                     document.getElementById('current-sea-level-pressure').textContent = '';
+                    document.getElementById('current-rain').textContent = '';
+                    document.getElementById('current-thunderstorm').textContent = 'No';
                     document.getElementById('forecast-grid').innerHTML = '<p>Error loading forecast.</p>';
                 } else {
-                    document.getElementById('error-message').textContent = 'Could not retrieve weather data.';
+                     document.getElementById('error-message').textContent = 'Could not retrieve weather data.  Please check the API or your internet connection.';
                     document.getElementById('current-temp').textContent = '--';
                     document.getElementById('current-description').textContent = '';
                     document.getElementById('current-humidity').textContent = '';
                     document.getElementById('current-wind-speed').textContent = '';
-                    document.getElementById('current-wind-direction').textContent = '';
+                     document.getElementById('current-wind-direction').textContent = '';
                     document.getElementById('current-sea-level-pressure').textContent = '';
+                     document.getElementById('current-rain').textContent = '';
+                    document.getElementById('current-thunderstorm').textContent = 'No';
                     document.getElementById('forecast-grid').innerHTML = '<p>Error loading forecast.</p>';
                 }
             } catch (error) {
                 console.error('Error fetching weather data:', error);
-                document.getElementById('error-message').textContent = 'Network error or unable to fetch data. Check console for details.';
+                document.getElementById('error-message').textContent = 'Network error or unable to fetch data.  Check console for details.';
                 document.getElementById('current-temp').textContent = '--';
                 document.getElementById('current-description').textContent = '';
                 document.getElementById('current-humidity').textContent = '';
-                document.getElementById('current-wind-speed').textContent = '';
-                document.getElementById('current-wind-direction').textContent = '';
+                 document.getElementById('current-wind-speed').textContent = '';
+                  document.getElementById('current-wind-direction').textContent = '';
                 document.getElementById('current-sea-level-pressure').textContent = '';
+                 document.getElementById('current-rain').textContent = '';
+                document.getElementById('current-thunderstorm').textContent = 'No';
                 document.getElementById('forecast-grid').innerHTML = '<p>Error loading forecast.</p>';
             }
         }
 
-        // Call the function to get weather data when the page loads
         document.addEventListener('DOMContentLoaded', getWeatherData);
-
-        // Refresh weather data every 5 minutes (300000 milliseconds)
-        setInterval(getWeatherData, 300000);
+        setInterval(getWeatherData, 300000); // Refresh every 5 minutes
     </script>
 </body>
 </html>
