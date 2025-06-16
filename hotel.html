@@ -17,7 +17,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #eef7ff; /* Very light blue background, similar to previous but harmonious */
+            background-color: #eef7ff;
             padding: 20px;
             text-align: center;
             color: #333;
@@ -25,7 +25,7 @@
         }
 
         header {
-            background-color: var(--sky-blue); /* Sky Blue Header */
+            background-color: var(--sky-blue);
             color: #fff;
             padding: 15px 20px;
             display: flex;
@@ -64,7 +64,7 @@
         }
 
         button {
-            background-color: var(--button-blue); /* Standard blue button */
+            background-color: var(--button-blue);
             color: white;
             padding: 10px 20px;
             margin: 10px;
@@ -88,18 +88,18 @@
         }
 
         .welcome-section {
-            background-color: #e3f2fd; /* Light background for this section */
+            background-color: #e3f2fd;
             padding: 25px;
             margin: 20px auto;
             max-width: 900px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             text-align: center;
-            border-left: 5px solid var(--sky-blue); /* Border in sky blue */
+            border-left: 5px solid var(--sky-blue);
         }
 
         .welcome-section h2 {
-            color: var(--darker-sky-blue); /* Heading in a darker sky blue */
+            color: var(--darker-sky-blue);
             font-size: 1.8em;
             margin-top: 0;
             margin-bottom: 15px;
@@ -134,7 +134,7 @@
         }
 
         .hotel-card h2 {
-            color: var(--darker-sky-blue); /* Hotel names in darker sky blue */
+            color: var(--darker-sky-blue);
             margin-top: 0;
             margin-bottom: 15px;
         }
@@ -166,7 +166,10 @@
         .ads-container {
             margin: 20px auto;
             text-align: center;
-            max-width: 728px;
+            /* Further restrict ad size for "decent" display */
+            max-width: 468px; /* Standard banner width or less */
+            max-height: 120px; /* Standard banner height or less */
+            overflow: hidden; /* Hide anything that spills over */
             background-color: #f0f0f0;
             padding: 10px;
             border-radius: 5px;
@@ -175,8 +178,14 @@
             font-style: italic;
         }
 
+        .ads-container .adsbygoogle {
+            display: block; /* Ensure it respects parent container */
+            width: 100%;
+            height: 100%;
+        }
+
         footer {
-            background-color: var(--sky-blue); /* Sky Blue Footer */
+            background-color: var(--sky-blue);
             color: #fff;
             text-align: center;
             padding: 20px;
@@ -228,21 +237,22 @@
         <p>Our aim is to provide easy access to hotel information, making your Digha journey smooth and enjoyable.</p>
     </div>
 
-    <div class="ads-container">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="YOUR_ADSENSE_CLIENT_ID"
-             data-ad-slot="YOUR_ADSENSE_SLOT_ID_1"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-        <p>Advertisement</p>
-    </div>
-
     <div class="container">
         <h2>Hotel Details</h2>
+
+        <div class="ads-container" style="max-width: 320px; max-height: 100px;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="YOUR_ADSENSE_CLIENT_ID"
+                 data-ad-slot="YOUR_ADSENSE_SLOT_1"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <p>Advertisement</p>
+        </div>
+
         <div id="hotelDetails">
             Loading hotel data...
         </div>
@@ -252,11 +262,11 @@
         </div>
     </div>
 
-    <div class="ads-container">
+    <div class="ads-container" style="max-width: 468px; max-height: 120px;">
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="YOUR_ADSENSE_CLIENT_ID"
-             data-ad-slot="YOUR_ADSENSE_SLOT_ID_2"
+             data-ad-slot="YOUR_ADSENSE_SLOT_3"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
         <script>
@@ -268,19 +278,6 @@
     <div class="container">
         <h3>More Digha Information (Optional)</h3>
         <p>Thinking of local attractions, travel tips, or dining options? This section can be expanded with more useful information for visitors.</p>
-    </div>
-
-    <div class="ads-container">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="YOUR_ADSENSE_CLIENT_ID"
-             data-ad-slot="YOUR_ADSENSE_SLOT_ID_3"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-        <p>Advertisement</p>
     </div>
 
     <footer>
@@ -297,26 +294,76 @@
     <script src="firebase-config.js"></script>
     <script>
         let hotels = [];
-        let currentHotelIndex = 0; // Starts at the first hotel
+        let currentHotelIndex = 0;
+
+        let shuffledHotelOrder = [];
+        let shuffledOrderPointer = 0;
+        const TWELVE_HOURS_MS = 12 * 60 * 60 * 1000;
 
         const hotelDetailsDiv = document.getElementById('hotelDetails');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
 
-        async function fetchHotels() {
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        async function fetchHotelsAndInitializeDisplay() {
             try {
                 const db = firebase.firestore();
                 const snapshot = await db.collection('hotels').get();
                 hotels = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                
-                if (hotels.length > 0) {
-                    showHotel(currentHotelIndex); // Show the first hotel initially
-                    updateNavigationButtons();
-                } else {
+
+                if (hotels.length === 0) {
                     hotelDetailsDiv.innerHTML = "<p>No hotels found.</p>";
                     prevBtn.disabled = true;
                     nextBtn.disabled = true;
+                    return;
                 }
+
+                const storedTimestamp = localStorage.getItem('lastAutoDisplayTimestamp');
+                const storedShuffledOrder = JSON.parse(localStorage.getItem('shuffledHotelOrder'));
+                let storedPointer = parseInt(localStorage.getItem('shuffledOrderPointer') || '0', 10);
+
+                const now = Date.now();
+                let needsNewAutoDisplay = true;
+
+                if (storedTimestamp && storedShuffledOrder && storedShuffledOrder.length > 0 && storedPointer <= storedShuffledOrder.length) {
+                    const timeElapsed = now - parseInt(storedTimestamp, 10);
+                    if (timeElapsed < TWELVE_HOURS_MS) {
+                        needsNewAutoDisplay = false;
+                        shuffledHotelOrder = storedShuffledOrder;
+                        const lastShownPointer = (storedPointer - 1 + shuffledHotelOrder.length) % shuffledHotelOrder.length;
+                        const lastShownHotelId = shuffledHotelOrder[lastShownPointer].id;
+                        currentHotelIndex = hotels.findIndex(h => h.id === lastShownHotelId);
+
+                        if (currentHotelIndex === -1) {
+                            needsNewAutoDisplay = true;
+                        }
+                    }
+                }
+
+                if (needsNewAutoDisplay) {
+                    shuffledHotelOrder = shuffleArray([...hotels]);
+                    shuffledOrderPointer = 0;
+
+                    const hotelToDisplay = shuffledHotelOrder[shuffledOrderPointer];
+                    currentHotelIndex = hotels.findIndex(h => h.id === hotelToDisplay.id);
+                    
+                    shuffledOrderPointer = (shuffledOrderPointer + 1) % shuffledHotelOrder.length;
+
+                    localStorage.setItem('lastAutoDisplayTimestamp', now.toString());
+                    localStorage.setItem('shuffledHotelOrder', JSON.stringify(shuffledHotelOrder));
+                    localStorage.setItem('shuffledOrderPointer', shuffledOrderPointer.toString());
+                }
+
+                showHotel(currentHotelIndex);
+                updateNavigationButtons();
+
             } catch (error) {
                 console.error("Error fetching hotels: ", error);
                 hotelDetailsDiv.innerHTML = "<p>Error loading hotels. Please try again later.</p>";
@@ -336,7 +383,7 @@
             }
 
             const h = hotels[index];
-            const html = `
+            let html = `
                 <div class="hotel-card">
                     <h2>${h.name || "No Name"}</h2>
                     <p><b>Address:</b> ${h.address || "N/A"}</p>
@@ -345,10 +392,37 @@
                     <p><b>Email:</b> ${h.email || "N/A"}</p>
                     <p><b>AC Room Price:</b> ₹${h.ac_min_price || "-"} – ₹${h.ac_max_price || "-"}</p>
                     <p><b>Non-AC Room Price:</b> ₹${h.non_ac_min_price || "-"} – ₹${h.non_ac_max_price || "-"}</p>
-                    ${h.image1 ? `<img src="${h.image1}" alt="Image 1">` : ""}
-                    ${h.image2 ? `<img src="${h.image2}" alt="Image 2">` : ""}
-                </div>
-            `;
+                    `;
+
+            if (h.image1) {
+                html += `<img src="${h.image1}" alt="Image 1">`;
+            }
+
+            // AdSense Ad Unit 2: Placed between image1 and image2 if both exist
+            // This ad unit will only show up IF there's at least one image.
+            // Adjust the max-width/height here for smaller, in-content ads.
+            if (h.image1 && h.image2) { 
+                html += `
+                <div class="ads-container" style="max-width: 300px; max-height: 60px; margin: 15px auto;">
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="YOUR_ADSENSE_CLIENT_ID"
+                         data-ad-slot="YOUR_ADSENSE_SLOT_2"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                         (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                    <p>Advertisement</p>
+                </div>`;
+            }
+
+            if (h.image2) {
+                html += `<img src="${h.image2}" alt="Image 2">`;
+            }
+
+            html += `</div>`; // Close hotel-card div
+            
             hotelDetailsDiv.innerHTML = html;
             currentHotelIndex = index;
             updateNavigationButtons();
@@ -371,7 +445,7 @@
             }
         });
 
-        document.addEventListener('DOMContentLoaded', fetchHotels);
+        document.addEventListener('DOMContentLoaded', fetchHotelsAndInitializeDisplay);
     </script>
 </body>
 </html>
