@@ -532,8 +532,9 @@
             nextBtn.disabled = currentHotelIndex === displayedHotels.length - 1;
         }
 
-        function applyFilter() {
+                function applyFilter() {
             const roomType = document.querySelector('input[name="roomType"]:checked').value;
+            // Use 0 for minPrice if input is empty or invalid, and Infinity for maxPrice
             const minPrice = parseFloat(minPriceInput.value) || 0;
             const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
 
@@ -541,33 +542,58 @@
                 let passesRoomType = true;
                 let passesPrice = true;
 
-                // Room Type Filter
+                // --- Room Type Filter ---
                 if (roomType === 'ac') {
-                    passesRoomType = (hotel.ac_min_price && hotel.ac_min_price !== "-") || (hotel.ac_max_price && hotel.ac_max_price !== "-");
+                    // Check if AC prices exist and are not just '-'
+                    passesRoomType = (
+                        (hotel.ac_min_price && hotel.ac_min_price !== "-") ||
+                        (hotel.ac_max_price && hotel.ac_max_price !== "-")
+                    );
                 } else if (roomType === 'non_ac') {
-                    passesRoomType = (hotel.non_ac_min_price && hotel.non_ac_min_price !== "-") || (hotel.non_ac_max_price && hotel.non_ac_max_price !== "-");
+                    // Check if Non-AC prices exist and are not just '-'
+                    passesRoomType = (
+                        (hotel.non_ac_min_price && hotel.non_ac_min_price !== "-") ||
+                        (hotel.non_ac_max_price && hotel.non_ac_max_price !== "-")
+                    );
                 }
-                // 'any' room type always passes
+                // If roomType is 'any', passesRoomType remains true, which is correct.
 
-                // Price Range Filter
-                let hotelMinPrice = Infinity;
-                let hotelMaxPrice = 0;
+                // If the room type filter already failed, no need to check price
+                if (!passesRoomType) {
+                    return false;
+                }
 
-                // Consider both AC and Non-AC prices for the range
-                // A hotel passes if ANY of its room types falls within the price range
-                const pricesToConsider = [];
-                if (hotel.ac_min_price && hotel.ac_min_price !== "-") pricesToConsider.push(parseFloat(hotel.ac_min_price));
-                if (hotel.ac_max_price && hotel.ac_max_price !== "-") pricesToConsider.push(parseFloat(hotel.ac_max_price));
-                if (hotel.non_ac_min_price && hotel.non_ac_min_price !== "-") pricesToConsider.push(parseFloat(hotel.non_ac_min_price));
-                if (hotel.non_ac_max_price && hotel.non_ac_max_price !== "-") pricesToConsider.push(parseFloat(hotel.non_ac_max_price));
-                
-                if (pricesToConsider.length === 0) {
-                    passesPrice = (minPrice === 0 && maxPrice === Infinity); // Passes only if no price filter applied
+                // --- Price Range Filter ---
+                const hotelPrices = [];
+
+                // Helper function to add a price if it's a valid number
+                const addValidPrice = (priceStr) => {
+                    if (priceStr && priceStr !== "-") {
+                        const priceNum = parseFloat(priceStr);
+                        if (!isNaN(priceNum)) {
+                            hotelPrices.push(priceNum);
+                        }
+                    }
+                };
+
+                addValidPrice(hotel.ac_min_price);
+                addValidPrice(hotel.ac_max_price);
+                addValidPrice(hotel.non_ac_min_price);
+                addValidPrice(hotel.non_ac_max_price);
+
+                if (hotelPrices.length === 0) {
+                    // If the hotel has no valid price information at all
+                    // It only passes the price filter if no price range was specified by the user
+                    passesPrice = (minPrice === 0 && maxPrice === Infinity);
                 } else {
-                    const actualMinHotelPrice = Math.min(...pricesToConsider);
-                    const actualMaxHotelPrice = Math.max(...pricesToConsider);
+                    const actualMinHotelPrice = Math.min(...hotelPrices);
+                    const actualMaxHotelPrice = Math.max(...hotelPrices);
                     
-                    // Check if there's any overlap between the hotel's price range and the filter's price range
+                    // Check for overlap:
+                    // A hotel passes if its price range (actualMinHotelPrice to actualMaxHotelPrice)
+                    // overlaps with the user's filter range (minPrice to maxPrice).
+                    // It fails if the hotel's max price is below the filter's min,
+                    // OR if the hotel's min price is above the filter's max.
                     passesPrice = !(actualMaxHotelPrice < minPrice || actualMinHotelPrice > maxPrice);
                 }
 
@@ -580,12 +606,12 @@
                 prevBtn.disabled = true;
                 nextBtn.disabled = true;
             } else {
-                // *** THIS IS THE KEY CHANGE ***
-                showHotel(currentHotelIndex); // Call showHotel to display the first filtered hotel
+                showHotel(currentHotelIndex); // Display the first filtered hotel
             }
             filterSection.style.display = 'block'; // Keep filter section visible after applying filter
             toggleFilterBtn.textContent = 'Hide Filter Options';
         }
+
 
         function clearFilter() {
             displayedHotels = [...allHotels]; // Reset to all hotels
