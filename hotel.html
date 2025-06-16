@@ -265,15 +265,15 @@
             text-decoration: underline;
         }
     </style>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9882958790444340"
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR_ADSENSE_CLIENT_ID"
      crossorigin="anonymous"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L5TNBK4WMZ"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_MEASUREMENT_ID"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'G-L5TNBK4WMZ');
+      gtag('config', 'YOUR_GA_MEASUREMENT_ID');
     </script>
 </head>
 <body>
@@ -324,8 +324,8 @@
         <div class="ads-container" id="ad-unit-1" style="max-width: 320px; max-height: 50px;">
             <ins class="adsbygoogle"
                  style="display:block;"
-                 data-ad-client="ca-pub-9882958790444340"
-                 data-ad-slot="9284360394"
+                 data-ad-client="YOUR_ADSENSE_CLIENT_ID"
+                 data-ad-slot="YOUR_ADSENSE_SLOT_1"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
         </div>
@@ -342,8 +342,8 @@
     <div class="ads-container" id="ad-unit-3" style="max-width: 728px; max-height: 90px;">
         <ins class="adsbygoogle"
              style="display:block;"
-             data-ad-client="ca-pub-9882958790444340"
-             data-ad-slot="1715462768"
+             data-ad-client="YOUR_ADSENSE_CLIENT_ID"
+             data-ad-slot="YOUR_ADSENSE_SLOT_3"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
     </div>
@@ -502,8 +502,8 @@
                 <div class="ads-container in-content-ad" id="ad-unit-2" style="max-width: 300px; max-height: 50px; margin: 15px auto;">
                     <ins class="adsbygoogle"
                          style="display:block;"
-                         data-ad-client="ca-pub-9882958790444340"
-                         data-ad-slot="3126732885"
+                         data-ad-client="YOUR_ADSENSE_CLIENT_ID"
+                         data-ad-slot="YOUR_ADSENSE_SLOT_2"
                          data-ad-format="auto"
                          data-full-width-responsive="true"></ins>
                 </div>`;
@@ -574,48 +574,7 @@
                             hotelPrices.push(priceNum);
                         }
                     }
-                };function applyFilter() {
-            const roomType = document.querySelector('input[name="roomType"]:checked').value;
-            // Use 0 for minPrice if input is empty or invalid, and Infinity for maxPrice
-            const minPrice = parseFloat(minPriceInput.value) || 0;
-            const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
-
-            displayedHotels = allHotels.filter(hotel => {
-                let passesRoomType = true;
-                let passesPrice = true;
-
-                // --- Room Type Filter ---
-                if (roomType === 'ac') {
-                    // Check if AC prices exist and are not just '-'
-                    passesRoomType = (
-                        (hotel.ac_min_price && hotel.ac_min_price !== "-") ||
-                        (hotel.ac_max_price && hotel.ac_max_price !== "-")
-                    );
-                } else if (roomType === 'non_ac') {
-                    // Check if Non-AC prices exist and are not just '-'
-                    passesRoomType = (
-                        (hotel.non_ac_min_price && hotel.non_ac_min_price !== "-") ||
-                        (hotel.non_ac_max_price && hotel.non_ac_max_price !== "-")
-                    );
-                }
-                // If roomType is 'any', passesRoomType remains true, which is correct.
-
-                // If the room type filter already failed, no need to check price
-                if (!passesRoomType) {
-                    return false;
-                }
-
-                // --- Price Range Filter ---
-                const hotelPrices = [];
-
-                // Helper function to add a price if it's a valid number
-                const addValidPrice = (priceStr) => {
-                    if (priceStr && priceStr !== "-") {
-                        const priceNum = parseFloat(priceStr);
-                        if (!isNaN(priceNum)) {
-                            hotelPrices.push(priceNum);
-                        }
-                    }
+                };
 
                 addValidPrice(hotel.ac_min_price);
                 addValidPrice(hotel.ac_max_price);
@@ -633,55 +592,8 @@
                     // Check for overlap:
                     // A hotel passes if its price range (actualMinHotelPrice to actualMaxHotelPrice)
                     // overlaps with the user's filter range (minPrice to maxPrice).
-        function applyFilter() {
-            const roomType = document.querySelector('input[name="roomType"]:checked').value;
-            const minPrice = parseFloat(minPriceInput.value) || 0;
-            const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
-
-            displayedHotels = allHotels.filter(hotel => {
-                let passesRoomType = true;
-                let passesPrice = true;
-
-                // --- Room Type Filter ---
-                if (roomType === 'ac') {
-                    passesRoomType = (
-                        (hotel.ac_min_price && hotel.ac_min_price !== "-") ||
-                        (hotel.ac_max_price && hotel.ac_max_price !== "-")
-                    );
-                } else if (roomType === 'non_ac') {
-                    passesRoomType = (
-                        (hotel.non_ac_min_price && hotel.non_ac_min_price !== "-") ||
-                        (hotel.non_ac_max_price && hotel.non_ac_max_price !== "-")
-                    );
-                }
-
-                if (!passesRoomType) {
-                    return false;
-                }
-
-                // --- Price Range Filter ---
-                const hotelPrices = [];
-
-                const addValidPrice = (priceStr) => {
-                    if (priceStr && priceStr !== "-") {
-                        const priceNum = parseFloat(priceStr);
-                        if (!isNaN(priceNum)) {
-                            hotelPrices.push(priceNum);
-                        }
-                    }
-                };
-
-                addValidPrice(hotel.ac_min_price);
-                addValidPrice(hotel.ac_max_price);
-                addValidPrice(hotel.non_ac_min_price);
-                addValidPrice(hotel.non_ac_max_price);
-
-                if (hotelPrices.length === 0) {
-                    passesPrice = (minPrice === 0 && maxPrice === Infinity);
-                } else {
-                    const actualMinHotelPrice = Math.min(...hotelPrices);
-                    const actualMaxHotelPrice = Math.max(...hotelPrices);
-                    
+                    // It fails if the hotel's max price is below the filter's min,
+                    // OR if the hotel's min price is above the filter's max.
                     passesPrice = !(actualMaxHotelPrice < minPrice || actualMinHotelPrice > maxPrice);
                 }
 
@@ -694,13 +606,11 @@
                 prevBtn.disabled = true;
                 nextBtn.disabled = true;
             } else {
-                // This is the call that should display the hotel immediately.
-                showHotel(currentHotelIndex); 
+                showHotel(currentHotelIndex); // Display the first filtered hotel
             }
             filterSection.style.display = 'block'; // Keep filter section visible after applying filter
             toggleFilterBtn.textContent = 'Hide Filter Options';
         }
-
 
 
         function clearFilter() {
