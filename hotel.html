@@ -424,6 +424,7 @@
                         currentHotelIndex = allHotels.findIndex(h => h.id === lastShownHotelId);
 
                         if (currentHotelIndex === -1) {
+                            // If the last shown hotel is no longer in allHotels (e.g., deleted), re-shuffle
                             needsNewAutoDisplay = true;
                         }
                     }
@@ -433,14 +434,18 @@
                     shuffledHotelOrder = shuffleArray([...allHotels]);
                     shuffledOrderPointer = 0;
 
-                    const hotelToDisplay = shuffledHotelOrder[shuffledOrderPointer];
-                    currentHotelIndex = allHotels.findIndex(h => h.id === hotelToDisplay.id);
-                    
-                    shuffledOrderPointer = (shuffledOrderPointer + 1) % shuffledHotelOrder.length;
+                    if (shuffledHotelOrder.length > 0) { // Ensure there are hotels to display
+                        const hotelToDisplay = shuffledHotelOrder[shuffledOrderPointer];
+                        currentHotelIndex = allHotels.findIndex(h => h.id === hotelToDisplay.id);
+                        
+                        shuffledOrderPointer = (shuffledOrderPointer + 1) % shuffledHotelOrder.length;
 
-                    localStorage.setItem('lastAutoDisplayTimestamp', now.toString());
-                    localStorage.setItem('shuffledHotelOrder', JSON.stringify(shuffledHotelOrder));
-                    localStorage.setItem('shuffledOrderPointer', shuffledOrderPointer.toString());
+                        localStorage.setItem('lastAutoDisplayTimestamp', now.toString());
+                        localStorage.setItem('shuffledHotelOrder', JSON.stringify(shuffledHotelOrder));
+                        localStorage.setItem('shuffledOrderPointer', shuffledOrderPointer.toString());
+                    } else {
+                        currentHotelIndex = 0; // No hotels to display, set index to 0
+                    }
                 }
 
                 displayedHotels = [...allHotels]; // Initially display all hotels
@@ -448,7 +453,6 @@
                 updateNavigationButtons();
 
                 // Manually push calls for the static ad units (Ad 1 and Ad 3) to ensure they render
-                // after the DOM is fully loaded.
                 (window.adsbygoogle = window.adsbygoogle || []).push({}); // For Ad Unit 1
                 (window.adsbygoogle = window.adsbygoogle || []).push({}); // For Ad Unit 3
 
@@ -465,11 +469,14 @@
 
             if (hotelsToDisplay.length === 0) {
                 hotelDetailsDiv.innerHTML = "<p>No hotel data available.</p>";
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
                 return;
             }
             if (index < 0 || index >= hotelsToDisplay.length) {
-                console.warn("Invalid hotel index.");
-                return;
+                console.warn("Invalid hotel index. Adjusting to 0.");
+                currentHotelIndex = 0; // Fallback to 0 if index is out of bounds
+                index = 0;
             }
 
             const h = hotelsToDisplay[index];
@@ -547,21 +554,22 @@
                 let hotelMaxPrice = 0;
 
                 // Consider both AC and Non-AC prices for the range
-                if (hotel.ac_min_price && hotel.ac_min_price !== "-") hotelMinPrice = Math.min(hotelMinPrice, parseFloat(hotel.ac_min_price));
-                if (hotel.ac_max_price && hotel.ac_max_price !== "-") hotelMaxPrice = Math.max(hotelMaxPrice, parseFloat(hotel.ac_max_price));
-                if (hotel.non_ac_min_price && hotel.non_ac_min_price !== "-") hotelMinPrice = Math.min(hotelMinPrice, parseFloat(hotel.non_ac_min_price));
-                if (hotel.non_ac_max_price && hotel.non_ac_max_price !== "-") hotelMaxPrice = Math.max(hotelMaxPrice, parseFloat(hotel.non_ac_max_price));
+                // A hotel passes if ANY of its room types falls within the price range
+                const pricesToConsider = [];
+                if (hotel.ac_min_price && hotel.ac_min_price !== "-") pricesToConsider.push(parseFloat(hotel.ac_min_price));
+                if (hotel.ac_max_price && hotel.ac_max_price !== "-") pricesToConsider.push(parseFloat(hotel.ac_max_price));
+                if (hotel.non_ac_min_price && hotel.non_ac_min_price !== "-") pricesToConsider.push(parseFloat(hotel.non_ac_min_price));
+                if (hotel.non_ac_max_price && hotel.non_ac_max_price !== "-") pricesToConsider.push(parseFloat(hotel.non_ac_max_price));
                 
-                // If the hotel has no price information, it doesn't pass the price filter if one is applied
-                if (hotelMinPrice === Infinity && hotelMaxPrice === 0 && (minPrice > 0 || maxPrice < Infinity)) {
-                    passesPrice = false;
+                if (pricesToConsider.length === 0) {
+                    passesPrice = (minPrice === 0 && maxPrice === Infinity); // Passes only if no price filter applied
                 } else {
-                    // Check for overlap between hotel's price range and filter range
-                    const overlapMin = Math.max(minPrice, hotelMinPrice);
-                    const overlapMax = Math.min(maxPrice, hotelMaxPrice);
-                    passesPrice = overlapMin <= overlapMax;
+                    const actualMinHotelPrice = Math.min(...pricesToConsider);
+                    const actualMaxHotelPrice = Math.max(...pricesToConsider);
+                    
+                    // Check if there's any overlap between the hotel's price range and the filter's price range
+                    passesPrice = !(actualMaxHotelPrice < minPrice || actualMinHotelPrice > maxPrice);
                 }
-
 
                 return passesRoomType && passesPrice;
             });
@@ -572,7 +580,8 @@
                 prevBtn.disabled = true;
                 nextBtn.disabled = true;
             } else {
-                showHotel(currentHotelIndex);
+                // *** THIS IS THE KEY CHANGE ***
+                showHotel(currentHotelIndex); // Call showHotel to display the first filtered hotel
             }
             filterSection.style.display = 'block'; // Keep filter section visible after applying filter
             toggleFilterBtn.textContent = 'Hide Filter Options';
@@ -618,4 +627,4 @@
         document.addEventListener('DOMContentLoaded', fetchHotelsAndInitializeDisplay);
     </script>
 </body>
-</html>
+</html> 
