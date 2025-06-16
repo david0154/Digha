@@ -11,21 +11,21 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(to bottom, #e3f2fd, #bbdefb);
+            background: linear-gradient(to bottom, #e3f2fd, #bbdefb); /* Light blue gradient */
             margin: 0;
-            padding: 20px 0;
+            padding: 20px 0; /* Add some vertical padding */
             box-sizing: border-box;
             color: #333;
         }
 
         .ad-slot {
-            margin: 25px auto;
-            border: 1px dashed #90caf9;
+            margin: 25px auto; /* Centered with vertical spacing */
+            border: 1px dashed #90caf9; /* Soft blue dashed border */
             padding: 15px;
             text-align: center;
-            background-color: rgba(255, 255, 255, 0.7);
+            background-color: rgba(255, 255, 255, 0.7); /* Slightly transparent white */
             width: 90%;
-            max-width: 728px;
+            max-width: 728px; /* Common ad width */
             box-sizing: border-box;
             font-size: 0.95em;
             color: #424242;
@@ -39,9 +39,9 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 40px;
             text-align: center;
-            max-width: 500px;
+            max-width: 500px; /* Slightly wider for more content */
             width: 100%;
-            border: 1px solid #90caf9;
+            border: 1px solid #90caf9; /* Match ad slot border */
             margin-bottom: 30px;
         }
 
@@ -50,14 +50,14 @@
         }
 
         .logo {
-            max-width: 180px;
+            max-width: 180px; /* Slightly larger logo */
             height: auto;
-            display: block;
+            display: block; /* Ensures centering works */
             margin: 0 auto;
         }
 
         h1 {
-            color: #0d47a1;
+            color: #0d47a1; /* Darker primary blue */
             margin-bottom: 20px;
             font-size: 2.5em;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
@@ -65,7 +65,7 @@
 
         #location {
             font-size: 1.9em;
-            color: #1976d2;
+            color: #1976d2; /* Primary blue */
             margin-bottom: 25px;
             font-weight: bold;
         }
@@ -177,12 +177,12 @@
         }
 
         .forecast-card .rain-chance {
-            color: #388e3c;
+            color: #388e3c; /* Green for rain */
             font-weight: bold;
         }
 
         .forecast-card .thunderstorm {
-            color: #d32f2f;
+            color: #d32f2f; /* Red for thunderstorm */
             font-weight: bold;
         }
 
@@ -364,7 +364,8 @@
             try {
                 const response = await fetch(apiUrl);
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    // Throw an error with specific status if the HTTP request was not successful
+                    throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
                 }
                 const data = await response.json();
 
@@ -375,9 +376,8 @@
 
                     // --- Update Current Weather ---
                     document.getElementById('current-temp').textContent = `${Math.round(currentWeather.temperature)}°C`;
-                    document.getElementById('current-wind-speed').textContent = `${currentWeather.windspeed} m/s`;
 
-                     const now = new Date();
+                    const now = new Date();
                     // Find the index for the current hour in hourly data
                     const currentHourIndex = hourlyData.time.findIndex(timeStr => {
                         const date = new Date(timeStr);
@@ -391,22 +391,24 @@
                         const currentHumidityValue = hourlyData.relativehumidity_2m[currentHourIndex];
                         const currentWindDirectionDeg = hourlyData.winddirection_10m[currentHourIndex];
                         const currentSeaLevelPressure = hourlyData.pressure_msl[currentHourIndex];
-                         const currentWeatherCode = hourlyData.weathercode[currentHourIndex];
+                        const currentWeatherCode = hourlyData.weathercode[currentHourIndex];
                         const currentRainChance = hourlyData.precipitation_probability[currentHourIndex];
-                         const currentWindGust = hourlyData.windgusts_10m[currentHourIndex];
+                        const currentWindGust = hourlyData.windgusts_10m[currentHourIndex];
 
-                        document.getElementById('current-humidity').textContent = currentHumidityValue !== undefined ? `<span class="current-day-highlight humidity">${currentHumidityValue}%</span>` : 'N/A';
-                         document.getElementById('current-wind-speed').textContent = currentWindGust !== undefined ? `<span class="current-day-highlight wind">${currentWindGust} m/s</span>` : 'N/A';
+                        // Update current details with highlights
+                        document.getElementById('current-humidity').innerHTML = currentHumidityValue !== undefined ? `<span class="current-day-highlight humidity">${currentHumidityValue}%</span>` : 'N/A';
+                        document.getElementById('current-wind-speed').innerHTML = currentWindGust !== undefined ? `<span class="current-day-highlight wind">${currentWindGust} m/s</span>` : 'N/A';
                         document.getElementById('current-wind-direction').textContent = getWindDirection(currentWindDirectionDeg);
                         document.getElementById('current-sea-level-pressure').textContent = currentSeaLevelPressure !== undefined ? `${Math.round(currentSeaLevelPressure)} hPa` : 'N/A';
-                         document.getElementById('current-rain').textContent = currentRainChance !== undefined ? `<span class="current-day-highlight rain">${currentRainChance}%</span>` : 'N/A';
-                        document.getElementById('current-thunderstorm').textContent = weatherCodeDescriptions.hasOwnProperty(currentWeatherCode) && (currentWeatherCode >= 95 && currentWeatherCode <= 99) ? `<span class="current-day-highlight thunderstorm">Yes</span>` : 'No';
+                        document.getElementById('current-rain').innerHTML = currentRainChance !== undefined ? `<span class="current-day-highlight rain">${currentRainChance}%</span>` : 'N/A';
+                        document.getElementById('current-thunderstorm').innerHTML = weatherCodeDescriptions.hasOwnProperty(currentWeatherCode) && (currentWeatherCode >= 95 && currentWeatherCode <= 99) ? `<span class="current-day-highlight thunderstorm">Yes</span>` : 'No';
                         document.getElementById('current-description').textContent = weatherCodeDescriptions.hasOwnProperty(currentWeatherCode) ? weatherCodeDescriptions[currentWeatherCode] : 'Conditions available';
 
                     } else {
+                        // Fallback for current hourly data
                         document.getElementById('current-humidity').textContent = 'N/A';
                         document.getElementById('current-wind-speed').textContent = 'N/A';
-                         document.getElementById('current-wind-direction').textContent = 'N/A';
+                        document.getElementById('current-wind-direction').textContent = 'N/A';
                         document.getElementById('current-sea-level-pressure').textContent = 'N/A';
                         document.getElementById('current-rain').textContent = 'N/A';
                         document.getElementById('current-thunderstorm').textContent = 'No';
@@ -415,7 +417,7 @@
 
                     // --- Update 7-Day Forecast ---
                     const forecastGrid = document.getElementById('forecast-grid');
-                    forecastGrid.innerHTML = '';
+                    forecastGrid.innerHTML = ''; // Clear previous loading message/cards
 
                     for (let i = 0; i < dailyData.time.length; i++) {
                         const date = new Date(dailyData.time[i]);
@@ -449,48 +451,54 @@
                         forecastGrid.appendChild(card);
                     }
 
-                document.getElementById('error-message').textContent = '';
+                    document.getElementById('error-message').textContent = ''; // Clear any previous errors
 
                 } else if (data.error) {
-                    document.getElementById('error-message').textContent = `API Error: ${data.reason}`;
+                    document.getElementById('error-message').textContent = `API Error: ${data.reason}. Please check the API documentation or your parameters.`;
+                    // Clear displayed data on API error
                     document.getElementById('current-temp').textContent = '--';
                     document.getElementById('current-description').textContent = '';
                     document.getElementById('current-humidity').textContent = '';
                     document.getElementById('current-wind-speed').textContent = '';
-                     document.getElementById('current-wind-direction').textContent = '';
+                    document.getElementById('current-wind-direction').textContent = '';
                     document.getElementById('current-sea-level-pressure').textContent = '';
                     document.getElementById('current-rain').textContent = '';
                     document.getElementById('current-thunderstorm').textContent = 'No';
-                    document.getElementById('forecast-grid').innerHTML = '<p>Error loading forecast.</p>';
+                    document.getElementById('forecast-grid').innerHTML = '<p>Error loading forecast data.</p>';
                 } else {
-                     document.getElementById('error-message').textContent = 'Could not retrieve weather data.  Please check the API or your internet connection.';
+                    document.getElementById('error-message').textContent = 'Could not retrieve weather data. Data structure from API was unexpected.';
+                     // Clear displayed data on unexpected data
                     document.getElementById('current-temp').textContent = '--';
                     document.getElementById('current-description').textContent = '';
                     document.getElementById('current-humidity').textContent = '';
                     document.getElementById('current-wind-speed').textContent = '';
-                     document.getElementById('current-wind-direction').textContent = '';
+                    document.getElementById('current-wind-direction').textContent = '';
                     document.getElementById('current-sea-level-pressure').textContent = '';
-                     document.getElementById('current-rain').textContent = '';
+                    document.getElementById('current-rain').textContent = '';
                     document.getElementById('current-thunderstorm').textContent = 'No';
-                    document.getElementById('forecast-grid').innerHTML = '<p>Error loading forecast.</p>';
+                    document.getElementById('forecast-grid').innerHTML = '<p>Error loading forecast data.</p>';
                 }
             } catch (error) {
                 console.error('Error fetching weather data:', error);
-                document.getElementById('error-message').textContent = 'Network error or unable to fetch data.  Check console for details.';
+                document.getElementById('error-message').textContent = `Network error or unable to fetch data. Details: ${error.message}. Please check your internet connection or the API service.`;
+                // Clear displayed data on network/fetch errors
                 document.getElementById('current-temp').textContent = '--';
                 document.getElementById('current-description').textContent = '';
                 document.getElementById('current-humidity').textContent = '';
-                 document.getElementById('current-wind-speed').textContent = '';
-                  document.getElementById('current-wind-direction').textContent = '';
+                document.getElementById('current-wind-speed').textContent = '';
+                document.getElementById('current-wind-direction').textContent = '';
                 document.getElementById('current-sea-level-pressure').textContent = '';
-                 document.getElementById('current-rain').textContent = '';
+                document.getElementById('current-rain').textContent = '';
                 document.getElementById('current-thunderstorm').textContent = 'No';
-                document.getElementById('forecast-grid').innerHTML = '<p>Error loading forecast.</p>';
+                document.getElementById('forecast-grid').innerHTML = '<p>Error loading forecast data.</p>';
             }
         }
 
+        // Call the function to get weather data when the page loads
         document.addEventListener('DOMContentLoaded', getWeatherData);
-        setInterval(getWeatherData, 300000); // Refresh every 5 minutes
+
+        // Refresh weather data every 5 minutes (300000 milliseconds)
+        setInterval(getWeatherData, 300000);
     </script>
 </body>
 </html>
