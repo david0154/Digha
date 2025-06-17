@@ -321,7 +321,18 @@
             </div>
         </div>
 
-        <div class="ads-container" id="ad-unit-1" style="max-width: 320px; max-height: 50px;">
+        <div class="ads-container" id="ad-unit-1">
+<script type="text/javascript">
+atOptions = {
+    'key' : '853e6b144dca854f7d15e200e3bfed2d',
+    'format' : 'iframe',
+    'height' : 90,
+    'width' : 728,
+    'params' : {}
+};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/853e6b144dca854f7d15e200e3bfed2d/invoke.js"></script>
+
             <ins class="adsbygoogle"
                  style="display:block;"
                  data-ad-client="ca-pub-9882958790444340"
@@ -339,7 +350,18 @@
         </div>
     </div>
 
-    <div class="ads-container" id="ad-unit-3" style="max-width: 728px; max-height: 90px;">
+    <div class="ads-container" id="ad-unit-3">
+<script type="text/javascript">
+atOptions = {
+    'key' : '853e6b144dca854f7d15e200e3bfed2d',
+    'format' : 'iframe',
+    'height' : 90,
+    'width' : 728,
+    'params' : {}
+};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/853e6b144dca854f7d15e200e3bfed2d/invoke.js"></script>
+
         <ins class="adsbygoogle"
              style="display:block;"
              data-ad-client="ca-pub-9882958790444340"
@@ -497,17 +519,9 @@
 
             // AdSense Ad Unit 2: Placed between image1 and image2 if both exist
             // Aiming for 300x50 (Mobile Banner)
-            if (h.image1 && h.image2) { 
-                html += `
-                <div class="ads-container in-content-ad" id="ad-unit-2" style="max-width: 300px; max-height: 50px; margin: 15px auto;">
-                    <ins class="adsbygoogle"
-                         style="display:block;"
-                         data-ad-client="ca-pub-9882958790444340"
-                         data-ad-slot="3126732885"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                </div>`;
-            }
+            if (h.image1 && h.image2) {
+    html += `<div class="ads-container" id="mid-ad-container" style="margin: 10px auto;"></div>`;
+}
 
             if (h.image2) {
                 html += `<img src="${h.image2}" alt="Image 2">`;
@@ -521,10 +535,27 @@
 
             // IMPORTANT: Manually push the AdSense call for the dynamically added Ad Unit 2
             // ONLY if it was actually inserted (i.e., if h.image1 and h.image2 were true)
-            const adUnit2Container = document.getElementById('ad-unit-2');
-            if (adUnit2Container) {
-                 (window.adsbygoogle = window.adsbygoogle || []).push({});
-            }
+            const adUnit2Container = document.getElementById('mid-ad-container');
+if (adUnit2Container) {
+    setTimeout(() => {
+        const script1 = document.createElement('script');
+        script1.type = 'text/javascript';
+        script1.innerHTML = `
+            atOptions = {
+                'key' : '4c5d9f559ffd3347761823551a12cf4e',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+            };
+        `;
+        const script2 = document.createElement('script');
+        script2.type = 'text/javascript';
+        script2.src = '//www.highperformanceformat.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js';
+        adUnit2Container.appendChild(script1);
+        adUnit2Container.appendChild(script2);
+    }, 100);
+}
         }
 
         function updateNavigationButtons() {
