@@ -166,16 +166,22 @@
         }
         
         .ads-container {
-        .ads-container {
     margin: 20px auto;
     text-align: center;
     background-color: transparent;
     padding: 0;
     border: none;
-    max-width: 728px;
-    height: 90px;
+    width: 100%; /* Allow to scale based on screen */
+    max-width: 728px; /* Don't go beyond desktop size */
+    height: auto;
     overflow: hidden;
-        }
+}
+.ads-container iframe {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 90px;
+    border: none;
+}
 
         /* Ensure the AdSense ins tag itself is styled to fit within its parent */
         .ads-container ins.adsbygoogle {
