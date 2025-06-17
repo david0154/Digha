@@ -3,7 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Digha - Your Digha Helper</title>
+    <title>My Digha - Digha Helpline, Contacts & Tourist Information</title>
+
+    <meta name="description" content="Find all essential helpline numbers, emergency contacts, websites, and help center addresses for Digha, West Bengal. Your complete guide for Digha tourism and local services.">
+
+    <meta name="keywords" content="Digha helpline, Digha contact numbers, Digha emergency, Digha police, Digha hospital, Digha fire, Digha tourism, West Bengal tourism, Digha address, Digha tourist guide, Digha information, Purba Medinipur">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-XXXXXXXXXX'); // AGAIN, REPLACE WITH YOUR GA4 MEASUREMENT ID
+    </script>
+
     <style>
         /* CSS for My Digha */
         body {
@@ -73,17 +87,46 @@
 
         .ads-container {
             text-align: center;
-            margin-bottom: 20px;
+            margin: 20px 0; /* Margin above and below ads */
+            width: 100%; /* Default to full width for flexibility */
+            display: flex; /* Use flexbox to center ad if it's smaller than container */
+            justify-content: center; /* Center the ad horizontally */
+            align-items: center; /* Center vertically (if ad height allows) */
+            background-color: #e6f7ff; /* Light background for ad areas */
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
         }
 
-        .ads-container.large-banner {
-            width: 100%;
+        /* Specific ad sizes for better control */
+        .ads-container.large-banner div { /* Target the div within the ad container to ensure ad is centered */
+            width: 728px;
+            height: 90px;
         }
 
-        .ads-container.medium-rect {
-            flex: 0 0 calc(33.333% - 20px); /* For 3 ads, adjust as needed */
+        .ads-container.medium-rect div { /* Target the div within the ad container */
+            width: 300px;
+            height: 250px;
+        }
+
+        /* Adjust ad container width for medium rect ads */
+        .ads-container.medium-rect-wrapper {
+            flex: 0 0 calc(33.333% - 20px); /* For 3 ads in a row */
             min-width: 300px;
+            /* Reset specific ad container styles to allow it to sit within flex layout */
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            box-shadow: none;
         }
+        .ads-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center; /* Center ads if they don't fill the row */
+            width: 100%; /* Ensure grid takes full width in container */
+        }
+
 
         footer {
             background-color: #87ceeb;
@@ -100,9 +143,23 @@
                 flex-direction: column;
                 align-items: center;
             }
-            .section, .ads-container.medium-rect {
+            .section {
                 width: 90%;
                 min-width: unset;
+            }
+            .ads-container.large-banner, .ads-container.medium-rect-wrapper {
+                 width: 100%;
+            }
+            .ads-container.large-banner div,
+            .ads-container.medium-rect div {
+                width: 100%; /* Make ads responsive to container width */
+                height: auto; /* Allow height to adjust */
+                max-width: 728px; /* Maintain max width */
+            }
+        }
+        @media (max-width: 480px) {
+            .ads-container.medium-rect-wrapper {
+                flex: 0 0 100%; /* Stack medium ads on very small screens */
             }
         }
     </style>
@@ -139,6 +196,21 @@
             <p><strong>Women Helpline:</strong> <a href="tel:+911091">1091</a></p>
         </div>
 
+        <div class="ads-container medium-rect-wrapper">
+            <div class="ads-container medium-rect">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '4c5d9f559ffd3347761823551a12cf4e',
+                        'format' : 'iframe',
+                        'height' : 250,
+                        'width' : 300,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
+            </div>
+        </div>
+
         <div class="section contact-info">
             <h2>Essential Services & Authorities</h2>
             <p><strong>Digha Shankarpur Development Authority (DSDA):</strong></p>
@@ -148,6 +220,29 @@
             <p><strong>West Bengal State Electricity Distribution Company Limited (WBSEDCL) - Customer Care (24x7):</strong> <a href="tel:+9119121">19121</a></p>
             <p><strong>WBSEDCL WhatsApp (Photo & Location for defect/danger):</strong> <a href="https://wa.me/918900793100" target="_blank">8900793100</a></p>
             <p><strong>Digha Railway Station Inquiry:</strong> <a href="tel:+913220266921">03220-266921</a></p>
+        </div>
+
+        <div class="ads-container medium-rect-wrapper">
+            <div class="ads-container medium-rect">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '4c5d9f559ffd3347761823551a12cf4e',
+                        'format' : 'iframe',
+                        'height' : 250,
+                        'width' : 300,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
+            </div>
+        </div>
+
+        <div class="section contact-info">
+            <h2>Important Websites & Emails</h2>
+            <p><strong>West Bengal Tourism:</strong> <a href="https://wbtourism.gov.in/" target="_blank">wbtourism.gov.in</a></p>
+            <p><strong>Purba Medinipur District Official Website:</strong> <a href="https://purbamedinipur.gov.in/" target="_blank">purbamedinipur.gov.in</a></p>
+            <p><strong>The State Fisheries Development Corporation Limited (Govt. of West Bengal Undertaking) - Tourism Inquiries:</strong> <a href="mailto:tourism@wbsfdcltd.com">tourism@wbsfdcltd.com</a></p>
+            <p><strong>General Tourism Information (Example, verify for Digha specific office):</strong> It's best to rely on official tourism websites or local government bodies for general tourism inquiries rather than generic emails. Some private tour operators may have their own contacts, but for official help, use the above.</p>
         </div>
 
         <div class="ads-container large-banner">
@@ -161,14 +256,6 @@
                 };
             </script>
             <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/853e6b144dca854f7d15e200e3bfed2d/invoke.js"></script>
-        </div>
-
-        <div class="section contact-info">
-            <h2>Important Websites & Emails</h2>
-            <p><strong>West Bengal Tourism:</strong> <a href="https://wbtourism.gov.in/" target="_blank">wbtourism.gov.in</a></p>
-            <p><strong>Purba Medinipur District Official Website:</strong> <a href="https://purbamedinipur.gov.in/" target="_blank">purbamedinipur.gov.in</a></p>
-            <p><strong>The State Fisheries Development Corporation Limited (Govt. of West Bengal Undertaking) - Tourism Inquiries:</strong> <a href="mailto:tourism@wbsfdcltd.com">tourism@wbsfdcltd.com</a></p>
-            <p><strong>General Tourism Information (Example, verify for Digha specific office):</strong> It's best to rely on official tourism websites or local government bodies for general tourism inquiries rather than generic emails. Some private tour operators may have their own contacts, but for official help, use the above.</p>
         </div>
 
         <div class="section contact-info">
@@ -187,43 +274,19 @@
             <p><strong>Address:</strong> Digha Flag Station, New Digha, Purba Medinipur, West Bengal 721463</p>
         </div>
 
-        <div class="ads-container medium-rect">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : '4c5d9f559ffd3347761823551a12cf4e',
-                    'format' : 'iframe',
-                    'height' : 250,
-                    'width' : 300,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
-        </div>
-
-        <div class="ads-container medium-rect">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : '4c5d9f559ffd3347761823551a12cf4e',
-                    'format' : 'iframe',
-                    'height' : 250,
-                    'width' : 300,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
-        </div>
-
-        <div class="ads-container medium-rect">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : '4c5d9f559ffd3347761823551a12cf4e',
-                    'format' : 'iframe',
-                    'height' : 250,
-                    'width' : 300,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
+        <div class="ads-container medium-rect-wrapper">
+            <div class="ads-container medium-rect">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '4c5d9f559ffd3347761823551a12cf4e',
+                        'format' : 'iframe',
+                        'height' : 250,
+                        'width' : 300,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
+            </div>
         </div>
 
     </div>
