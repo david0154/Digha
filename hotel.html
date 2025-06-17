@@ -91,7 +91,8 @@
 
         .welcome-section {
             background-color: #e3f2fd;
-            padding: 25px;
+            padding: 15px;
+            margin: 10px auto;
             margin: 20px auto;
             max-width: 900px;
             border-radius: 8px;
@@ -115,7 +116,8 @@
         }
 
         .container {
-            padding: 20px;
+            margin: 10px auto;
+            padding: 10px;
             max-width: 900px;
             margin: 20px auto;
             background-color: #fff;
@@ -125,6 +127,8 @@
 
         .hotel-card {
             background: white;
+            margin-bottom: 10px;
+            padding: 15px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             padding: 20px;
@@ -166,7 +170,9 @@
         }
         
         .ads-container {
-    margin: 20px auto;
+    margin: 10px auto;
+    padding: 0;
+    height: auto;
     text-align: center;
     background-color: transparent;
     padding: 0;
@@ -246,6 +252,11 @@
         }
 
         footer {
+        margin-top: 10px;
+    }
+
+    .container:last-of-type {
+        margin-bottom: 0;
             background-color: var(--sky-blue);
             color: #fff;
             text-align: center;
@@ -686,5 +697,19 @@ if (adUnit2Container) {
 
         document.addEventListener('DOMContentLoaded', fetchHotelsAndInitializeDisplay);
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const adUnits = document.querySelectorAll('.ads-container');
+            adUnits.forEach(ad => {
+                setTimeout(() => {
+                    if (!ad.querySelector('iframe') && !ad.querySelector('ins')) {
+                        ad.style.display = 'none';
+                    }
+                }, 3000);
+            });
+        });
+    </script>
 </body>
+
 </html> 
