@@ -1,261 +1,706 @@
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Discover Digha, West Bengal</title>
-<meta name="keywords" content="Digha, West Bengal, Digha tourism, Digha beaches, New Digha, Old Digha, Marine Aquarium Digha, Amrabati Park, Digha Science Centre, Digha Mohona, Talsari Beach, Chandaneswar Temple, Bengal tourism, weekend getaway Digha, Udaypur Sea Beach, Digha Jagannath Temple">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-XXXXXXXXXX'); /* Replace G-XXXXXXXXXX with your actual GA4 Measurement ID */
-</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Digha Hotel - Your ultimate guide to finding the perfect stay in Digha!</title>
+<link href="mydighahotel.png" rel="icon" type="image/png"/>
 <style>
-body {
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-line-height: 1.6;
-margin: 0;
-background-color: #f0f8ff; /* Light background /
-color: #333;
-padding-bottom: 30px;
+        :root {
+            --sky-blue: #87CEEB; /* Lighter Sky Blue */
+            --darker-sky-blue: #5F9EA0; /* A slightly darker shade for accents */
+            --button-blue: #007bff; /* Standard button blue */
+            --button-hover-blue: #0056b3; /* Standard button hover blue */
+            --green-button: #28a745; /* Green color for Add Hotel button */
+            --green-button-hover: #218838; /* Darker green for hover */
+            --filter-bg: #f9f9f9;
+            --filter-border: #ddd;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef7ff;
+            padding: 20px;
+            text-align: center;
+            color: #333;
+            margin: 0;
+        }
+
+        header {
+            background-color: var(--sky-blue);
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        header .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        header .logo img {
+            height: 70px;
+            margin-bottom: 5px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        header .tagline {
+            font-size: 1.2em;
+            font-style: italic;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        nav {
+            display: none;
+        }
+
+        button {
+            background-color: var(--button-blue);
+            color: white;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--button-hover-blue);
+        }
+
+        .add-hotel-button {
+            background-color: var(--green-button);
+        }
+
+        .add-hotel-button:hover {
+            background-color: var(--green-button-hover);
+        }
+
+        .welcome-section {
+            background-color: #e3f2fd;
+            padding: 15px;
+            margin: 10px auto;
+            margin: 20px auto;
+            max-width: 900px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 5px solid var(--sky-blue);
+        }
+
+        .welcome-section h2 {
+            color: var(--darker-sky-blue);
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .welcome-section p {
+            font-size: 1.1em;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .container {
+    margin: 5px auto;
+    padding: 5px;
+    max-width: 900px;
+    background-color: #fff;
+    border-radius: opx;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .hotel-card {
+            background: white;
+            margin-bottom: 0px;
+            padding: 0px;
+            border-radius: 0px;
+            box-shadow: 0 4px 5px rgba(0,0,0,0.1);
+            padding: 0px;
+            margin-bottom: 0px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            border: none;
+        }
+
+        .hotel-card h2 {
+            color: var(--darker-sky-blue);
+            margin-top: 0;
+            margin-bottom: 0px;
+        }
+
+        .hotel-card p {
+            margin: 0px 0;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .hotel-card img {
+            width: 90%;
+            max-height: 250px;
+            object-fit: cover;
+            margin: 10px auto;
+            border-radius: 5px;
+            display: block;
+        }
+
+        .navigation-buttons {
+            margin-top: 20px;
+        }
+
+        .navigation-buttons button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .ads-container {
+    margin: 5px auto;
+    padding: 0;
+    height: auto;
+    text-align: center;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    width: 100%; /* Allow to scale based on screen */
+    max-width: 728px; /* Don't go beyond desktop size */
+    height: auto;
+    overflow: hidden;
 }
-.container {
-max-width: 960px;
-margin: 20px auto;
-padding: 20px;
-background-color: #fff;
-border-radius: 10px;
-box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+.ads-container iframe {
+    width: 100% !important;
+    height: auto !important;
+    max-height: auto;
+    border: none;
 }
-h1, h2 {
-color: #4682B4; / Official Blue-like /
-text-align: center;
-margin-bottom: 20px;
+
+        /* Ensure the AdSense ins tag itself is styled to fit within its parent */
+        .ads-container ins.adsbygoogle {
+            display: inline-block; /* Allows it to shrink/grow within limits */
+            width: 100%; /* Take full width of parent .ads-container */
+            height: 100%; /* Take full height of parent .ads-container */
+            min-width: 250px; /* AdSense recommended minimum widths for responsive */
+            min-height: 300px; /* AdSense recommended minimum heights for responsive */
+        }
+
+        .filter-section {
+            background-color: var(--filter-bg);
+            border: 1px solid var(--filter-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px auto;
+            max-width: 600px;
+            text-align: left;
+            display: none; /* Hidden by default */
+        }
+
+        .filter-section h3 {
+            color: var(--darker-sky-blue);
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .filter-group {
+            margin-bottom: 5px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .filter-group input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .filter-group input[type="number"] {
+            width: calc(50% - 10px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+
+        .filter-group input[type="number"]:last-child {
+            margin-right: 0;
+        }
+
+        .filter-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .filter-buttons button {
+            margin: 0 10px;
+        }
+
+        footer {
+        margin-top: 0px;
+    }
+
+    .container:last-of-type {
+        margin-bottom: 0;
+            background-color: var(--sky-blue);
+            color: #fff;
+            text-align: center;
+            padding: 5px;
+            margin-top: 0px;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    
+
+#mid-ad-container {
+    width: 300px !important;
+    height: 300px !important;
+    margin: 5px auto !important;
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
 }
-.attractions-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-gap: 30px;
-margin-top: 20px;
-}
-.attraction-card {
-background-color: #e0f2f7; / Light blueish card /
-border-radius: 8px;
-padding: 20px;
-box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-border-left: 5px solid #4682B4; / Accent blue /
-}
-.attraction-card h3 {
-color: #2e64a1; / Darker blue /
-margin-top: 0;
-margin-bottom: 10px;
-}
-.attraction-card p {
-color: #555;
-font-size: 0.9em;
-margin-bottom: 10px;
-}
-.address {
-font-style: italic;
-color: #777;
-}
-.map-container {
-border: 1px solid #ccc;
-border-radius: 6px;
-overflow: hidden;
-margin-top: 15px;
-}
-/ Responsive adjustments /
-@media (max-width: 768px) {
-.container {
-margin: 15px;
-padding: 15px;
-}
-.attractions-grid {
-grid-template-columns: 1fr;
-}
-}
-.header-band {
-background-color: #4682B4; / Official Blue-like */
-color: #fff;
-padding: 40px 20px;
-text-align: center;
-margin-bottom: 30px;
-border-radius: 0 0 15px 15px;
-box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-.header-band h1 {
-color: #fff;
-margin-bottom: 5px;
-}
-.header-band p {
-font-size: 1.1em;
-opacity: 0.8;
-}
-.footer {
-text-align: center;
-margin-top: 40px;
-color: #777;
-font-size: 0.8em;
-}
-.ad-container {
-text-align: center;
-margin: 20px 0;
-}
+
+
 </style>
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9882958790444340"></script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L5TNBK4WMZ"></script>
+<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-L5TNBK4WMZ');
+    </script>
 </head>
 <body>
-<div class="ad-container">
-<script type="text/javascript">
-atOptions = {
-'key' : '853e6b144dca854f7d15e200e3bfed2d',
-'format' : 'iframe',
-'height' : 90,
-'width' : 728,
-'params' : {}
-};
-</script>
-<script type="text/javascript" src="//japaneseexceedinglysanctuary.com/853e6b144dca854f7d15e200e3bfed2d/invoke.js"></script>
+<header>
+<div class="logo">
+<img alt="My Digha Hotel Logo" src="mydighahotel.png"/>
+<h1>My Digha Hotel</h1>
+<span class="tagline">Your ultimate guide to finding the perfect stay in Digha!</span>
 </div>
-<div class="header-band">
-<h1>Welcome to My Digha</h1>
-<p>Explore the beautiful beaches and attractions of Digha!</p>
-</div>
-<div class="ad-container">
-<script type="text/javascript">
-atOptions = {
-'key' : '853e6b144dca854f7d15e200e3bfed2d',
-'format' : 'iframe',
-'height' : 90,
-'width' : 728,
-'params' : {}
-};
-</script>
-<script type="text/javascript" src="//japaneseexceedinglysanctuary.com/853e6b144dca854f7d15e200e3bfed2d/invoke.js"></script>
+<nav style="display: none;">
+<button onclick="location.href='addhotel.html'">Add Hotel</button>
+<button onclick="location.href='updatehotel.html'">Update Hotel</button>
+</nav>
+</header>
+<div class="welcome-section">
+<h2>Welcome to Digha!</h2>
+<p>Discover the serene beaches and vibrant atmosphere of Digha. We're here to help every tourist find a comfortable and memorable stay. Explore the best hotels and make your trip unforgettable!</p>
+<p>Our aim is to provide easy access to hotel information, making your Digha journey smooth and enjoyable.</p>
 </div>
 <div class="container">
-<h2>Top Attractions in Digha</h2>
-<div class="attractions-grid">
-<div class="attraction-card">
-<h3>New Digha Beach</h3>
-<p class="address">New Digha, Digha, West Bengal 721463</p>
-<p>New Digha Beach is a newly developed beach known for its clean sand, calm waves, and peaceful atmosphere. It is ideal for people who are looking for a quiet walk along the shore while enjoying the gentle breeze. It also offers beautiful sunrise/sunset views and local seafood.</p>
-<div class="map-container">
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3705.033818748998!2d87.5021777750931!3d21.63477177998857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02a7b149999999%3A0x9e3b3b3b3b3b3b3b!2sNew%20Digha%20Sea%20Beach!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+<h2>Hotel Details</h2>
+<button class="add-hotel-button" id="toggleFilterBtn">Show Filter Options</button>
+<div class="filter-section" id="filterSection">
+<h3>Filter Hotels</h3>
+<div class="filter-group">
+<label>Room Type:</label>
+<input id="acRoom" name="roomType" type="radio" value="ac"/>
+<label for="acRoom">AC Room</label>
+<input id="nonAcRoom" name="roomType" type="radio" value="non_ac"/>
+<label for="nonAcRoom">Non-AC Room</label>
+<input checked="" id="anyRoom" name="roomType" type="radio" value="any"/>
+<label for="anyRoom">Any Room Type</label>
+</div>
+<div class="filter-group">
+<label for="minPrice">Price Range (INR):</label>
+<input id="minPrice" placeholder="Min Price" type="number"/>
+<input id="maxPrice" placeholder="Max Price" type="number"/>
+</div>
+<div class="filter-buttons">
+<button id="applyFilterBtn">Apply Filter</button>
+<button class="add-hotel-button" id="clearFilterBtn">Clear Filter</button>
 </div>
 </div>
-<div class="attraction-card">
-<h3>Old Digha Beach</h3>
-<p class="address">Old Digha, Digha, West Bengal 721428</p>
-<p>Old Digha Beach offers a serene retreat with distinctive stone formations and relatively less tourism compared to New Digha. It's a picturesque haven for tranquility and natural beauty.</p>
-<div class="map-container">
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3705.09480911791!2d87.51022797509313!3d21.63368877998833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02a7b149999999%3A0x1c3b3b3b3b3b3b3b!2sOld%20Digha%20Beach!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-</div>
-</div>
-<div class="ad-container">
+<div class="ads-container" id="ad-unit-1" style="margin: 5px !important; padding: 5px !important; height: 90px !important; line-height: 0 !important; overflow: hidden !important;">
 <script type="text/javascript">
 atOptions = {
-'key' : '4c5d9f559ffd3347761823551a12cf4e',
-'format' : 'iframe',
-'height' : 250,
-'width' : 300,
-'params' : {}
+    'key' : '853e6b144dca854f7d15e200e3bfed2d',
+    'format' : 'iframe',
+    'height' : 90,
+    'width' : 728,
+    'params' : {}
 };
 </script>
-<script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
+<script src="//www.highperformanceformat.com/853e6b144dca854f7d15e200e3bfed2d/invoke.js" type="text/javascript"></script>
+<ins class="adsbygoogle" data-ad-client="ca-pub-9882958790444340" data-ad-format="auto" data-ad-slot="9284360394" data-full-width-responsive="true" style="display:block;"></ins>
 </div>
-<div class="attraction-card">
-<h3>Marine Aquarium and Regional Centre (MARC)</h3>
-<p class="address">State Highway 57, Digha, West Bengal 721428</p>
-<p>The Marine Aquarium and Regional Centre (MARC) showcases a diverse range of marine life, from 'local and curious' species to freshwater creatures, providing visitors with a unique opportunity to marvel at sea anemones, lobsters, sharks, rays, butterfly fishes, sea snakes, and seahorses. It also has research and museum wings.</p>
-<div class="map-container">
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3705.142348039053!2d87.50738837509314!3d21.63283878001866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02a7b149999999%3A0x5e3b3b3b3b3b3b3b!2sMarine%20Aquarium%20%26%20Regional%20Centre%2C%20Digha!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-</div>
-</div>
-<div class="attraction-card">
-<h3>Amrabati Park</h3>
-<p class="address">New Digha, Digha, West Bengal 721463</p>
-<p>Amrabati Park is a delightful oasis with immaculate lawns, well-paved walkways, and a crystal clear lake. Visitors can enjoy boating, a ropeway ride, and explore the natural flora and fauna. It's a perfect spot for picnics and relaxation.</p>
-<div class="map-container">
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3705.041486809616!2d87.50283227509311!3d21.63463477998826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02a7b149999999%3A0x7e3b3b3b3b3b3b3b!2sAmarabati%20Park!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+<div id="hotelDetails">
+            Loading hotel data...
+        </div>
+<div class="navigation-buttons">
+<button disabled="" id="prevBtn">Previous Hotel</button>
+<button disabled="" id="nextBtn">Next Hotel</button>
 </div>
 </div>
-<div class="ad-container">
+<div class="ads-container" id="ad-unit-3">
 <script type="text/javascript">
 atOptions = {
-'key' : '4c5d9f559ffd3347761823551a12cf4e',
-'format' : 'iframe',
-'height' : 250,
-'width' : 300,
-'params' : {}
+    'key' : '853e6b144dca854f7d15e200e3bfed2d',
+    'format' : 'iframe',
+    'height' : 90,
+    'width' : 728,
+    'params' : {}
 };
 </script>
-<script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
+<script src="//www.highperformanceformat.com/853e6b144dca854f7d15e200e3bfed2d/invoke.js" type="text/javascript"></script>
+<ins class="adsbygoogle" data-ad-client="ca-pub-9882958790444340" data-ad-format="auto" data-ad-slot="1715462768" data-full-width-responsive="true" style="display:block;"></ins>
 </div>
-<div class="attraction-card">
-<h3>Digha Science Centre</h3>
-<p class="address">Fore Shore Road, Digha, West Bengal 721428</p>
-<p>The Digha Science Centre & National Science Camp is a remarkable destination that marries education with entertainment. It features interactive exhibits on fun and life science, reflections, a 3D theatre, Jurassic Park with light and sound, and a Science Park, providing a unique experience for all ages.</p>
-<div class="map-container">
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3705.174275589687!2d87.51067767509315!3d21.63226878001739!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02a7b149999999%3A0xe3b3b3b3b3b3b3b!2sDigha%20Science%20Centre!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+<div class="container">
+<h3>More Digha Information (Optional)</h3>
+<p>Thinking of local attractions, travel tips, or dining options? This section can be expanded with more useful information for visitors.</p>
 </div>
+<footer>
+<p>Support: <a href="mailto:hotelmydigha@gmail.com">hotelmydigha@gmail.com</a></p>
+<p>This website managed by Nexuzy Tech Pvt Ltd</p>
+<div>
+<button class="add-hotel-button" onclick="location.href='addhotel.html'">Add Hotel</button>
+<button onclick="location.href='updatehotel.html'">Update Hotel</button>
 </div>
-<div class="attraction-card">
-<h3>Digha Mohona (Watch Point)</h3>
-<p class="address">Mohana, Digha, West Bengal 721428</p>
-<p>Digha Mohona Watch Point offers breathtaking panoramic views where the Champa River meets the Bay of Bengal. It's a captivating spot for photography, leisurely walks, enjoying spectacular sunsets, and experiencing a serene coastal ambiance.</p>
-<div class="map-container">
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3705.360368277817!2d87.52158897509318!3d21.62893878001008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02a7b149999999%3A0xf3b3b3b3b3b3b3b!2sDigha%20Mohana!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-</div>
-</div>
-<div class="attraction-card">
-<h3>Talsari Beach (Near Digha)</h3>
-<p class="address">Talsari, Odisha (approximately 10-15 km from Digha)</p>
-<p>Talsari Beach, located near Digha on the Odisha-West Bengal border, is a serene and untouched beach known for its red crabs, scenic shores, and peaceful ambiance. It offers a quieter retreat for those looking to escape crowds and enjoy nature.</p>
-<div class="map-container">
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3704.52798113903!2d87.44169777509287!3d21.64378877996832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02b2a87d000001%3A0x9e3b3b3b3b3b3b3b!2sTalasari%20Beach!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-</div>
-</div>
-<div class="attraction-card">
-<h3>Chandaneswar Temple (Near Digha)</h3>
-<p class="address">Chandaneswar, Odisha (approximately 6-8 km from Digha)</p>
-<p>Chandaneswar Temple is a famous Shiva temple located in Chandaneswar, Odisha. It is known for its grand architecture and is a revered pilgrimage site, especially during the Chadak Mela and Maha Shivaratri Festival, attracting lakhs of devotees.</p>
-<div class="map-container">
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3704.808987359256!2d87.481217775093!3d21.63873877997818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02b2b6e6000001%3A0x9e3b3b3b3b3b3b3b!2sChandaneswar%20Temple!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-</div>
-</div>
-<div class="attraction-card">
-<h3>Udaypur Sea Beach</h3>
-<p class="address">JF6M+CRW, Udaypur, Odisha 721428</p>
-<p>Udaypur Sea Beach, located near the border of Odisha and West Bengal, is a tranquil and less crowded beach known for its pristine natural beauty. It offers a peaceful escape with casuarina trees lining the shore, ideal for relaxation and enjoying the serene coastal environment.</p>
-<div class="map-container">
-<iframe src="https://maps.google.com/?cid=14524771706374454849"
-width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-</div>
-</div>
-<div class="attraction-card">
-<h3>Shree Shree Jagannath Dev Mandir Digha</h3>
-<p class="address">VILL: KHADALGOBRA, P. O: DIGHA, P. S: DIGHA, EAST MEDINIPUR EAST, Gadadharpur, Digha, West Bengal 721428</p>
-<p>Shree Shree Jagannath Dev Mandir Digha is a revered temple in Digha, dedicated to Lord Jagannath. It's known for its beautiful architecture and religious significance, attracting devotees and tourists alike.</p>
-<div class="map-container">
-<iframe src="https://maps.google.com/?cid=4490316860984739114"
-width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-</div>
-</div>
-</div>
-</div>
-<footer class="footer">
-<p>© 2025 My Digha </p>
 </footer>
-<script type='text/javascript' src='//japaneseexceedinglysanctuary.com/eb/a4/ec/eba4ec5d6467f3323400186572030c3f.js'></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+        let allHotels = []; // Store all fetched hotels
+        let displayedHotels = []; // Hotels currently being displayed (all or filtered)
+        let currentHotelIndex = 0;
+
+        let shuffledHotelOrder = [];
+        let shuffledOrderPointer = 0;
+        const TWELVE_HOURS_MS = 12 * 60 * 60 * 1000;
+
+        const hotelDetailsDiv = document.getElementById('hotelDetails');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const toggleFilterBtn = document.getElementById('toggleFilterBtn');
+        const filterSection = document.getElementById('filterSection');
+        const applyFilterBtn = document.getElementById('applyFilterBtn');
+        const clearFilterBtn = document.getElementById('clearFilterBtn');
+        const roomTypeRadios = document.querySelectorAll('input[name="roomType"]');
+        const minPriceInput = document.getElementById('minPrice');
+        const maxPriceInput = document.getElementById('maxPrice');
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        async function fetchHotelsAndInitializeDisplay() {
+            try {
+                const db = firebase.firestore();
+                const snapshot = await db.collection('hotels').get();
+                allHotels = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                if (allHotels.length === 0) {
+                    hotelDetailsDiv.innerHTML = "<p>No hotels found.</p>";
+                    prevBtn.disabled = true;
+                    nextBtn.disabled = true;
+                    return;
+                }
+
+                // Initial display logic (random hotel for the first visit in 12 hours)
+                const storedTimestamp = localStorage.getItem('lastAutoDisplayTimestamp');
+                const storedShuffledOrder = JSON.parse(localStorage.getItem('shuffledHotelOrder'));
+                let storedPointer = parseInt(localStorage.getItem('shuffledOrderPointer') || '0', 10);
+
+                const now = Date.now();
+                let needsNewAutoDisplay = true;
+
+                if (storedTimestamp && storedShuffledOrder && storedShuffledOrder.length > 0 && storedPointer <= storedShuffledOrder.length) {
+                    const timeElapsed = now - parseInt(storedTimestamp, 10);
+                    if (timeElapsed < TWELVE_HOURS_MS) {
+                        needsNewAutoDisplay = false;
+                        shuffledHotelOrder = storedShuffledOrder;
+                        const lastShownPointer = (storedPointer - 1 + shuffledHotelOrder.length) % shuffledHotelOrder.length;
+                        const lastShownHotelId = shuffledHotelOrder[lastShownPointer].id;
+                        currentHotelIndex = allHotels.findIndex(h => h.id === lastShownHotelId);
+
+                        if (currentHotelIndex === -1) {
+                            // If the last shown hotel is no longer in allHotels (e.g., deleted), re-shuffle
+                            needsNewAutoDisplay = true;
+                        }
+                    }
+                }
+
+                if (needsNewAutoDisplay) {
+                    shuffledHotelOrder = shuffleArray([...allHotels]);
+                    shuffledOrderPointer = 0;
+
+                    if (shuffledHotelOrder.length > 0) { // Ensure there are hotels to display
+                        const hotelToDisplay = shuffledHotelOrder[shuffledOrderPointer];
+                        currentHotelIndex = allHotels.findIndex(h => h.id === hotelToDisplay.id);
+                        
+                        shuffledOrderPointer = (shuffledOrderPointer + 1) % shuffledHotelOrder.length;
+
+                        localStorage.setItem('lastAutoDisplayTimestamp', now.toString());
+                        localStorage.setItem('shuffledHotelOrder', JSON.stringify(shuffledHotelOrder));
+                        localStorage.setItem('shuffledOrderPointer', shuffledOrderPointer.toString());
+                    } else {
+                        currentHotelIndex = 0; // No hotels to display, set index to 0
+                    }
+                }
+
+                displayedHotels = [...allHotels]; // Initially display all hotels
+                showHotel(currentHotelIndex);
+                updateNavigationButtons();
+
+                // Manually push calls for the static ad units (Ad 1 and Ad 3) to ensure they render
+                (window.adsbygoogle = window.adsbygoogle || []).push({}); // For Ad Unit 1
+                (window.adsbygoogle = window.adsbygoogle || []).push({}); // For Ad Unit 3
+
+            } catch (error) {
+                console.error("Error fetching hotels: ", error);
+                hotelDetailsDiv.innerHTML = "<p>Error loading hotels. Please try again later.</p>";
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+            }
+        }
+
+        function showHotel(index) {
+            const hotelsToDisplay = displayedHotels; // Use displayedHotels array
+
+            if (hotelsToDisplay.length === 0) {
+                hotelDetailsDiv.innerHTML = "<p>No hotel data available.</p>";
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+                return;
+            }
+            if (index < 0 || index >= hotelsToDisplay.length) {
+                console.warn("Invalid hotel index. Adjusting to 0.");
+                currentHotelIndex = 0; // Fallback to 0 if index is out of bounds
+                index = 0;
+            }
+
+            const h = hotelsToDisplay[index];
+            let html = `
+                <div class="hotel-card">
+                    <h2>${h.name || "No Name"}</h2>
+                    <p><b>Address:</b> ${h.address || "N/A"}</p>
+                    <p><b>Mobile:</b> ${h.mobile || "N/A"}</p>
+                    <p><b>WhatsApp:</b> ${h.whatsapp || "N/A"}</p>
+                    <p><b>Email:</b> ${h.email || "N/A"}</p>
+                    <p><b>AC Room Price:</b> ₹${h.ac_min_price || "-"} – ₹${h.ac_max_price || "-"}</p>
+                    <p><b>Non-AC Room Price:</b> ₹${h.non_ac_min_price || "-"} – ₹${h.non_ac_max_price || "-"}</p>
+                    `;
+
+            if (h.image1) {
+                html += `<img src="${h.image1}" alt="Image 1">`;
+            }
+
+            // AdSense Ad Unit 2: Placed between image1 and image2 if both exist
+            // Aiming for 300x50 (Mobile Banner)
+            if (h.image1 && h.image2) {
+    html += `<div class="ads-container" id="mid-ad-container"></div>`;
+}
+
+            if (h.image2) {
+                html += `<img src="${h.image2}" alt="Image 2">`;
+            }
+
+            html += `</div>`; // Close hotel-card div
+            
+            hotelDetailsDiv.innerHTML = html;
+            currentHotelIndex = index;
+            updateNavigationButtons();
+
+            // IMPORTANT: Manually push the AdSense call for the dynamically added Ad Unit 2
+            // ONLY if it was actually inserted (i.e., if h.image1 and h.image2 were true)
+            const adUnit2Container = document.getElementById('mid-ad-container');
+if (adUnit2Container) {
+    setTimeout(() => {
+        const script1 = document.createElement('script');
+        script1.type = 'text/javascript';
+        script1.innerHTML = `
+            atOptions = {
+                'key' : '4c5d9f559ffd3347761823551a12cf4e',
+                'format' : 'iframe',
+                'height' : 300,
+                'width' : 300,
+                'params' : {}
+            };
+        `;
+        const script2 = document.createElement('script');
+        script2.type = 'text/javascript';
+        script2.src = '//www.highperformanceformat.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js';
+        adUnit2Container.appendChild(script1);
+        adUnit2Container.appendChild(script2);
+    }, 100);
+}
+        }
+
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentHotelIndex === 0;
+            nextBtn.disabled = currentHotelIndex === displayedHotels.length - 1;
+        }
+
+                function applyFilter() {
+            const roomType = document.querySelector('input[name="roomType"]:checked').value;
+            // Use 0 for minPrice if input is empty or invalid, and Infinity for maxPrice
+            const minPrice = parseFloat(minPriceInput.value) || 0;
+            const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
+
+            displayedHotels = allHotels.filter(hotel => {
+                let passesRoomType = true;
+                let passesPrice = true;
+
+                // --- Room Type Filter ---
+                if (roomType === 'ac') {
+                    // Check if AC prices exist and are not just '-'
+                    passesRoomType = (
+                        (hotel.ac_min_price && hotel.ac_min_price !== "-") ||
+                        (hotel.ac_max_price && hotel.ac_max_price !== "-")
+                    );
+                } else if (roomType === 'non_ac') {
+                    // Check if Non-AC prices exist and are not just '-'
+                    passesRoomType = (
+                        (hotel.non_ac_min_price && hotel.non_ac_min_price !== "-") ||
+                        (hotel.non_ac_max_price && hotel.non_ac_max_price !== "-")
+                    );
+                }
+                // If roomType is 'any', passesRoomType remains true, which is correct.
+
+                // If the room type filter already failed, no need to check price
+                if (!passesRoomType) {
+                    return false;
+                }
+
+                // --- Price Range Filter ---
+                const hotelPrices = [];
+
+                // Helper function to add a price if it's a valid number
+                const addValidPrice = (priceStr) => {
+                    if (priceStr && priceStr !== "-") {
+                        const priceNum = parseFloat(priceStr);
+                        if (!isNaN(priceNum)) {
+                            hotelPrices.push(priceNum);
+                        }
+                    }
+                };
+
+                addValidPrice(hotel.ac_min_price);
+                addValidPrice(hotel.ac_max_price);
+                addValidPrice(hotel.non_ac_min_price);
+                addValidPrice(hotel.non_ac_max_price);
+
+                if (hotelPrices.length === 0) {
+                    // If the hotel has no valid price information at all
+                    // It only passes the price filter if no price range was specified by the user
+                    passesPrice = (minPrice === 0 && maxPrice === Infinity);
+                } else {
+                    const actualMinHotelPrice = Math.min(...hotelPrices);
+                    const actualMaxHotelPrice = Math.max(...hotelPrices);
+                    
+                    // Check for overlap:
+                    // A hotel passes if its price range (actualMinHotelPrice to actualMaxHotelPrice)
+                    // overlaps with the user's filter range (minPrice to maxPrice).
+                    // It fails if the hotel's max price is below the filter's min,
+                    // OR if the hotel's min price is above the filter's max.
+                    passesPrice = !(actualMaxHotelPrice < minPrice || actualMinHotelPrice > maxPrice);
+                }
+
+                return passesRoomType && passesPrice;
+            });
+
+            currentHotelIndex = 0; // Reset to the first hotel in the filtered list
+            if (displayedHotels.length === 0) {
+                hotelDetailsDiv.innerHTML = "<p>No hotels found matching your criteria.</p>";
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+            } else {
+                showHotel(currentHotelIndex); // Display the first filtered hotel
+            }
+            filterSection.style.display = 'block'; // Keep filter section visible after applying filter
+            toggleFilterBtn.textContent = 'Hide Filter Options';
+        }
+
+
+        function clearFilter() {
+            displayedHotels = [...allHotels]; // Reset to all hotels
+            currentHotelIndex = 0; // Reset to the first hotel
+            minPriceInput.value = '';
+            maxPriceInput.value = '';
+            document.getElementById('anyRoom').checked = true; // Select "Any Room Type"
+            showHotel(currentHotelIndex);
+            filterSection.style.display = 'none'; // Hide filter section after clearing
+            toggleFilterBtn.textContent = 'Show Filter Options';
+        }
+
+        // Event Listeners
+        prevBtn.addEventListener('click', () => {
+            if (currentHotelIndex > 0) {
+                showHotel(currentHotelIndex - 1);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentHotelIndex < displayedHotels.length - 1) {
+                showHotel(currentHotelIndex + 1);
+            }
+        });
+
+        toggleFilterBtn.addEventListener('click', () => {
+            if (filterSection.style.display === 'none' || filterSection.style.display === '') {
+                filterSection.style.display = 'block';
+                toggleFilterBtn.textContent = 'Hide Filter Options';
+            } else {
+                filterSection.style.display = 'none';
+                toggleFilterBtn.textContent = 'Show Filter Options';
+            }
+        });
+
+        applyFilterBtn.addEventListener('click', applyFilter);
+        clearFilterBtn.addEventListener('click', clearFilter);
+
+        document.addEventListener('DOMContentLoaded', fetchHotelsAndInitializeDisplay);
+    </script>
+<script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const adUnits = document.querySelectorAll('.ads-container');
+            adUnits.forEach(ad => {
+                setTimeout(() => {
+                    if (!ad.querySelector('iframe') && !ad.querySelector('ins')) {
+                        ad.style.display = 'none';
+                    }
+                }, 3000);
+            });
+        });
+    </script>
+        <script type='text/javascript' src='//japaneseexceedinglysanctuary.com/eb/a4/ec/eba4ec5d6467f3323400186572030c3f.js'></script>
 </body>
 </html>
