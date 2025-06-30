@@ -137,6 +137,20 @@
       <button id="prevBtnBus">Previous</button>
       <button id="nextBtnBus">Next</button>
     </div>
+
+    <!-- 📌 Sidebar Ad -->
+    <div style="text-align:center; margin-top:30px;">
+      <script type="text/javascript">
+        atOptions = {
+          'key': '2aa1457685f7031ac18ae3f3e110c19d',
+          'format': 'iframe',
+          'height': 300,
+          'width': 160,
+          'params': {}
+        };
+      </script>
+      <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/2aa1457685f7031ac18ae3f3e110c19d/invoke.js"></script>
+    </div>
   </div>
 
   <!-- 🔽 Bottom Ad -->
@@ -163,7 +177,7 @@
     <p>Made in India 🇮🇳</p>
   </footer>
 
-  <!-- ✅ Firebase Script -->
+  <!-- ✅ Firebase + Working Render -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -188,26 +202,6 @@
     let currentPage = 0;
     const perPage = 2;
 
-    function insertAdScript(key, width, height) {
-      const adDiv = document.createElement('div');
-      adDiv.style.textAlign = 'center';
-      const script1 = document.createElement('script');
-      script1.innerHTML = `
-        atOptions = {
-          'key': '${key}',
-          'format': 'iframe',
-          'height': ${height},
-          'width': ${width},
-          'params': {}
-        };
-      `;
-      const script2 = document.createElement('script');
-      script2.src = \`//japaneseexceedinglysanctuary.com/${key}/invoke.js\`;
-      adDiv.appendChild(script1);
-      adDiv.appendChild(script2);
-      container.appendChild(adDiv);
-    }
-
     function renderPage() {
       container.innerHTML = '';
       const start = currentPage * perPage;
@@ -229,15 +223,32 @@
         `;
         container.appendChild(div);
 
-        // 🧱 Two ads between agents
-        insertAdScript("4c5d9f559ffd3347761823551a12cf4e", 300, 250);
+        // Insert 300x250 ad after each agent
+        const adBox = document.createElement('div');
+        adBox.innerHTML = `
+          <script type="text/javascript">
+            atOptions = {
+              'key': '4c5d9f559ffd3347761823551a12cf4e',
+              'format': 'iframe',
+              'height': 250,
+              'width': 300,
+              'params': {}
+            };
+          </script>
+          <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
+        `;
+        container.appendChild(adBox);
       });
-
-      // 📌 Sidebar ad
-      insertAdScript("2aa1457685f7031ac18ae3f3e110c19d", 160, 300);
 
       prevBtn.disabled = currentPage === 0;
       nextBtn.disabled = end >= agents.length;
+    }
+
+    async function loadAgents() {
+      const snapshot = await getDocs(collection(db, "bus_agents"));
+      agents = [];
+      snapshot.forEach(doc => agents.push(doc.data()));
+      renderPage();
     }
 
     prevBtn.onclick = () => {
@@ -253,13 +264,6 @@
         renderPage();
       }
     };
-
-    async function loadAgents() {
-      const snapshot = await getDocs(collection(db, "bus_agents"));
-      agents = [];
-      snapshot.forEach(doc => agents.push(doc.data()));
-      renderPage();
-    }
 
     document.addEventListener("DOMContentLoaded", loadAgents);
   </script>
