@@ -4,10 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Digha Restaurants - Food Places in Digha</title>
-
-  <!-- SEO -->
-  <meta name="description" content="Find the best food places and restaurants in Digha with contact and address.">
-  <meta name="keywords" content="Digha, restaurants, food guide, My Digha, Bengali food, Digha food places">
+  <meta name="description" content="Find top restaurants in Digha with contact details and address. Part of My Digha Platform.">
+  <meta name="keywords" content="Digha restaurants, Digha food, places to eat in Digha, My Digha">
   <meta name="author" content="Nexuzy Tech Pvt Ltd">
 
   <!-- Google Analytics -->
@@ -94,13 +92,13 @@
     }
     .ad-box {
       text-align: center;
-      margin: 15px 0;
+      margin: 20px 0;
     }
   </style>
 </head>
 <body>
 
-  <!-- 🔼 Top Banner Ad -->
+  <!-- 🔼 Top Ad -->
   <div class="ad-box">
     <script type="text/javascript">
       atOptions = {
@@ -156,7 +154,7 @@
     <p>Made in India 🇮🇳</p>
   </footer>
 
-  <!-- ✅ Firebase Script -->
+  <!-- ✅ Firebase & Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -192,7 +190,7 @@
         return;
       }
 
-      pageItems.forEach((rest, index) => {
+      pageItems.forEach(rest => {
         const div = document.createElement('div');
         div.className = 'restaurant-card';
         div.innerHTML = `
@@ -201,25 +199,6 @@
           <p><strong>Mobile:</strong> ${rest.phone || rest.mobile || 'Not available'}</p>
         `;
         container.appendChild(div);
-
-        // 🔸 Show ad after first restaurant
-        if (index === 0 && pageItems.length > 1) {
-          const ad = document.createElement('div');
-          ad.className = 'ad-box';
-          ad.innerHTML = `
-            <script type="text/javascript">
-              atOptions = {
-                'key' : '4c5d9f559ffd3347761823551a12cf4e',
-                'format' : 'iframe',
-                'height' : 250,
-                'width' : 300,
-                'params' : {}
-              };
-            </script>
-            <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
-          `;
-          container.appendChild(ad);
-        }
       });
 
       prevBtn.disabled = currentPage === 0;
