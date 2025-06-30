@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Digha Restaurants</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background-color: #D35400;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+    }
+    .logo {
+      max-width: 120px;
+      display: block;
+      margin: 0 auto 10px;
+    }
+    .container {
+      width: 90%;
+      margin: auto;
+      padding: 20px 0;
+    }
+    .welcome-message {
+      text-align: center;
+      background: #FDEBD0;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    #restaurant-container {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      min-height: 200px;
+    }
+    .restaurant-card {
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+    }
+    .navigation-controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .navigation-controls button {
+      background-color: #D35400;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .navigation-controls button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+      margin-top: 40px;
+    }
+    footer a {
+      color: #D35400;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="mydigharestaurants.png" alt="My Digha Restaurant Logo" class="logo" />
+    <h1>Digha Restaurants</h1>
+    <p>Discover tasty food spots across Digha!</p>
+  </header>
+
+  <div class="container">
+    <div class="welcome-message">
+      <h2>Welcome to Digha Food Guide</h2>
+      <p>Explore popular restaurants with location and contact info.</p>
+    </div>
+
+    <div id="restaurant-container">
+      <p>Loading restaurant data...</p>
+    </div>
+
+    <div class="navigation-controls">
+      <button id="prevBtnRestaurant">Previous</button>
+      <button id="nextBtnRestaurant">Next</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>Support: <a href="mailto:mydighafood@gmail.com">mydighafood@gmail.com</a></p>
+    <p>Part of My Digha Platform - Nexuzy Tech Pvt Ltd</p>
+    <p>Made in India 🇮🇳</p>
+  </footer>
+
+  <!-- Firebase & Restaurant Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB9SGeSzQSP63szOYyzEFCd9-f26KRNA5I",
+      authDomain: "dk-chats-2919c.firebaseapp.com",
+      projectId: "dk-chats-2919c",
+      storageBucket: "dk-chats-2919c.appspot.com",
+      messagingSenderId: "620357656811",
+      appId: "1:620357656811:web:ee4ada3c2e8baa0d679eae"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const container = document.getElementById('restaurant-container');
+    const prevBtn = document.getElementById('prevBtnRestaurant');
+    const nextBtn = document.getElementById('nextBtnRestaurant');
+
+    let restaurants = [];
+    let currentPage = 0;
+    const perPage = 2;
+
+    function renderPage() {
+      container.innerHTML = '';
+      const start = currentPage * perPage;
+      const end = start + perPage;
+      const pageItems = restaurants.slice(start, end);
+
+      if (pageItems.length === 0) {
+        container.innerHTML = '<p>No restaurant data found.</p>';
+        return;
+      }
+
+      pageItems.forEach(rest => {
+        const div = document.createElement('div');
+        div.className = 'restaurant-card';
+        div.innerHTML = `
+          <h3>${rest.name}</h3>
+          <p><strong>Address:</strong> ${rest.address}</p>
+          <p><strong>Mobile:</strong> ${rest.mobile}</p>
+        `;
+        container.appendChild(div);
+      });
+
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = end >= restaurants.length;
+    }
+
+    prevBtn.onclick = () => {
+      if (currentPage > 0) {
+        currentPage--;
+        renderPage();
+      }
+    };
+
+    nextBtn.onclick = () => {
+      if ((currentPage + 1) * perPage < restaurants.length) {
+        currentPage++;
+        renderPage();
+      }
+    };
+
+    async function loadRestaurants() {
+      try {
+        const snapshot = await getDocs(collection(db, "restaurants")); // Collection name: 'restaurants'
+        restaurants = [];
+        snapshot.forEach(doc => {
+          console.log("Restaurant:", doc.data());
+          restaurants.push(doc.data());
+        });
+        renderPage();
+      } catch (error) {
+        console.error("Error fetching restaurants:", error);
+        container.innerHTML = `<p style="color:red;">Failed to load restaurants. Check console.</p>`;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadRestaurants);
+  </script>
+</body>
+</html>
