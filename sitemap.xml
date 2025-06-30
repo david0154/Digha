@@ -38,4 +38,10 @@
     <priority>0.90</priority>
   </url>
 
+   <url>
+    <loc>https://mydigha.in/resturant</loc>
+    <lastmod>2025-06-30</lastmod>
+    <priority>0.85</priority>
+  </url>
+
 </urlset>
