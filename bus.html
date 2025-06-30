@@ -163,7 +163,7 @@
     <p>Made in India 🇮🇳</p>
   </footer>
 
-  <!-- ✅ Firebase & Rendering -->
+  <!-- ✅ Firebase Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -229,11 +229,11 @@
         `;
         container.appendChild(div);
 
-        // 🧱 Two 300x250 Ads — one after each card
+        // 🧱 Two ads between agents
         insertAdScript("4c5d9f559ffd3347761823551a12cf4e", 300, 250);
       });
 
-      // 📌 Sidebar 160x300 Ad
+      // 📌 Sidebar ad
       insertAdScript("2aa1457685f7031ac18ae3f3e110c19d", 160, 300);
 
       prevBtn.disabled = currentPage === 0;
