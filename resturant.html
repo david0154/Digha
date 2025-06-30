@@ -5,6 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Digha Restaurants</title>
 
+  <!-- ✅ SEO and Social Meta -->
+  <meta name="description" content="Discover popular restaurants in Digha. My Digha Restaurants helps travelers find contact info, address and top food places across Digha.">
+  <meta name="keywords" content="Digha restaurants, food in Digha, Digha food guide, My Digha Restaurants, West Bengal">
+  <meta name="author" content="Nexuzy Tech Pvt Ltd">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#D35400">
+  <meta property="og:title" content="My Digha Restaurants">
+  <meta property="og:description" content="Explore tasty food places in Digha with My Digha Restaurants. Find addresses and phone numbers easily.">
+  <meta property="og:image" content="https://mydigha.in/mydigharestaurants.png">
+  <meta property="og:url" content="https://mydigha.in/restaurants.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="My Digha">
+
+  <!-- ✅ Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L5TNBK4WMZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-L5TNBK4WMZ');
+  </script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -82,6 +104,20 @@
 </head>
 <body>
 
+  <!-- 🔼 Top Banner Ad -->
+  <div style="text-align:center; margin: 10px 0;">
+    <script type="text/javascript">
+      atOptions = {
+        'key': '853e6b144dca854f7d15e200e3bfed2d',
+        'format': 'iframe',
+        'height': 90,
+        'width': 728,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/853e6b144dca854f7d15e200e3bfed2d/invoke.js"></script>
+  </div>
+
   <header>
     <img src="mydigharestaurants.png" alt="My Digha Restaurant Logo" class="logo" />
     <h1>Digha Restaurants</h1>
@@ -104,13 +140,27 @@
     </div>
   </div>
 
+  <!-- 🔽 Bottom Banner Ad -->
+  <div style="text-align:center; margin: 30px 0;">
+    <script type="text/javascript">
+      atOptions = {
+        'key': '853e6b144dca854f7d15e200e3bfed2d',
+        'format': 'iframe',
+        'height': 90,
+        'width': 728,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/853e6b144dca854f7d15e200e3bfed2d/invoke.js"></script>
+  </div>
+
   <footer>
     <p>Support: <a href="mailto:mydighafood@gmail.com">mydighafood@gmail.com</a></p>
     <p>Part of My Digha Platform - Nexuzy Tech Pvt Ltd</p>
     <p>Made in India 🇮🇳</p>
   </footer>
 
-  <!-- Firebase & Restaurant Script -->
+  <!-- ✅ Firebase & Restaurant Data -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -146,15 +196,34 @@
         return;
       }
 
-      pageItems.forEach(rest => {
+      pageItems.forEach((rest, index) => {
         const div = document.createElement('div');
         div.className = 'restaurant-card';
         div.innerHTML = `
-          <h3>${rest.name}</h3>
-          <p><strong>Address:</strong> ${rest.address}</p>
-          <p><strong>Mobile:</strong> ${rest.mobile}</p>
+          <h3>${rest.name || 'No Name'}</h3>
+          <p><strong>Address:</strong> ${rest.address || 'N/A'}</p>
+          <p><strong>Mobile:</strong> ${rest.phone || rest.mobile || 'N/A'}</p>
         `;
         container.appendChild(div);
+
+        // ➕ Insert 1 ad after first restaurant card
+        if (index === 0 && pageItems.length > 1) {
+          const adDiv = document.createElement('div');
+          adDiv.style.textAlign = 'center';
+          adDiv.innerHTML = `
+            <script type="text/javascript">
+              atOptions = {
+                'key': '4c5d9f559ffd3347761823551a12cf4e',
+                'format': 'iframe',
+                'height': 250,
+                'width': 300,
+                'params': {}
+              };
+            </script>
+            <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
+          `;
+          container.appendChild(adDiv);
+        }
       });
 
       prevBtn.disabled = currentPage === 0;
@@ -175,22 +244,21 @@
       }
     };
 
-    async function loadRestaurants() {
+    document.addEventListener("DOMContentLoaded", async () => {
       try {
-        const snapshot = await getDocs(collection(db, "restaurants")); // Collection name: 'restaurants'
+        const snapshot = await getDocs(collection(db, "restaurants"));
         restaurants = [];
-        snapshot.forEach(doc => {
-          console.log("Restaurant:", doc.data());
-          restaurants.push(doc.data());
-        });
+        snapshot.forEach(doc => restaurants.push(doc.data()));
         renderPage();
       } catch (error) {
-        console.error("Error fetching restaurants:", error);
-        container.innerHTML = `<p style="color:red;">Failed to load restaurants. Check console.</p>`;
+        console.error("Error loading restaurants:", error);
+        container.innerHTML = `<p style="color:red;">Error loading data. Please try again later.</p>`;
       }
-    }
-
-    document.addEventListener("DOMContentLoaded", loadRestaurants);
+    });
   </script>
+
+  <!-- 🔔 Popup Ad -->
+  <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/7d/6a/f1/7d6af1c8991f69ada26a8c6a4a9ee242.js"></script>
+
 </body>
 </html>
