@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Digha Bus Booking Counters - Find Your Bus!</title>
 
+  <!-- ✅ Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L5TNBK4WMZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-L5TNBK4WMZ');
+  </script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -154,7 +163,7 @@
     <p>Made in India 🇮🇳</p>
   </footer>
 
-  <!-- Firebase Script -->
+  <!-- ✅ Firebase & Rendering -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -162,12 +171,10 @@
     const firebaseConfig = {
       apiKey: "AIzaSyB9SGeSzQSP63szOYyzEFCd9-f26KRNA5I",
       authDomain: "dk-chats-2919c.firebaseapp.com",
-      databaseURL: "https://dk-chats-2919c-default-rtdb.firebaseio.com",
       projectId: "dk-chats-2919c",
       storageBucket: "dk-chats-2919c.appspot.com",
       messagingSenderId: "620357656811",
-      appId: "1:620357656811:web:ee4ada3c2e8baa0d679eae",
-      measurementId: "G-XHS1E7PRKL"
+      appId: "1:620357656811:web:ee4ada3c2e8baa0d679eae"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -195,7 +202,7 @@
         };
       `;
       const script2 = document.createElement('script');
-      script2.src = `//japaneseexceedinglysanctuary.com/${key}/invoke.js`;
+      script2.src = \`//japaneseexceedinglysanctuary.com/${key}/invoke.js\`;
       adDiv.appendChild(script1);
       adDiv.appendChild(script2);
       container.appendChild(adDiv);
@@ -222,13 +229,11 @@
         `;
         container.appendChild(div);
 
-        // Insert 300x250 ad after first card
-        if (index === 0) {
-          insertAdScript("4c5d9f559ffd3347761823551a12cf4e", 300, 250);
-        }
+        // 🧱 Two 300x250 Ads — one after each card
+        insertAdScript("4c5d9f559ffd3347761823551a12cf4e", 300, 250);
       });
 
-      // Insert one 160x300 side ad
+      // 📌 Sidebar 160x300 Ad
       insertAdScript("2aa1457685f7031ac18ae3f3e110c19d", 160, 300);
 
       prevBtn.disabled = currentPage === 0;
@@ -259,7 +264,7 @@
     document.addEventListener("DOMContentLoaded", loadAgents);
   </script>
 
-  <!-- 📌 Popup Ad -->
+  <!-- 🔔 Popup Ad -->
   <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/7d/6a/f1/7d6af1c8991f69ada26a8c6a4a9ee242.js"></script>
 </body>
 </html>
