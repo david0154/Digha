@@ -5,18 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Digha Restaurants</title>
 
-  <!-- ✅ SEO and Social Meta -->
-  <meta name="description" content="Discover popular restaurants in Digha. My Digha Restaurants helps travelers find contact info, address and top food places across Digha.">
-  <meta name="keywords" content="Digha restaurants, food in Digha, Digha food guide, My Digha Restaurants, West Bengal">
+  <!-- ✅ SEO -->
+  <meta name="description" content="Discover tasty restaurants across Digha with contact, address, and food guide.">
+  <meta name="keywords" content="Digha restaurants, My Digha food, food in Digha, Nexuzy, Digha food spots">
   <meta name="author" content="Nexuzy Tech Pvt Ltd">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#D35400">
   <meta property="og:title" content="My Digha Restaurants">
-  <meta property="og:description" content="Explore tasty food places in Digha with My Digha Restaurants. Find addresses and phone numbers easily.">
+  <meta property="og:description" content="Your guide to Digha's best restaurants with contacts and locations.">
   <meta property="og:image" content="https://mydigha.in/mydigharestaurants.png">
   <meta property="og:url" content="https://mydigha.in/restaurants.html">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="My Digha">
+  <meta name="theme-color" content="#D35400">
 
   <!-- ✅ Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-L5TNBK4WMZ"></script>
@@ -104,7 +102,7 @@
 </head>
 <body>
 
-  <!-- 🔼 Top Banner Ad -->
+  <!-- 🔼 Top Ad -->
   <div style="text-align:center; margin: 10px 0;">
     <script type="text/javascript">
       atOptions = {
@@ -140,7 +138,7 @@
     </div>
   </div>
 
-  <!-- 🔽 Bottom Banner Ad -->
+  <!-- 🔽 Bottom Ad -->
   <div style="text-align:center; margin: 30px 0;">
     <script type="text/javascript">
       atOptions = {
@@ -200,13 +198,12 @@
         const div = document.createElement('div');
         div.className = 'restaurant-card';
         div.innerHTML = `
-          <h3>${rest.name || 'No Name'}</h3>
-          <p><strong>Address:</strong> ${rest.address || 'N/A'}</p>
-          <p><strong>Mobile:</strong> ${rest.phone || rest.mobile || 'N/A'}</p>
+          <h3>${rest.name || 'Unnamed Restaurant'}</h3>
+          <p><strong>Address:</strong> ${rest.address || 'Not provided'}</p>
+          <p><strong>Mobile:</strong> ${rest.phone || rest.mobile || 'Not available'}</p>
         `;
         container.appendChild(div);
 
-        // ➕ Insert 1 ad after first restaurant card
         if (index === 0 && pageItems.length > 1) {
           const adDiv = document.createElement('div');
           adDiv.style.textAlign = 'center';
@@ -252,12 +249,12 @@
         renderPage();
       } catch (error) {
         console.error("Error loading restaurants:", error);
-        container.innerHTML = `<p style="color:red;">Error loading data. Please try again later.</p>`;
+        container.innerHTML = `<p style="color:red;">Failed to load restaurants. Try again later.</p>`;
       }
     });
   </script>
 
-  <!-- 🔔 Popup Ad -->
+  <!-- 🎯 Popup Ad -->
   <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/7d/6a/f1/7d6af1c8991f69ada26a8c6a4a9ee242.js"></script>
 
 </body>
