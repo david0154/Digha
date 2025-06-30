@@ -131,15 +131,16 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-
+   const firebaseConfig = {
+  apiKey: "AIzaSyB9SGeSzQSP63szOYyzEFCd9-f26KRNA5I",
+  authDomain: "dk-chats-2919c.firebaseapp.com",
+  databaseURL: "https://dk-chats-2919c-default-rtdb.firebaseio.com",
+  projectId: "dk-chats-2919c",
+  storageBucket: "dk-chats-2919c.appspot.com",
+  messagingSenderId: "620357656811",
+  appId: "1:620357656811:web:ee4ada3c2e8baa0d679eae",
+  measurementId: "G-XHS1E7PRKL"
+};
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
