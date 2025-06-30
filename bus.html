@@ -103,8 +103,8 @@
 </head>
 <body>
 
-  <!-- 🔼 Top Ad -->
-  <div style="text-align: center; margin-top: 10px;">
+  <!-- 🔼 Minimal Top Banner Ad (728x90) -->
+  <div style="text-align:center; margin: 10px 0;">
     <script type="text/javascript">
       atOptions = {
         'key': '853e6b144dca854f7d15e200e3bfed2d',
@@ -137,24 +137,10 @@
       <button id="prevBtnBus">Previous</button>
       <button id="nextBtnBus">Next</button>
     </div>
-
-    <!-- 📌 Sidebar Ad -->
-    <div style="text-align:center; margin-top:30px;">
-      <script type="text/javascript">
-        atOptions = {
-          'key': '2aa1457685f7031ac18ae3f3e110c19d',
-          'format': 'iframe',
-          'height': 300,
-          'width': 160,
-          'params': {}
-        };
-      </script>
-      <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/2aa1457685f7031ac18ae3f3e110c19d/invoke.js"></script>
-    </div>
   </div>
 
-  <!-- 🔽 Bottom Ad -->
-  <div style="text-align: center; margin: 30px 0;">
+  <!-- 🔽 Minimal Bottom Banner Ad (728x90) -->
+  <div style="text-align:center; margin: 30px 0;">
     <script type="text/javascript">
       atOptions = {
         'key': '853e6b144dca854f7d15e200e3bfed2d',
@@ -177,7 +163,7 @@
     <p>Made in India 🇮🇳</p>
   </footer>
 
-  <!-- ✅ Firebase + Working Render -->
+  <!-- ✅ Firebase Load Bus Agents -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -222,24 +208,6 @@
           <p><strong>Mobile:</strong> ${agent.phone || agent.mobile || 'N/A'}</p>
         `;
         container.appendChild(div);
-
-        // ✅ Ad after each agent
-        const adDiv = document.createElement('div');
-        adDiv.innerHTML = `
-          <div style="text-align: center; margin: 15px 0;">
-            <script type="text/javascript">
-              atOptions = {
-                'key': '4c5d9f559ffd3347761823551a12cf4e',
-                'format': 'iframe',
-                'height': 250,
-                'width': 300,
-                'params': {}
-              };
-            </script>
-            <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
-          </div>
-        `;
-        container.appendChild(adDiv);
       });
 
       prevBtn.disabled = currentPage === 0;
