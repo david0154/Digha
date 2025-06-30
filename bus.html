@@ -213,31 +213,33 @@
         return;
       }
 
-      pageItems.forEach((agent, index) => {
+      pageItems.forEach(agent => {
         const div = document.createElement('div');
         div.className = 'agent-card';
         div.innerHTML = `
           <h3>${agent.name || 'No Name'}</h3>
           <p><strong>Address:</strong> ${agent.address || 'N/A'}</p>
-          <p><strong>Mobile:</strong> ${agent.phone || 'N/A'}</p>
+          <p><strong>Mobile:</strong> ${agent.phone || agent.mobile || 'N/A'}</p>
         `;
         container.appendChild(div);
 
-        // Insert 300x250 ad after each agent
-        const adBox = document.createElement('div');
-        adBox.innerHTML = `
-          <script type="text/javascript">
-            atOptions = {
-              'key': '4c5d9f559ffd3347761823551a12cf4e',
-              'format': 'iframe',
-              'height': 250,
-              'width': 300,
-              'params': {}
-            };
-          </script>
-          <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
+        // ✅ Ad after each agent
+        const adDiv = document.createElement('div');
+        adDiv.innerHTML = `
+          <div style="text-align: center; margin: 15px 0;">
+            <script type="text/javascript">
+              atOptions = {
+                'key': '4c5d9f559ffd3347761823551a12cf4e',
+                'format': 'iframe',
+                'height': 250,
+                'width': 300,
+                'params': {}
+              };
+            </script>
+            <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
+          </div>
         `;
-        container.appendChild(adBox);
+        container.appendChild(adDiv);
       });
 
       prevBtn.disabled = currentPage === 0;
