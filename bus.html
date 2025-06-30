@@ -94,6 +94,20 @@
 </head>
 <body>
 
+  <!-- 🔼 Top Ad (728x90) -->
+  <div style="text-align: center; margin-top: 10px;">
+    <script type="text/javascript">
+      atOptions = {
+        'key': '853e6b144dca854f7d15e200e3bfed2d',
+        'format': 'iframe',
+        'height': 90,
+        'width': 728,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/853e6b144dca854f7d15e200e3bfed2d/invoke.js"></script>
+  </div>
+
   <header>
     <img src="mydighabus.png" alt="My Digha Bus Logo" class="logo" />
     <h1>Digha Bus Booking Counters</h1>
@@ -110,10 +124,38 @@
       <p>Loading bus agent data...</p>
     </div>
 
+    <!-- ➡️ Side Ad (300x160) -->
+    <div style="text-align: center; margin: 20px 0;">
+      <script type="text/javascript">
+        atOptions = {
+          'key': '2aa1457685f7031ac18ae3f3e110c19d',
+          'format': 'iframe',
+          'height': 300,
+          'width': 160,
+          'params': {}
+        };
+      </script>
+      <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/2aa1457685f7031ac18ae3f3e110c19d/invoke.js"></script>
+    </div>
+
     <div class="navigation-controls">
       <button id="prevBtnBus">Previous</button>
       <button id="nextBtnBus">Next</button>
     </div>
+  </div>
+
+  <!-- 🔽 Bottom Ad (728x90) -->
+  <div style="text-align: center; margin: 30px 0;">
+    <script type="text/javascript">
+      atOptions = {
+        'key': '853e6b144dca854f7d15e200e3bfed2d',
+        'format': 'iframe',
+        'height': 90,
+        'width': 728,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/853e6b144dca854f7d15e200e3bfed2d/invoke.js"></script>
   </div>
 
   <footer>
@@ -131,16 +173,17 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-   const firebaseConfig = {
-  apiKey: "AIzaSyB9SGeSzQSP63szOYyzEFCd9-f26KRNA5I",
-  authDomain: "dk-chats-2919c.firebaseapp.com",
-  databaseURL: "https://dk-chats-2919c-default-rtdb.firebaseio.com",
-  projectId: "dk-chats-2919c",
-  storageBucket: "dk-chats-2919c.appspot.com",
-  messagingSenderId: "620357656811",
-  appId: "1:620357656811:web:ee4ada3c2e8baa0d679eae",
-  measurementId: "G-XHS1E7PRKL"
-};
+    const firebaseConfig = {
+      apiKey: "AIzaSyB9SGeSzQSP63szOYyzEFCd9-f26KRNA5I",
+      authDomain: "dk-chats-2919c.firebaseapp.com",
+      databaseURL: "https://dk-chats-2919c-default-rtdb.firebaseio.com",
+      projectId: "dk-chats-2919c",
+      storageBucket: "dk-chats-2919c.appspot.com",
+      messagingSenderId: "620357656811",
+      appId: "1:620357656811:web:ee4ada3c2e8baa0d679eae",
+      measurementId: "G-XHS1E7PRKL"
+    };
+
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
@@ -163,15 +206,34 @@
         return;
       }
 
-      pageItems.forEach(agent => {
+      pageItems.forEach((agent, index) => {
         const div = document.createElement('div');
         div.className = 'agent-card';
         div.innerHTML = `
-          <h3>${agent.name}</h3>
-          <p><strong>Address:</strong> ${agent.address}</p>
-          <p><strong>Mobile:</strong> ${agent.mobile}</p>
+          <h3>${agent.name || 'No Name'}</h3>
+          <p><strong>Address:</strong> ${agent.address || 'N/A'}</p>
+          <p><strong>Mobile:</strong> ${agent.phone || 'N/A'}</p>
         `;
         container.appendChild(div);
+
+        // ➕ Insert Ad in middle (300x250) after 1st agent
+        if ((index + 1) % 2 === 0) {
+          const adDiv = document.createElement('div');
+          adDiv.style.textAlign = 'center';
+          adDiv.innerHTML = `
+            <script type="text/javascript">
+              atOptions = {
+                'key': '4c5d9f559ffd3347761823551a12cf4e',
+                'format': 'iframe',
+                'height': 250,
+                'width': 300,
+                'params': {}
+              };
+            </script>
+            <script type="text/javascript" src="//japaneseexceedinglysanctuary.com/4c5d9f559ffd3347761823551a12cf4e/invoke.js"></script>
+          `;
+          container.appendChild(adDiv);
+        }
       });
 
       prevBtn.disabled = currentPage === 0;
@@ -195,11 +257,16 @@
     async function loadAgents() {
       const snapshot = await getDocs(collection(db, "bus_agents"));
       agents = [];
-      snapshot.forEach(doc => agents.push(doc.data()));
+      snapshot.forEach(doc => {
+        agents.push(doc.data());
+      });
       renderPage();
     }
 
     document.addEventListener("DOMContentLoaded", loadAgents);
   </script>
+
+  <!-- 🔔 Popup Ad -->
+  <script type='text/javascript' src='//japaneseexceedinglysanctuary.com/7d/6a/f1/7d6af1c8991f69ada26a8c6a4a9ee242.js'></script>
 </body>
 </html>
