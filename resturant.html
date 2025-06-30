@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Digha Restaurants</title>
+  <title>My Digha Restaurants - Food Places in Digha</title>
 
-  <!-- ✅ SEO -->
-  <meta name="description" content="Discover tasty restaurants across Digha with contact, address, and food guide.">
-  <meta name="keywords" content="Digha restaurants, My Digha food, food in Digha, Nexuzy, Digha food spots">
+  <!-- ✅ Meta & SEO -->
+  <meta name="description" content="Discover food places and restaurants in Digha. Find restaurant names, contacts, and locations.">
+  <meta name="keywords" content="Digha restaurants, food in Digha, My Digha food guide, Digha food">
   <meta name="author" content="Nexuzy Tech Pvt Ltd">
-  <meta name="robots" content="index, follow">
   <meta property="og:title" content="My Digha Restaurants">
-  <meta property="og:description" content="Your guide to Digha's best restaurants with contacts and locations.">
+  <meta property="og:description" content="Your food guide for Digha. Explore restaurants with contacts and addresses.">
   <meta property="og:image" content="https://mydigha.in/mydigharestaurants.png">
   <meta property="og:url" content="https://mydigha.in/restaurants.html">
-  <meta name="theme-color" content="#D35400">
+  <meta name="theme-color" content="#007ACC" />
 
   <!-- ✅ Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-L5TNBK4WMZ"></script>
@@ -34,7 +33,7 @@
       color: #333;
     }
     header {
-      background-color: #D35400;
+      background-color: #007ACC;
       color: white;
       text-align: center;
       padding: 15px 0;
@@ -51,7 +50,7 @@
     }
     .welcome-message {
       text-align: center;
-      background: #FDEBD0;
+      background: #D9EDF7;
       padding: 20px;
       border-radius: 8px;
       margin-bottom: 30px;
@@ -76,7 +75,7 @@
       margin-top: 20px;
     }
     .navigation-controls button {
-      background-color: #D35400;
+      background-color: #007ACC;
       color: white;
       border: none;
       padding: 10px 20px;
@@ -95,7 +94,7 @@
       margin-top: 40px;
     }
     footer a {
-      color: #D35400;
+      color: #007ACC;
       text-decoration: none;
     }
   </style>
@@ -119,13 +118,13 @@
   <header>
     <img src="mydigharestaurants.png" alt="My Digha Restaurant Logo" class="logo" />
     <h1>Digha Restaurants</h1>
-    <p>Discover tasty food spots across Digha!</p>
+    <p>Your food guide to Digha</p>
   </header>
 
   <div class="container">
     <div class="welcome-message">
       <h2>Welcome to Digha Food Guide</h2>
-      <p>Explore popular restaurants with location and contact info.</p>
+      <p>Explore restaurants with name, contact, and address.</p>
     </div>
 
     <div id="restaurant-container">
@@ -158,7 +157,7 @@
     <p>Made in India 🇮🇳</p>
   </footer>
 
-  <!-- ✅ Firebase & Restaurant Data -->
+  <!-- ✅ Firebase Data Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -204,6 +203,7 @@
         `;
         container.appendChild(div);
 
+        // 🔸 Ad in middle after first card
         if (index === 0 && pageItems.length > 1) {
           const adDiv = document.createElement('div');
           adDiv.style.textAlign = 'center';
@@ -244,12 +244,11 @@
     document.addEventListener("DOMContentLoaded", async () => {
       try {
         const snapshot = await getDocs(collection(db, "restaurants"));
-        restaurants = [];
-        snapshot.forEach(doc => restaurants.push(doc.data()));
+        restaurants = snapshot.docs.map(doc => doc.data());
         renderPage();
       } catch (error) {
-        console.error("Error loading restaurants:", error);
-        container.innerHTML = `<p style="color:red;">Failed to load restaurants. Try again later.</p>`;
+        console.error("Error loading data:", error);
+        container.innerHTML = '<p style="color:red;">Error loading restaurant data.</p>';
       }
     });
   </script>
