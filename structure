@@ -1,0 +1,28 @@
+david_ai_2b/
+│
+├── app/
+│   ├── main.py                  # Flask app entry
+│   ├── bootstrap.py             # Auto-download all models (only once)
+│   ├── ai/
+│   │   ├── chat_ai.py
+│   │   ├── code_ai.py
+│   │   ├── image_gen.py
+│   │   ├── deblur_ai.py
+│   ├── voice/
+│   │   ├── voice_input.py
+│   │   ├── voice_control.py
+│   ├── ui/
+│   │   ├── frontend.py
+│
+├── models/                      # Models stored here after first run
+│   ├── .downloaded              # Hidden marker file
+│
+├── static/
+│   ├── davidai.png
+│   └── david.ico
+│
+├── run.py                       # Main launcher
+├── requirements.txt
+└── installer/
+    ├── build.bat
+    └── inno_setup.iss
