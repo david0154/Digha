@@ -1,9 +1,11 @@
 DevanLang/
-├── devan_parser.py         # Interpreter
-├── devan_compiler.py       # Compiler
-├── devan_runner.py         # CLI tool
-├── devan_installer.py      # Auto library installer
-├── devan_php_runner.py     # PHP runner helper
-├── devan_stdlib.json       # Sanskrit → Python/PHP translation
-├── requirements.txt        # Python dependencies
-└── test_files/             # .Om files for testing
+├── devan_lexer.py           # NEW: Tokenizer
+├── devan_interpreter.py     # NEW: Interpreter logic
+├── devan_parser.py          # Old: Will delegate to interpreter
+├── devan_compiler.py        # Compiler (Om → py/php)
+├── devan_runner.py          # CLI: devan run/compile
+├── devan_installer.py       # Auto pip installer
+├── devan_php_runner.py      # Executes PHP blocks
+├── devan_stdlib.json        # Sanskrit ↔ Python/PHP mappings
+├── requirements.txt         # Dependencies
+└── test_files/              # Example .Om files
